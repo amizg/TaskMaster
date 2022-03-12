@@ -1,15 +1,13 @@
 package com.example.taskapp
 
-
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import java.util.*
 
+private val TAG: String = MainActivity::class.java.simpleName //Debugging tag
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +15,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val db:DatabaseManager = DatabaseManager(this)
+        //db.addCard("Work")
+        //db.addTask(1,"Do your homework","CSC 302",1654056000000, System.currentTimeMillis())
+
+        val debugtimestamp:Long = 1654056000000
+
+        var cards:Vector<Card> = Vector()
 
 
         var adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
