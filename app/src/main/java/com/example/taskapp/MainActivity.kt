@@ -1,6 +1,7 @@
 package com.example.taskapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -21,29 +22,20 @@ class MainActivity : AppCompatActivity() {
 
         val debugtimestamp:Long = 1654056000000
 
-        var cards:Vector<Card> = Vector()
-
-
         var adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
 
-        val tablayout = findViewById<TabLayout>(R.id.tablayout)
         val viewpager = findViewById<ViewPager2>(R.id.viewpager)
 
         viewpager.adapter = adapter
 
-        TabLayoutMediator(tablayout, viewpager
-        ) { tab, position ->
-            when (position) {
-                0 -> {
-                    tab.text = "Home"
-                }
-                1 -> {
-                    tab.text = "Card"
-                }
-                2 -> {
-                    tab.text = "Test"
-                }
-            }
-        }.attach()
+        var cards:CardManager = CardManager()
+        cards.addCard("Work")
+        cards.addCard("School")
+        cards.addCard("Home")
+        adapter.setSize(cards.getCardSize())
+
+        val size:Int = cards.getCardSize()
+        Log.d(TAG, "$size")
+
     }
 }
