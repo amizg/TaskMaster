@@ -27,8 +27,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         if (position == 0){ return new HomeFragment(); }
         else if (position > 0) {
-            CardFragment cardFragment = new CardFragment(cards.getCardName(position-1));
-            return cardFragment; }
+            return new CardFragment(cards.getCardName(position-1)); }
         else {}
         return null;
     }

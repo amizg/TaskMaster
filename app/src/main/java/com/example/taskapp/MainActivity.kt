@@ -18,9 +18,9 @@ class MainActivity : AppCompatActivity() {
 
         var cards: CardManager = CardManager()
 
-        val db:DatabaseManager = DatabaseManager(this)
+        val db = DatabaseManager(this)
         //db.addCard("Work")
-        //db.addTask(1,"Do your homework","CSC 302",1654056000000, System.currentTimeMillis())
+        db.addTask(1,"Do your homework","CSC 302",1654056000000, System.currentTimeMillis())
 
         val debugtimestamp:Long = 1654056000000
 
@@ -31,11 +31,17 @@ class MainActivity : AppCompatActivity() {
         viewpager.adapter = adapter
 
         cards.addCard("Work")
+        db.addCard("Work")
         cards.addCard("School")
         cards.addCard("Home")
         cards.addCard("Home2")
         cards.addCard("Home3")
-        adapter.setCards(cards)
 
+        //cards.removeCard(2)
+        //cards.addCard("Home")
+        //cards.editCard("PooPoo", 2)
+
+        adapter.setCards(cards)
     }
+
 }

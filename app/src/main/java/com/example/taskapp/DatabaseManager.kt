@@ -9,7 +9,7 @@ private val TAG: String = DatabaseManager::class.java.simpleName //Debugging tag
 class DatabaseManager(var context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VER) {
     companion object {
         private const val DB_NAME = "taskmaster"
-        private const val DB_VER = 1
+        private const val DB_VER = 2
 
         //card table
         private const val TBL_CARDS = "cards"
@@ -21,7 +21,7 @@ class DatabaseManager(var context: Context) : SQLiteOpenHelper(context, DB_NAME,
         private const val COL_TID = "id"
         private const val COL_TCARD_ID = "card_id"
         private const val COL_TNAME = "name"
-        private const val COL_TDESC = "desc"
+        private const val COL_TDESC = "description"
         private const val COL_TDEADLINE = "deadline"
         private const val COL_TCREATED = "created"
     }
@@ -29,7 +29,7 @@ class DatabaseManager(var context: Context) : SQLiteOpenHelper(context, DB_NAME,
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createCardTable = "CREATE TABLE $TBL_CARDS($COL_CID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_CNAME TEXT)"
-        val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT, $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER)"
+        val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT(100), $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER)"
         db?.execSQL(createCardTable)
         db?.execSQL(createTaskTable)
 

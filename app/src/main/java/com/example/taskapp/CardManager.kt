@@ -1,22 +1,49 @@
 package com.example.taskapp
+import android.provider.ContactsContract
 import com.example.taskapp.Card
 
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CardManager {
-    private var cards:Vector<Card> = Vector()
+    private var cards:ArrayList<Card> = ArrayList()
 
+
+
+    //Initializes Card and adds to the Card Array
     fun addCard(nm:String){
+
         var card:Card = Card(nm)
-        cards.addElement(card)
+        cards.add(card)
     }
-    fun getCardName(pos:Int):String{
-        return cards.get(pos).getName()
+
+    //Removes Card at desired index
+    fun removeCard(index: Int): Boolean{
+        if (index < 0 || index >= cards.size){
+            return false
+        }
+
+        cards.removeAt(index)
+        return true
     }
+
+    //Edits Card name
+    fun editCard(nm: String, index: Int){
+        cards[index].setName(nm)
+    }
+
+    //Returns name of Card
+    fun getCardName(index: Int):String{
+        return cards[index].getName()
+    }
+
+    //Returns the size of the Card Array
     fun getCardSize():Int{
         return cards.size
     }
-    fun getCard(pos: Int):Card{
-        return cards.get(pos)
+
+    //Returns a Card object at given index
+    fun getCard(index: Int):Card{
+        return cards[index]
     }
 }
