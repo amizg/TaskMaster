@@ -8,12 +8,15 @@ import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
-private val TAG: String = DatabaseManager::class.java.simpleName //Debugging tag
+private val TAG: String = DataManager::class.java.simpleName //Debugging tag
 
-class DatabaseManager(var context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VER) {
+class DataManager(var context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VER) {
+//    Tables in our database taskmaster
+//    cards: (id, name)
+//    tasks: (id, card_id, name, description, deadline, created)
     companion object {
         private const val DB_NAME = "taskmaster"
-        private const val DB_VER = 6
+        private const val DB_VER = 7
 
         //card table
         private const val TBL_CARDS = "cards"
@@ -30,22 +33,29 @@ class DatabaseManager(var context: Context) : SQLiteOpenHelper(context, DB_NAME,
         private const val COL_TCREATED = "created"
     }
 
+    //Primary array of card objects
+    private var cards:ArrayList<Card> = ArrayList()
 
+//On creation of the database for the very first time
+    //Create tasks table
+    //Create cards table
+    //Execute SQL statements
     override fun onCreate(db: SQLiteDatabase?) {
         val createCardTable = "CREATE TABLE $TBL_CARDS($COL_CID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_CNAME TEXT)"
         val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT(100), $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER)"
         db?.execSQL(createCardTable)
         db?.execSQL(createTaskTable)
-
-
     }
 
+    //When DB_VER is incremented by 1, this will reset the entire database and its data
+    //dropping both tasks and cards table
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db!!.execSQL("DROP TABLE IF EXISTS $TBL_CARDS")
         db!!.execSQL("DROP TABLE IF EXISTS $TBL_TASKS")
         onCreate(db)
     }
 
+    //Adding a card to the database
     fun addCard(name : String){
         val values = ContentValues()
         values.put(COL_CNAME, name)
@@ -54,6 +64,7 @@ class DatabaseManager(var context: Context) : SQLiteOpenHelper(context, DB_NAME,
         db.close()
     }
 
+    //Adding a task to the database
     fun addTask(card_id:Int, name:String, desc:String, deadline:Long, created:Long){
         val values = ContentValues()
         values.put(COL_TCARD_ID, card_id)
@@ -66,29 +77,25 @@ class DatabaseManager(var context: Context) : SQLiteOpenHelper(context, DB_NAME,
         db.close()
     }
 
-    @SuppressLint("Range")
-    @Throws(SQLiteException::class)
-    fun getCards(): ArrayList<Card>{
-        val cards = ArrayList<Card>()
-        val db = writableDatabase
-        var cursor: Cursor? = null
+    //Reading tasks from the database, importing for reassigning the cards arraylist
+    fun readCards() {
+        val db = this.readableDatabase
 
-        try{
-            cursor = db.rawQuery("SELECT * FROM " + TBL_CARDS, null)
-        }catch (e: SQLiteException) {
-            onCreate(db)
-            return ArrayList()
+        val cursorCards = db.rawQuery("SELECT * FROM $TBL_CARDS", null)
+        if (cursorCards.moveToFirst()) {
+            do {
+                cards.add(
+                    Card(
+                        cursorCards.getString(1)
+                    )
+                )
+            } while (cursorCards.moveToNext())
         }
-        var name: String
-        //var cardId: Int?
+        cursorCards.close()
+    }
 
-        if(cursor!!.moveToFirst()){
-            while (cursor.isAfterLast == false){
-
-                name = cursor.getString(cursor.getColumnIndex(COL_CNAME))
-                cards.add(Card(name))
-            }
-        }
+    //Returns an arraylist of cards
+    fun getCards():ArrayList<Card>{
         return cards
     }
 

@@ -15,7 +15,7 @@ import com.example.taskapp.MainActivity.*;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
     private int size = 1;
-    private CardManager cards = new CardManager();
+    private ArrayList<Card> cards = new ArrayList<>();
 
     public ViewPagerAdapter(FragmentManager fragmentManager, Lifecycle lifecycle){
         super(fragmentManager, lifecycle);
@@ -27,16 +27,16 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         if (position == 0){ return new HomeFragment(); }
         else if (position > 0) {
-            return new CardFragment(cards.getCardName(position-1)); }
+            return new CardFragment(cards.get(position-1).getName()); }
         else {}
         return null;
     }
 
     @Override
     public int getItemCount() {
-        return this.cards.getCardSize()+1;
+        return this.cards.size()+1;
     }
-    public void setCards(CardManager cards){
+    public void setCards(ArrayList<Card> cards){
         this.cards = cards;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.taskapp
 
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.service.quickaccesswallet.GetWalletCardsCallback
 import android.util.Log
 import android.widget.TextView
@@ -18,46 +19,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var cards: CardManager = CardManager()
+        //Declaring and setting up the database
+        val db:DataManager = DataManager(this)
 
-        val db = DatabaseManager(this)
-        //db.addCard("Work")
-        //db.addTask(1,"Do your homework","CSC 302",1654056000000, System.currentTimeMillis())
-
-        val debugtimestamp:Long = 1654056000000
-
+        //Initializing the view pager adapter
         var adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
-
+        //assigning the layout ViewPager2 to viewpager with the id of viewpager
         val viewpager = findViewById<ViewPager2>(R.id.viewpager)
-
         viewpager.adapter = adapter
 
-
-
-        //Adds Card to Card List and Database
-        fun addCard(name: String){
-            //cards.addCard(name)
-            //db.addCard(name)
-        }
-
-        //addCard("Work")
-        //addCard("School")
-        //addCard("Home")
-
-        //cards.setCards(db.getCards())
-        adapter.setCards(cards)
-
-
-
-        //cards.removeCard(2)
-        //cards.editCard("PooPoo", 2)
-
-        var arrList: ArrayList<Card> = db.getCards()
-
-        
-
+        //Cards must be read from the database
+        //Before accessing any data, the database must be read to set local variables
+        db.readCards()
+        //the cards are set for the viewpager
+        //Viewpager has its own local storage for card objects
+        adapter.setCards(db.getCards())
     }
-
-
-
 }
