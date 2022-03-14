@@ -1,16 +1,12 @@
 package com.example.taskapp
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 
 private val TAG: String = DataManager::class.java.simpleName //Debugging tag
 
-class DataManager(var context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VER) {
+class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VER) {
 //    Tables in our database taskmaster
 //    cards: (id, name)
 //    tasks: (id, card_id, name, description, deadline, created)
@@ -50,8 +46,8 @@ class DataManager(var context: Context) : SQLiteOpenHelper(context, DB_NAME, nul
     //When DB_VER is incremented by 1, this will reset the entire database and its data
     //dropping both tasks and cards table
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db!!.execSQL("DROP TABLE IF EXISTS $TBL_CARDS")
-        db!!.execSQL("DROP TABLE IF EXISTS $TBL_TASKS")
+        db?.execSQL("DROP TABLE IF EXISTS $TBL_CARDS")
+        db?.execSQL("DROP TABLE IF EXISTS $TBL_TASKS")
         onCreate(db)
     }
 

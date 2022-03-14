@@ -1,15 +1,12 @@
 package com.example.taskapp
 
-class Task {
-    private var name:String = ""
-    private var desc:String = ""
-    private var deadline:Long = 0
+class Task(nm: String, dsc: String, date: Long) {
+    private var name:String = nm
+    private var desc:String = dsc
+    private var deadline:Long = date
     private var created:Long = 0
 
-    constructor(nm:String, dsc:String, date:Long){
-        name = nm
-        desc = dsc
-        deadline = date
+    init {
         created = System.currentTimeMillis()
     }
 

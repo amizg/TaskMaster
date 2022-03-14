@@ -1,19 +1,10 @@
 package com.example.taskapp.Fragments
-
 import android.os.Bundle
-import android.provider.AlarmClock
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.example.taskapp.R
 import com.example.taskapp.databinding.FragmentCardBinding
-import org.w3c.dom.Text
-import android.provider.AlarmClock.EXTRA_MESSAGE
-
-
-
 
 class CardFragment(nm: String) : Fragment() {
 
@@ -27,7 +18,7 @@ class CardFragment(nm: String) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCardBinding.inflate(inflater, container, false)
         val view = binding.root
         // Inflate the layout for this fragment
