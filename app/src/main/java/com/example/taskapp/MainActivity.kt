@@ -1,16 +1,7 @@
 package com.example.taskapp
-
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.service.quickaccesswallet.GetWalletCardsCallback
-import android.util.Log
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
-import java.util.*
-import kotlin.collections.ArrayList
 
 private val TAG: String = MainActivity::class.java.simpleName //Debugging tag
 class MainActivity : AppCompatActivity() {
@@ -23,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         val db:DataManager = DataManager(this)
 
         //Initializing the view pager adapter
-        var adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
+        val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         //assigning the layout ViewPager2 to viewpager with the id of viewpager
         val viewpager = findViewById<ViewPager2>(R.id.viewpager)
         viewpager.adapter = adapter
