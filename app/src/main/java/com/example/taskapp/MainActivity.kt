@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         //addCard("School")
         //addCard("Home")
 
-        cards.setCards(db.getCards())
+        //cards.setCards(db.getCards())
         adapter.setCards(cards)
 
 
@@ -52,6 +52,9 @@ class MainActivity : AppCompatActivity() {
         //cards.removeCard(2)
         //cards.editCard("PooPoo", 2)
 
+        var arrList: ArrayList<Card> = db.getCards()
+
+        
 
     }
 
