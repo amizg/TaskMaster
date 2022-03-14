@@ -16,6 +16,7 @@ import android.provider.AlarmClock.EXTRA_MESSAGE
 
 
 class CardFragment(nm: String) : Fragment() {
+
     private var name: String = "Card"
     private var _binding: FragmentCardBinding? = null
     private val binding get() = _binding!!

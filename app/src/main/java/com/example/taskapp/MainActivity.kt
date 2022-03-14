@@ -1,6 +1,7 @@
 package com.example.taskapp
 
 import android.os.Bundle
+import android.service.quickaccesswallet.GetWalletCardsCallback
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.*
+import kotlin.collections.ArrayList
 
 private val TAG: String = MainActivity::class.java.simpleName //Debugging tag
 class MainActivity : AppCompatActivity() {
@@ -20,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         val db = DatabaseManager(this)
         //db.addCard("Work")
-        db.addTask(1,"Do your homework","CSC 302",1654056000000, System.currentTimeMillis())
+        //db.addTask(1,"Do your homework","CSC 302",1654056000000, System.currentTimeMillis())
 
         val debugtimestamp:Long = 1654056000000
 
@@ -30,18 +32,29 @@ class MainActivity : AppCompatActivity() {
 
         viewpager.adapter = adapter
 
-        cards.addCard("Work")
-        db.addCard("Work")
-        cards.addCard("School")
-        cards.addCard("Home")
-        cards.addCard("Home2")
-        cards.addCard("Home3")
+
+
+        //Adds Card to Card List and Database
+        fun addCard(name: String){
+            //cards.addCard(name)
+            //db.addCard(name)
+        }
+
+        //addCard("Work")
+        //addCard("School")
+        //addCard("Home")
+
+        cards.setCards(db.getCards())
+        adapter.setCards(cards)
+
+
 
         //cards.removeCard(2)
-        //cards.addCard("Home")
         //cards.editCard("PooPoo", 2)
 
-        adapter.setCards(cards)
+
     }
+
+
 
 }

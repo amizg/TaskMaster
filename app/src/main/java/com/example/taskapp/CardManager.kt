@@ -6,8 +6,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class CardManager {
-    private var cards:ArrayList<Card> = ArrayList()
 
+    private var cards:ArrayList<Card> = ArrayList()
 
 
     //Initializes Card and adds to the Card Array
@@ -45,5 +45,9 @@ class CardManager {
     //Returns a Card object at given index
     fun getCard(index: Int):Card{
         return cards[index]
+    }
+
+    fun setCards(cardArr: ArrayList<Card>){
+        cards = cardArr
     }
 }

@@ -1,15 +1,19 @@
 package com.example.taskapp
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 private val TAG: String = DatabaseManager::class.java.simpleName //Debugging tag
 
 class DatabaseManager(var context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VER) {
     companion object {
         private const val DB_NAME = "taskmaster"
-        private const val DB_VER = 2
+        private const val DB_VER = 6
 
         //card table
         private const val TBL_CARDS = "cards"
@@ -60,6 +64,32 @@ class DatabaseManager(var context: Context) : SQLiteOpenHelper(context, DB_NAME,
         val db = this.writableDatabase
         db.insert(TBL_TASKS, null, values)
         db.close()
+    }
+
+    @SuppressLint("Range")
+    @Throws(SQLiteException::class)
+    fun getCards(): ArrayList<Card>{
+        val cards = ArrayList<Card>()
+        val db = writableDatabase
+        var cursor: Cursor? = null
+
+        try{
+            cursor = db.rawQuery("SELECT * FROM " + TBL_CARDS, null)
+        }catch (e: SQLiteException) {
+            onCreate(db)
+            return ArrayList()
+        }
+        var name: String
+        //var cardId: Int?
+
+        if(cursor!!.moveToFirst()){
+            while (cursor.isAfterLast == false){
+
+                name = cursor.getString(cursor.getColumnIndex(COL_CNAME))
+                cards.add(Card(name))
+            }
+        }
+        return cards
     }
 
 }
