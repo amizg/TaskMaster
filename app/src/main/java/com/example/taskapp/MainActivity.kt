@@ -1,49 +1,38 @@
 package com.example.taskapp
 
 import android.os.Bundle
+import android.provider.ContactsContract
+import android.service.quickaccesswallet.GetWalletCardsCallback
+import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.*
+import kotlin.collections.ArrayList
 
 private val TAG: String = MainActivity::class.java.simpleName //Debugging tag
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val db:DatabaseManager = DatabaseManager(this)
-        //db.addCard("Work")
-        //db.addTask(1,"Do your homework","CSC 302",1654056000000, System.currentTimeMillis())
+        //Declaring and setting up the database
+        val db:DataManager = DataManager(this)
 
-        val debugtimestamp:Long = 1654056000000
-
-        var cards:Vector<Card> = Vector()
-
-
+        //Initializing the view pager adapter
         var adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
-
-        val tablayout = findViewById<TabLayout>(R.id.tablayout)
+        //assigning the layout ViewPager2 to viewpager with the id of viewpager
         val viewpager = findViewById<ViewPager2>(R.id.viewpager)
-
         viewpager.adapter = adapter
 
-        TabLayoutMediator(tablayout, viewpager
-        ) { tab, position ->
-            when (position) {
-                0 -> {
-                    tab.text = "Home"
-                }
-                1 -> {
-                    tab.text = "Card"
-                }
-                2 -> {
-                    tab.text = "Test"
-                }
-            }
-        }.attach()
+        //Cards must be read from the database
+        //Before accessing any data, the database must be read to set local variables
+        db.readCards()
+        //the cards are set for the viewpager
+        //Viewpager has its own local storage for card objects
+        adapter.setCards(db.getCards())
     }
 }
