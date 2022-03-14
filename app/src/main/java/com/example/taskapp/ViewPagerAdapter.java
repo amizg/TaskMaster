@@ -10,31 +10,34 @@ import com.example.taskapp.Fragments.HomeFragment;
 import com.example.taskapp.Fragments.CardFragment;
 
 import java.util.ArrayList;
+import java.util.Vector;
+import com.example.taskapp.MainActivity.*;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
     private int size = 1;
+    private CardManager cards = new CardManager();
 
     public ViewPagerAdapter(FragmentManager fragmentManager, Lifecycle lifecycle){
         super(fragmentManager, lifecycle);
     }
     private ArrayList<Fragment> fragments;
 
-
     @NonNull
     @Override
     public Fragment createFragment(int position) {
         if (position == 0){ return new HomeFragment(); }
-        else if (position > 0) { return new CardFragment(); }
+        else if (position > 0) {
+            CardFragment cardFragment = new CardFragment(cards.getCardName(position-1));
+            return cardFragment; }
         else {}
         return null;
     }
 
     @Override
     public int getItemCount() {
-        return this.size;
+        return this.cards.getCardSize()+1;
     }
-
-    public void setSize(int size){
-        this.size = size+1;
+    public void setCards(CardManager cards){
+        this.cards = cards;
     }
 }

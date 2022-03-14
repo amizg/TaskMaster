@@ -2,6 +2,7 @@ package com.example.taskapp
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -9,12 +10,13 @@ import com.google.android.material.tabs.TabLayoutMediator
 import java.util.*
 
 private val TAG: String = MainActivity::class.java.simpleName //Debugging tag
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        var cards: CardManager = CardManager()
 
         val db:DatabaseManager = DatabaseManager(this)
         //db.addCard("Work")
@@ -28,14 +30,12 @@ class MainActivity : AppCompatActivity() {
 
         viewpager.adapter = adapter
 
-        var cards:CardManager = CardManager()
         cards.addCard("Work")
         cards.addCard("School")
         cards.addCard("Home")
-        adapter.setSize(cards.getCardSize())
-
-        val size:Int = cards.getCardSize()
-        Log.d(TAG, "$size")
+        cards.addCard("Home2")
+        cards.addCard("Home3")
+        adapter.setCards(cards)
 
     }
 }

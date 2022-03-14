@@ -16,4 +16,7 @@ class CardManager {
     fun getCardSize():Int{
         return cards.size
     }
+    fun getCard(pos: Int):Card{
+        return cards.get(pos)
+    }
 }
