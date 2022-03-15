@@ -5,26 +5,35 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.taskapp.Fragments.CardFragment
 import com.example.taskapp.Fragments.HomeFragment
-import java.util.ArrayList
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ViewPagerAdapter(fragmentManager: FragmentManager?, lifecycle: Lifecycle?) :
+class ViewPagerAdapter(fm: FragmentManager?, lifecycle: Lifecycle?) :
     FragmentStateAdapter(
-        fragmentManager!!, lifecycle!!
+        fm!!, lifecycle!!
     ) {
     private var cards = ArrayList<Card>()
     override fun createFragment(position: Int): Fragment {
-        return if (position > 0) {
-            CardFragment(cards[position - 1].getName())
-        } else {
-            HomeFragment()
+        return when {
+            position > 0 && position <= (cards.size) -> {
+                CardFragment(cards[position - 1].getName())
+            }
+            position > 0 && position >= (cards.size) -> {
+                AddCardFragment()
+            }
+            else -> {
+                HomeFragment()
+            }
         }
     }
 
     override fun getItemCount(): Int {
-        return cards.size + 1
+        return cards.size + 2
     }
 
     fun setCards(cards: ArrayList<Card>) {
         this.cards = cards
+        notifyDataSetChanged()
     }
+
 }
