@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
+//For debuggin Log.d(TAG,"")
 private val TAG: String = DataManager::class.java.simpleName //Debugging tag
 
 class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VER) {
@@ -31,6 +32,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 
     //Primary array of card objects
     private var cards:ArrayList<Card> = ArrayList()
+    private var tasks:ArrayList<Task> = ArrayList()
 
 //On creation of the database for the very first time
     //Create tasks table
@@ -69,13 +71,13 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
 
     //Adding a task to the database
-    fun addTask(card_id:Int, name:String, desc:String, deadline:Long, created:Long){
+    fun addTask(card_id:Int, name:String, desc:String, deadline:Long){
         val values = ContentValues()
         values.put(COL_TCARD_ID, card_id)
         values.put(COL_TNAME, name)
         values.put(COL_TDESC, desc)
         values.put(COL_TDEADLINE, deadline)
-        values.put(COL_TCREATED, created)
+        values.put(COL_TCREATED, System.currentTimeMillis())
         val db = this.writableDatabase
         db.insert(TBL_TASKS, null, values)
         db.close()
@@ -90,6 +92,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
             do {
                 cards.add(
                     Card(
+                        cursorCards.getInt(0),
                         cursorCards.getString(1)
                     )
                 )
@@ -103,7 +106,37 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         return cards
     }
 
-    fun clearCards(){
-        cards.clear()
+    fun readTask(){
+        val db = this.readableDatabase
+
+        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS", null)
+        if (cursorTasks.moveToFirst()) {
+            do {
+                tasks.add(
+                    Task(
+                        cursorTasks.getInt(1),
+                        cursorTasks.getString(2),
+                        cursorTasks.getString(3),
+                        cursorTasks.getLong(4),
+                        cursorTasks.getLong(5)
+                    )
+                )
+            } while (cursorTasks.moveToNext())
+        }
+        cursorTasks.close()
+
+        for (task in tasks){
+            var taskcardId = task.getCardId()
+            for(card in cards){
+                var cardId = card.getId()
+                if(taskcardId == cardId){
+                    card.addTask(task)
+                }
+            }
+        }
+    }
+    //Returns an arraylist of tasks
+    fun getTasks():ArrayList<Task>{
+        return tasks
     }
 }
