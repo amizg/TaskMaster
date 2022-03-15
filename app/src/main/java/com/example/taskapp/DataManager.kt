@@ -13,7 +13,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 //    tasks: (id, card_id, name, description, deadline, created)
     companion object {
         private const val DB_NAME = "taskmaster"
-        private const val DB_VER = 8
+        private const val DB_VER = 1
 
         //card table
         private const val TBL_CARDS = "cards"
@@ -48,6 +48,14 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     //When DB_VER is incremented by 1, this will reset the entire database and its data
     //dropping both tasks and cards table
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        db?.execSQL("DROP TABLE IF EXISTS $TBL_CARDS")
+        db?.execSQL("DROP TABLE IF EXISTS $TBL_TASKS")
+        onCreate(db)
+    }
+
+    //When DB_VER is incremented by 1, this will reset the entire database and its data
+    //dropping both tasks and cards table
+    override fun onDowngrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TBL_CARDS")
         db?.execSQL("DROP TABLE IF EXISTS $TBL_TASKS")
         onCreate(db)
@@ -98,7 +106,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         return cards
     }
 
-
     fun readTask(){
         val db = this.readableDatabase
 
@@ -132,5 +139,4 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     fun getTasks():ArrayList<Task>{
         return tasks
     }
-
 }

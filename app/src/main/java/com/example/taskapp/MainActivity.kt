@@ -3,11 +3,22 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.example.taskapp.AddCardFragment
 
 //For debugging Log.d(TAG,"")
 private val TAG: String = MainActivity::class.java.simpleName //Debugging tag
 
 class MainActivity : AppCompatActivity() {
+
+    // refresh function to add fragment changes
+    fun refresh(cards:ArrayList<Card>, size:Int)
+    {
+        val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
+        val viewpager = findViewById<ViewPager2>(R.id.viewpager)
+        viewpager.adapter = adapter
+        adapter.setCards(cards)
+        viewpager.currentItem = size
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
