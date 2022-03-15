@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="#EEEEEE"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".Fragments.CardFragment">
 
@@ -13,10 +13,24 @@
         android:id="@+id/cardName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="20sp"
         android:text="Card"
         android:textColor="#222222"
-        android:textSize="30sp"
-        android:padding="20sp"/>
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/editCardBtn"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Edit" />
+
+
+    <Button
+        android:id="@+id/deleteCardBtn"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:text="Delete" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasks"

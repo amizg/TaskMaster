@@ -12,27 +12,33 @@ class ViewPagerAdapter(fm: FragmentManager?, lifecycle: Lifecycle?) :
     FragmentStateAdapter(
         fm!!, lifecycle!!
     ) {
-    private var cards = ArrayList<Card>()
+    private var currPos: Int = 0
+    //private var cards = ArrayList<Card>()
+
     override fun createFragment(position: Int): Fragment {
+
         return when {
-            position > 0 && position <= (cards.size) -> {
-                CardFragment(cards[position - 1].getName())
+            position > 0 && position <= (MainActivity.dm.getCards().size) -> {
+                currPos = position
+                CardFragment(MainActivity.dm.getCards()[position - 1].getId(), MainActivity.dm.getCards()[position - 1].getName())
             }
-            position > 0 && position >= (cards.size) -> {
+            position > 0 && position > (MainActivity.dm.getCards().size) -> {
+                currPos = position
                 AddCardFragment()
             }
             else -> {
+                currPos = position
                 HomeFragment()
             }
         }
     }
 
-    override fun getItemCount(): Int {
-        return cards.size + 2
+    fun getPosition(): Int{
+        return currPos
     }
 
-    fun setCards(cards: ArrayList<Card>) {
-        this.cards = cards
+    override fun getItemCount(): Int {
+        return MainActivity.dm.getCards().size + 2
     }
 
 }

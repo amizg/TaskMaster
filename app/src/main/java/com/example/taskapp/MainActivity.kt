@@ -1,6 +1,8 @@
 package com.example.taskapp
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.size
 import androidx.viewpager2.widget.ViewPager2
 
 //For debugging Log.d(TAG,"")
@@ -13,14 +15,23 @@ class MainActivity : AppCompatActivity() {
         lateinit var adapter: ViewPagerAdapter
         lateinit var viewpager:ViewPager2
         lateinit var dm:DataManager
+        lateinit var alertBuilder: AlertDialog.Builder
 
         fun refresh(cards:ArrayList<Card>){
             dm.readCards()
-            adapter.setCards(cards)
             val pos = dm.getCards().size
             adapter.notifyItemInserted(pos)
             viewpager.currentItem = pos+1
             viewpager.currentItem = pos
+        }
+        fun editCardRefresh(cards: ArrayList<Card>){
+            dm.readCards()
+        }
+        fun deleteCardRefresh(cards: ArrayList<Card>, pos: Int){
+            dm.readCards()
+            viewpager.currentItem = 0
+            adapter.notifyItemRemoved(pos)
+            //adapter.notifyItemRangeChanged(0, dm.getCards().size)
         }
     }
 
@@ -30,10 +41,9 @@ class MainActivity : AppCompatActivity() {
 
         //Declaring and setting up the database
         dm = DataManager(this)
+        alertBuilder = AlertDialog.Builder(this)
 
         //DUMMY DATA
-//        db.addCard("Work")
-//        db.addCard("School")
 //        db.addTask(1,"Meeting","Meeting with randy",1654056000000)
 //        db.addTask(2,"Final Exam","CSC 302",1654056000000)
 
@@ -47,10 +57,8 @@ class MainActivity : AppCompatActivity() {
         //Cards must be read from the database
         //Before accessing any data, the database must be read to set local variables
         dm.readCards()
-        dm.readTask()
-        //the cards are set for the viewpager
-        //Viewpager has its own local storage for card objects
-        adapter.setCards(dm.getCards())
+        //dm.readTask()
+
 
         //Debugging
         //var nm = db.getCards()[1].getTasks()[0].getDesc()
