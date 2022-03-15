@@ -1,7 +1,8 @@
 package com.example.taskapp
 import kotlin.collections.ArrayList
 
-class Card(nm: String) {
+class Card(id:Int, nm: String) {
+    private var cid = id
     private var name = nm
     private var tasks:ArrayList<Task> = ArrayList()
 
@@ -11,8 +12,20 @@ class Card(nm: String) {
     fun getName():String{
         return name
     }
-    fun addTask(nm:String, dsc:String, date:Long){
-        val task = Task(nm,dsc,date)
+    fun setId(id:Int) {
+        cid = id
+    }
+    fun getId():Int{
+        return cid
+    }
+    fun addTask(cid:Int, nm:String, dsc:String, ddln:Long, crtd:Long){
+        val task = Task(cid,nm,dsc,ddln,crtd)
         tasks.add(task)
+    }
+    fun addTask(task:Task){
+        tasks.add(task)
+    }
+    fun getTasks():ArrayList<Task>{
+        return tasks
     }
 }

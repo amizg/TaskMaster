@@ -1,13 +1,14 @@
 package com.example.taskapp
 
-class Task(nm: String, dsc: String, date: Long) {
+class Task(cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long) {
+    private var cardId:Int = cid
     private var name:String = nm
     private var desc:String = dsc
-    private var deadline:Long = date
-    private var created:Long = 0
+    private var deadline:Long = ddln
+    private var created:Long = crtd
 
-    init {
-        created = System.currentTimeMillis()
+    fun getCardId():Int{
+        return cardId
     }
 
     fun setName(nm:String){
