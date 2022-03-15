@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-//For debuggin Log.d(TAG,"")
+//For debugging Log.d(TAG,"")
 private val TAG: String = DataManager::class.java.simpleName //Debugging tag
 
 class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VER) {
@@ -85,6 +85,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 
     //Reading tasks from the database, importing for reassigning the cards arraylist
     fun readCards() {
+        cards.clear()
         val db = this.readableDatabase
 
         val cursorCards = db.rawQuery("SELECT * FROM $TBL_CARDS", null)
@@ -126,9 +127,9 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         cursorTasks.close()
 
         for (task in tasks){
-            var taskcardId = task.getCardId()
+            val taskcardId = task.getCardId()
             for(card in cards){
-                var cardId = card.getId()
+                val cardId = card.getId()
                 if(taskcardId == cardId){
                     card.addTask(task)
                 }

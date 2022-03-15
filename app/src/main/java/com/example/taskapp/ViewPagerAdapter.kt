@@ -33,7 +33,6 @@ class ViewPagerAdapter(fm: FragmentManager?, lifecycle: Lifecycle?) :
 
     fun setCards(cards: ArrayList<Card>) {
         this.cards = cards
-        notifyDataSetChanged()
     }
 
 }

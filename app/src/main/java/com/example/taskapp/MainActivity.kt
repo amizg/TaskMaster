@@ -1,9 +1,7 @@
 package com.example.taskapp
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.example.taskapp.AddCardFragment
 
 //For debugging Log.d(TAG,"")
 private val TAG: String = MainActivity::class.java.simpleName //Debugging tag
@@ -11,13 +9,19 @@ private val TAG: String = MainActivity::class.java.simpleName //Debugging tag
 class MainActivity : AppCompatActivity() {
 
     // refresh function to add fragment changes
-    fun refresh(cards:ArrayList<Card>, size:Int)
-    {
-        val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
-        val viewpager = findViewById<ViewPager2>(R.id.viewpager)
-        viewpager.adapter = adapter
-        adapter.setCards(cards)
-        viewpager.currentItem = size
+    companion object{
+        lateinit var adapter: ViewPagerAdapter
+        lateinit var viewpager:ViewPager2
+        lateinit var dm:DataManager
+
+        fun refresh(cards:ArrayList<Card>){
+            dm.readCards()
+            adapter.setCards(cards)
+            val pos = dm.getCards().size
+            adapter.notifyItemInserted(pos)
+            viewpager.currentItem = pos+1
+            viewpager.currentItem = pos
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Declaring and setting up the database
-        val db = DataManager(this)
+        dm = DataManager(this)
 
         //DUMMY DATA
 //        db.addCard("Work")
@@ -34,22 +38,22 @@ class MainActivity : AppCompatActivity() {
 //        db.addTask(2,"Final Exam","CSC 302",1654056000000)
 
         //Initializing the view pager adapter
-        val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
+        adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         //assigning the layout ViewPager2 to viewpager with the id of viewpager
-        val viewpager = findViewById<ViewPager2>(R.id.viewpager)
+        viewpager = findViewById(R.id.viewpager)
         viewpager.adapter = adapter
 
 
         //Cards must be read from the database
         //Before accessing any data, the database must be read to set local variables
-        db.readCards()
-        db.readTask()
+        dm.readCards()
+        dm.readTask()
         //the cards are set for the viewpager
         //Viewpager has its own local storage for card objects
-        adapter.setCards(db.getCards())
+        adapter.setCards(dm.getCards())
 
         //Debugging
-        var nm = db.getCards()[1].getTasks()[0].getDesc()
-        Log.d(TAG,"$nm")
+        //var nm = db.getCards()[1].getTasks()[0].getDesc()
+        //Log.d(TAG,"$nm")
     }
 }

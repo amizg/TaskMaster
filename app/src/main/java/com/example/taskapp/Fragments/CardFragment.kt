@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import com.example.taskapp.databinding.FragmentCardBinding
 
 class CardFragment(nm: String) : Fragment() {

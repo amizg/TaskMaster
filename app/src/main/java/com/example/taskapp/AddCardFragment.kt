@@ -13,34 +13,18 @@ import java.security.AccessController.getContext
 
 private val TAG: String = AddCardFragment::class.java.simpleName //Debugging tag
 class AddCardFragment : Fragment() {
-
-    lateinit var dm:DataManager
-    lateinit var thiscontext:Context
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        dm = DataManager(requireContext().applicationContext)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view:View = inflater!!.inflate(R.layout.fragment_add_card, container, false)
-        var confirmAddCardBtn:Button
-        var addCardEditText:EditText
-        var activity:MainActivity = activity as MainActivity
-        confirmAddCardBtn = view.findViewById(R.id.confirmAddCard)
-        addCardEditText = view.findViewById(R.id.newCardNameField)
+        var confirmAddCardBtn:Button = view.findViewById(R.id.confirmAddCard)
+        var addCardEditText:EditText = view.findViewById(R.id.newCardNameField)
         confirmAddCardBtn.setOnClickListener{
             if (addCardEditText.text.toString() != "")
             {
-                dm.addCard(addCardEditText.text.toString())
-                dm.readCards()
-                var size: Int = dm.getCards().size
-                activity.refresh(dm.getCards(), size)
-
+                MainActivity.dm.addCard(addCardEditText.text.toString())
+                MainActivity.refresh(MainActivity.dm.getCards())
             }
         }
         // Inflate the layout for this fragment

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="#8BC34A"
+    android:background="#EEEEEE"
+    android:orientation="vertical"
     tools:context=".Fragments.CardFragment">
 
 
@@ -12,8 +13,15 @@
         android:id="@+id/cardName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+        android:text="Card"
+        android:textColor="#222222"
+        android:textSize="30sp"
+        android:padding="20sp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tasks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20sp" />
 
 </LinearLayout>
