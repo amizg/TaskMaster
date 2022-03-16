@@ -18,8 +18,10 @@ class AddCardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view:View = inflater!!.inflate(R.layout.fragment_add_card, container, false)
+
         var confirmAddCardBtn:Button = view.findViewById(R.id.confirmAddCard)
         var addCardEditText:EditText = view.findViewById(R.id.newCardNameField)
+
         confirmAddCardBtn.setOnClickListener{
             if (addCardEditText.text.toString() != "")
             {
@@ -27,6 +29,7 @@ class AddCardFragment : Fragment() {
                 MainActivity.refresh(MainActivity.dm.getCards())
             }
         }
+
         // Inflate the layout for this fragment
         return view
     }

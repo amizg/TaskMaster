@@ -70,6 +70,27 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         db.close()
     }
 
+    //Edit Card name column for existing Card by Card Name
+    fun editCard(newName: String, cardId: Int){
+
+        val db = this.writableDatabase
+        val values = ContentValues()
+
+        values.put(COL_CNAME, newName);
+        db.update(TBL_CARDS, values, "$COL_CID=?", arrayOf(cardId.toString()))
+        db.close()
+    }
+
+    //Delete Card
+    fun deleteCard(cardId: Int){
+
+        val db = this.writableDatabase
+
+        db.delete(TBL_CARDS, "$COL_CID=?", arrayOf(cardId.toString()))
+        db.close()
+    }
+
+
     //Adding a task to the database
     fun addTask(card_id:Int, name:String, desc:String, deadline:Long){
         val values = ContentValues()
@@ -104,6 +125,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 
     //Returns an arraylist of cards
     fun getCards():ArrayList<Card>{
+        readCards()
         return cards
     }
 
