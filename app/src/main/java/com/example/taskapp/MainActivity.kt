@@ -3,7 +3,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.size
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
+import com.example.taskapp.Fragments.CardFragment
 
 //For debugging Log.d(TAG,"")
 private val TAG: String = MainActivity::class.java.simpleName //Debugging tag
@@ -17,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var dm:DataManager
         lateinit var alertBuilder: AlertDialog.Builder
 
+        //Refresh viewpager after adding a card
         fun refresh(cards:ArrayList<Card>){
             dm.readCards()
             val pos = dm.getCards().size
@@ -24,14 +29,22 @@ class MainActivity : AppCompatActivity() {
             viewpager.currentItem = pos+1
             viewpager.currentItem = pos
         }
+        //Refresh viewpager after Editing a card.
         fun editCardRefresh(cards: ArrayList<Card>){
             dm.readCards()
         }
-        fun deleteCardRefresh(cards: ArrayList<Card>, pos: Int){
+        //Refresh viewpager after deleting a card.
+        fun deleteCardRefresh(cards: ArrayList<Card>){
             dm.readCards()
+            val pos = dm.getCards().size
+            adapter.notifyItemRemoved(0)
+
+            //This is dumb and bad, nut it is the only way
+            //To refresh the View Pager after a deletion
+            //using it the way we are.
+            viewpager.currentItem = -5
+            viewpager.currentItem = 20
             viewpager.currentItem = 0
-            adapter.notifyItemRemoved(pos)
-            //adapter.notifyItemRangeChanged(0, dm.getCards().size)
         }
     }
 
@@ -63,5 +76,6 @@ class MainActivity : AppCompatActivity() {
         //Debugging
         //var nm = db.getCards()[1].getTasks()[0].getDesc()
         //Log.d(TAG,"$nm")
+
     }
 }
