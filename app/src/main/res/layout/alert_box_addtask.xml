@@ -22,20 +22,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/taskDesc"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:text="Add Deadline" />
 
     <TextView
         android:id="@+id/selectedDateText"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/taskDesc"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="16dp"
-        android:layout_toRightOf="@id/DateBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/DateBtn"
+        android:layout_marginTop="15dp"
         android:gravity="center"
-        android:text="DD/MM/YYYY"
-        android:textSize="20dp" />
+        android:text=""
+        android:textSize="30dp" />
 
 </RelativeLayout>

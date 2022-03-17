@@ -8,6 +8,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
 import com.example.taskapp.Fragments.CardFragment
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 //For debugging Log.d(TAG,"")
 private val TAG: String = MainActivity::class.java.simpleName //Debugging tag
@@ -46,6 +49,21 @@ class MainActivity : AppCompatActivity() {
             viewpager.currentItem = pos - 5
             viewpager.currentItem = 0
         }
+
+        fun convertLongToTime(time: Long): String {
+            val date = Date(time)
+            val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+            return format.format(date)
+        }
+
+        fun convertDateToLong(date: String): Long {
+            val df = SimpleDateFormat("yyyy.MM.dd HH:mm")
+            return df.parse(date).time
+        }
+
+        fun currentTimeToLong(): Long {
+            return System.currentTimeMillis()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,4 +95,5 @@ class MainActivity : AppCompatActivity() {
         //Log.d(TAG,"$nm")
 
     }
+
 }
