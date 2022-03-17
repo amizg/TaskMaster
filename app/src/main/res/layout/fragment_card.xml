@@ -9,31 +9,102 @@
     tools:context=".Fragments.CardFragment">
 
 
-    <TextView
-        android:id="@+id/cardName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="20sp"
-        android:text="Card"
-        android:textColor="#222222"
-        android:textSize="30sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
 
-    <Button
-        android:id="@+id/editCardBtn"
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Edit" />
+<!--        <TextView-->
+<!--            android:id="@+id/leftOfCardText"-->
+<!--            android:layout_width="80dp"-->
+<!--            android:layout_height="20dp"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_marginStart="30dp"-->
+<!--            android:layout_marginEnd="280dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_marginBottom="75dp"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Left"-->
+<!--            android:textSize="20dp" />-->
 
+<!--        <TextView-->
+<!--            android:id="@+id/rightOfCardText"-->
+<!--            android:layout_width="80dp"-->
+<!--            android:layout_height="20dp"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_marginStart="280dp"-->
+<!--            android:layout_marginEnd="30dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_marginBottom="75dp"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Right"-->
+<!--            android:textSize="20dp" />-->
 
-    <Button
-        android:id="@+id/deleteCardBtn"
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:text="Delete" />
+        <TextView
+            android:id="@+id/cardName"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="Card"
+            android:textColor="#222222"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/editCardBtn"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="250dp"
+            android:layout_marginRight="250dp"
+            android:layout_marginBottom="80dp"
+            android:gravity="center"
+            android:text="Edit" />
+
+        <Button
+            android:id="@+id/deleteCardBtn"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="250dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="80dp"
+            android:gravity="center"
+            android:text="Delete" />
+
+        <Button
+            android:id="@+id/addTaskBtn"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="125dp"
+            android:layout_marginBottom="10dp"
+            android:text="Add Task"/>
+
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tasks"
+        android:id="@+id/tasksView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20sp" />

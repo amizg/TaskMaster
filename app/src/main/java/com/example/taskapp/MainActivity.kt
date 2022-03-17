@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
             dm.readCards()
             val pos = dm.getCards().size
             adapter.notifyItemInserted(pos)
+
             viewpager.currentItem = pos+1
             viewpager.currentItem = pos
         }
@@ -39,11 +40,10 @@ class MainActivity : AppCompatActivity() {
             val pos = dm.getCards().size
             adapter.notifyItemRemoved(0)
 
-            //This is dumb and bad, nut it is the only way
+            //This is dumb and bad, but it is the only way
             //To refresh the View Pager after a deletion
             //using it the way we are.
-            viewpager.currentItem = -5
-            viewpager.currentItem = 20
+            viewpager.currentItem = pos - 5
             viewpager.currentItem = 0
         }
     }
@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity() {
         //assigning the layout ViewPager2 to viewpager with the id of viewpager
         viewpager = findViewById(R.id.viewpager)
         viewpager.adapter = adapter
-
 
         //Cards must be read from the database
         //Before accessing any data, the database must be read to set local variables

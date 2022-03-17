@@ -13,6 +13,7 @@ import java.security.AccessController.getContext
 
 private val TAG: String = AddCardFragment::class.java.simpleName //Debugging tag
 class AddCardFragment : Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

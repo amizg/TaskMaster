@@ -12,6 +12,11 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.taskapp.MainActivity
 import com.example.taskapp.R
 import com.example.taskapp.databinding.FragmentCardBinding
+import android.app.DatePickerDialog
+import android.widget.DatePicker
+import android.widget.TextView
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CardFragment(id: Int, nm: String) : Fragment() {
 
@@ -21,10 +26,16 @@ class CardFragment(id: Int, nm: String) : Fragment() {
     private val binding get() = _binding!!
     private val alertDialog = MainActivity.alertBuilder //for building popup screens
 
+//    private var leftName: String = "leftCard"
+//    private var rightName: String = "rightCard"
+
 
     init{
         name = nm
         cardId = id
+
+//        leftName = leftCard
+//        rightName = rightCard
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,10 +46,13 @@ class CardFragment(id: Int, nm: String) : Fragment() {
         // Inflate the layout for this fragment
         binding.cardName.text = name
 
+//      binding.leftOfCardText.text = leftName
+//      binding.rightOfCardText.text = rightName
 
 
         var editCardBtn: Button = view.findViewById(R.id.editCardBtn)
         var deleteCardBtn: Button = view.findViewById(R.id.deleteCardBtn)
+        var addTaskBtn: Button = view.findViewById(R.id.addTaskBtn)
 
         //Edit card name button
         editCardBtn.setOnClickListener{
@@ -47,6 +61,10 @@ class CardFragment(id: Int, nm: String) : Fragment() {
         //Delete card button
         deleteCardBtn.setOnClickListener{
             deleteCardBox()
+        }
+        //Add task button
+        addTaskBtn.setOnClickListener {
+            addTaskBox()
         }
 
         return view
@@ -57,6 +75,7 @@ class CardFragment(id: Int, nm: String) : Fragment() {
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.alert_box_edittext, null)
         val editText = dialogLayout.findViewById<EditText>(R.id.editText)
+
 
         alertDialog.setView(dialogLayout)
         alertDialog.setTitle("Edit Card Name")
@@ -90,6 +109,56 @@ class CardFragment(id: Int, nm: String) : Fragment() {
             }
         val alert = alertDialog.create()
         alert.show()
+    }
+
+    private fun addTaskBox(){
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.alert_box_addtask, null)
+        val  taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
+        val taskDesc =  dialogLayout.findViewById<EditText>(R.id.taskDesc)
+
+        alertDialog.setView(dialogLayout)
+        alertDialog.setTitle("Add New Task")
+
+        var selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
+        var dateChosen: TextView = dialogLayout.findViewById(R.id.selectedDateText)
+
+        val cal = Calendar.getInstance()
+        val year = cal.get(Calendar.YEAR)
+        val month = cal.get(Calendar.MONTH)
+        val day = cal.get(Calendar.DAY_OF_MONTH)
+
+        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            cal.set(Calendar.YEAR, year)
+            cal.set(Calendar.MONTH, monthOfYear)
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            val myFormat = "dd/MM/yyyy" // mention the format you need
+            val sdf = SimpleDateFormat(myFormat, Locale.US)
+            dateChosen.text = sdf.format(cal.time)
+
+        }
+
+        selectDateBtn.setOnClickListener {
+            DatePickerDialog(requireContext(), dateSetListener,
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)).show()
+        }
+
+        alertDialog.setPositiveButton("Add Task") { _, _ ->
+            MainActivity.dm.addTask(
+                cardId,
+                taskName.text.toString(),
+                taskDesc.text.toString(),
+                1654056000000
+                )
+            // MainActivity.editCardRefresh(MainActivity.dm.getCards())
+        }
+
+        alertDialog.setNegativeButton("Cancel") { _, _ ->
+        }
+        alertDialog.show()
     }
 
     override fun onDestroyView() {
