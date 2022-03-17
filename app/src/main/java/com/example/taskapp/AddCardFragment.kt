@@ -13,12 +13,14 @@ import java.security.AccessController.getContext
 
 private val TAG: String = AddCardFragment::class.java.simpleName //Debugging tag
 class AddCardFragment : Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view:View = inflater!!.inflate(R.layout.fragment_add_card, container, false)
 
+        //Initialize button and edit text
         var confirmAddCardBtn:Button = view.findViewById(R.id.confirmAddCard)
         var addCardEditText:EditText = view.findViewById(R.id.newCardNameField)
 
