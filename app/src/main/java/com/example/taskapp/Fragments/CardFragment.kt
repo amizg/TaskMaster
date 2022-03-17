@@ -1,20 +1,16 @@
 package com.example.taskapp.Fragments
-import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.core.view.get
-import androidx.fragment.app.FragmentTransaction
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.example.taskapp.MainActivity
 import com.example.taskapp.R
 import com.example.taskapp.databinding.FragmentCardBinding
-import android.app.DatePickerDialog
-import android.widget.DatePicker
-import android.widget.TextView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -50,9 +46,9 @@ class CardFragment(id: Int, nm: String) : Fragment() {
 //      binding.rightOfCardText.text = rightName
 
         //Initialize buttons
-        var editCardBtn: Button = view.findViewById(R.id.editCardBtn)
-        var deleteCardBtn: Button = view.findViewById(R.id.deleteCardBtn)
-        var addTaskBtn: Button = view.findViewById(R.id.addTaskBtn)
+        val editCardBtn: Button = view.findViewById(R.id.editCardBtn)
+        val deleteCardBtn: Button = view.findViewById(R.id.deleteCardBtn)
+        val addTaskBtn: Button = view.findViewById(R.id.addTaskBtn)
 
         //Edit card name button
         editCardBtn.setOnClickListener{
@@ -112,7 +108,7 @@ class CardFragment(id: Int, nm: String) : Fragment() {
     }
 
     private fun addTaskBox(){
-        //For the outer alertbox
+        //For the outer alert box
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.alert_box_addtask, null)
         val  taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
@@ -122,14 +118,14 @@ class CardFragment(id: Int, nm: String) : Fragment() {
         alertDialog.setTitle("Add New Task")
 
         //date pick button
-        var selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
-        var dateChosen: TextView = dialogLayout.findViewById(R.id.selectedDateText)
+        val selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
+        val dateChosen: TextView = dialogLayout.findViewById(R.id.selectedDateText)
 
         //Calendar
         val cal = Calendar.getInstance()
 
         //Listener for the selection of date
-        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, monthOfYear)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
