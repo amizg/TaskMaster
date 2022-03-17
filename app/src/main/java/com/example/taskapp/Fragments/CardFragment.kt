@@ -49,7 +49,7 @@ class CardFragment(id: Int, nm: String) : Fragment() {
 //      binding.leftOfCardText.text = leftName
 //      binding.rightOfCardText.text = rightName
 
-
+        //Initialize buttons
         var editCardBtn: Button = view.findViewById(R.id.editCardBtn)
         var deleteCardBtn: Button = view.findViewById(R.id.deleteCardBtn)
         var addTaskBtn: Button = view.findViewById(R.id.addTaskBtn)
@@ -112,6 +112,7 @@ class CardFragment(id: Int, nm: String) : Fragment() {
     }
 
     private fun addTaskBox(){
+        //For the outer alertbox
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.alert_box_addtask, null)
         val  taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
@@ -120,32 +121,32 @@ class CardFragment(id: Int, nm: String) : Fragment() {
         alertDialog.setView(dialogLayout)
         alertDialog.setTitle("Add New Task")
 
+        //date pick button
         var selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
         var dateChosen: TextView = dialogLayout.findViewById(R.id.selectedDateText)
 
+        //Calendar
         val cal = Calendar.getInstance()
-        val year = cal.get(Calendar.YEAR)
-        val month = cal.get(Calendar.MONTH)
-        val day = cal.get(Calendar.DAY_OF_MONTH)
 
+        //Listener for the selection of date
         val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, monthOfYear)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-            val myFormat = "dd/MM/yyyy" // mention the format you need
+            val myFormat = "dd/MM/yyyy" // desired format
             val sdf = SimpleDateFormat(myFormat, Locale.US)
             dateChosen.text = sdf.format(cal.time)
 
         }
-
+        //Date selection Pop Up button
         selectDateBtn.setOnClickListener {
             DatePickerDialog(requireContext(), dateSetListener,
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)).show()
         }
-
+        //Confirm Task button
         alertDialog.setPositiveButton("Add Task") { _, _ ->
             MainActivity.dm.addTask(
                 cardId,
@@ -155,7 +156,7 @@ class CardFragment(id: Int, nm: String) : Fragment() {
                 )
             // MainActivity.editCardRefresh(MainActivity.dm.getCards())
         }
-
+        //Cancel
         alertDialog.setNegativeButton("Cancel") { _, _ ->
         }
         alertDialog.show()

@@ -20,6 +20,7 @@ class AddCardFragment : Fragment() {
     ): View? {
         val view:View = inflater!!.inflate(R.layout.fragment_add_card, container, false)
 
+        //Initialize button and edit text
         var confirmAddCardBtn:Button = view.findViewById(R.id.confirmAddCard)
         var addCardEditText:EditText = view.findViewById(R.id.newCardNameField)
 
