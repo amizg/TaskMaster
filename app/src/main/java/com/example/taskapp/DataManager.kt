@@ -90,7 +90,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         db.close()
     }
 
-
     //Adding a task to the database
     fun addTask(card_id:Int, name:String, desc:String, deadline:Long){
         val values = ContentValues()
@@ -101,6 +100,29 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         values.put(COL_TCREATED, System.currentTimeMillis())
         val db = this.writableDatabase
         db.insert(TBL_TASKS, null, values)
+        db.close()
+    }
+
+    //Edit contents of an existing task by TaskId
+    fun editTask(newTitle: String, newDesc: String, newDeadline: Long, taskId: Int){
+
+        val db = this.writableDatabase
+        val values = ContentValues()
+
+        values.put(COL_TNAME, newTitle)
+        values.put(COL_TDESC, newDesc)
+        values.put(COL_TDEADLINE, newDeadline)
+
+        db.update(TBL_TASKS, values, "$COL_CID=?", arrayOf(taskId.toString()))
+        db.close()
+    }
+
+    //Delete Task
+    fun deleteTask(taskId: Int){
+
+        val db = this.writableDatabase
+
+        db.delete(TBL_TASKS, "$COL_TID=?", arrayOf(taskId.toString()))
         db.close()
     }
 

@@ -120,7 +120,7 @@ class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSet
         val alert = alertDialog.create()
         alert.show()
     }
-
+    //popup for adding task
     private fun addTaskBox() {
         //For the outer alert box
         val inflater = layoutInflater
