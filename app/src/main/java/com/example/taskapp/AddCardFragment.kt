@@ -14,25 +14,40 @@ import java.security.AccessController.getContext
 private val TAG: String = AddCardFragment::class.java.simpleName //Debugging tag
 class AddCardFragment : Fragment() {
 
+    private val alertDialog = MainActivity.alertBuilder //for building popup screens
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view:View = inflater!!.inflate(R.layout.fragment_add_card, container, false)
 
-        //Initialize button and edit text
-        var confirmAddCardBtn:Button = view.findViewById(R.id.confirmAddCard)
-        var addCardEditText:EditText = view.findViewById(R.id.newCardNameField)
+        val addCardBtn:Button = view.findViewById(R.id.addCardBtn)
 
-        confirmAddCardBtn.setOnClickListener{
-            if (addCardEditText.text.toString() != "")
-            {
-                MainActivity.dm.addCard(addCardEditText.text.toString())
-                MainActivity.refresh(MainActivity.dm.getCards())
-            }
+        addCardBtn.setOnClickListener{
+            addCardBox()
         }
 
-        // Inflate the layout for this fragment
         return view
+    }
+
+    private fun addCardBox() {
+
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.alert_box_edittext, null)
+        val editText = dialogLayout.findViewById<EditText>(R.id.editText)
+
+
+        alertDialog.setView(dialogLayout)
+        alertDialog.setTitle("Enter Card Name")
+
+        alertDialog.setPositiveButton("Enter") { _, _ ->
+            MainActivity.dm.addCard(editText.text.toString())
+            MainActivity.refresh(MainActivity.dm.getCards())
+        }
+
+        alertDialog.setNegativeButton("Cancel") { _, _ ->
+        }
+        alertDialog.show()
     }
 }

@@ -7,35 +7,15 @@
     android:background="#EEEEEE"
     tools:context=".AddCardFragment">
 
-    <!-- Add New Card Text -->
-    <TextView
-        android:id="@+id/addNewCardText"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:text="Add New Card" />
-
-    <!-- Text Entry Box -->
-    <EditText
-        android:id="@+id/newCardNameField"
-        android:layout_gravity="center"
-        android:layout_height="50dp"
-        android:layout_width="200dp"
-        android:layout_marginTop="50dp"
-         />
-
-    <!-- Confirm Button -->
+    <!-- Add Card Button -->
     <Button
-        android:id="@+id/confirmAddCard"
-        android:tag="confirmAddCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
+        android:id="@+id/addCardBtn"
+        android:layout_width="207dp"
+        android:layout_height="109dp"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:text="Confirm" />
+        android:backgroundTint="@color/black"
+        android:tag="confirmAddCard"
+        android:text="Add New Card"
+        android:textSize="20sp"/>
 
 </FrameLayout>

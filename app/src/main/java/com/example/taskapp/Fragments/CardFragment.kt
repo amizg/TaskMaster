@@ -105,7 +105,7 @@ class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSet
     //Pop-up delete card confirmation screen
     private fun deleteCardBox(){
 
-        alertDialog.setMessage("Delete Card?")
+        alertDialog.setTitle("Delete Card?")
                 //"Yes" Button
             .setPositiveButton("Yes") { _, _ ->
                 // Delete selected card from database
