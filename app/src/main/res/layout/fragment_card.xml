@@ -13,38 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="150dp">
 
-<!--        <TextView-->
-<!--            android:id="@+id/leftOfCardText"-->
-<!--            android:layout_width="80dp"-->
-<!--            android:layout_height="20dp"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_alignParentLeft="true"-->
-<!--            android:layout_alignParentRight="true"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_marginStart="30dp"-->
-<!--            android:layout_marginEnd="280dp"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:layout_marginBottom="75dp"-->
-<!--            android:gravity="center"-->
-<!--            android:text="Left"-->
-<!--            android:textSize="20dp" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/rightOfCardText"-->
-<!--            android:layout_width="80dp"-->
-<!--            android:layout_height="20dp"-->
-<!--            android:layout_alignParentLeft="true"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_alignParentRight="true"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_marginStart="280dp"-->
-<!--            android:layout_marginEnd="30dp"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:layout_marginBottom="75dp"-->
-<!--            android:gravity="center"-->
-<!--            android:text="Right"-->
-<!--            android:textSize="20dp" />-->
-
         <TextView
             android:id="@+id/cardName"
             android:layout_width="wrap_content"
@@ -108,5 +76,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20sp" />
+
+
+
+
 
 </LinearLayout>

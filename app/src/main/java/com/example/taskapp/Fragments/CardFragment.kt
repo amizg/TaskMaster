@@ -1,6 +1,7 @@
 package com.example.taskapp.Fragments
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.app.usage.UsageEvents
 import android.os.Bundle
 import android.text.Layout
 import android.view.LayoutInflater
@@ -8,11 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.example.taskapp.MainActivity
 import com.example.taskapp.R
+import com.example.taskapp.Task
 import com.example.taskapp.databinding.FragmentCardBinding
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -36,16 +40,10 @@ class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSet
 
     lateinit var dateTextView: TextView
 
-//    private var leftName: String = "leftCard"
-//    private var rightName: String = "rightCard"
-
 
     init{
         name = nm
         cardId = id
-
-//        leftName = leftCard
-//        rightName = rightCard
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,9 +53,6 @@ class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSet
         val view = binding.root
         // Inflate the layout for this fragment
         binding.cardName.text = name
-
-//      binding.leftOfCardText.text = leftName
-//      binding.rightOfCardText.text = rightName
 
         //Initialize buttons
         val editCardBtn: Button = view.findViewById(R.id.editCardBtn)
@@ -78,8 +73,38 @@ class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSet
             addTaskBox()
         }
 
+        //Watch this to figure out rest of recyclerview?
+        //https://www.google.com/search?q=populate+recyclerview+inside+part+of+a+fragment+kotlin&client=firefox-b-1-d&ei=4S01YtCOGYGttQbhpKeIAw&ved=0ahUKEwiQg9Oa_9D2AhWBVs0KHWHSCTEQ4dUDCA0&uact=5&oq=populate+recyclerview+inside+part+of+a+fragment+kotlin&gs_lcp=Cgdnd3Mtd2l6EAM6BwgAEEcQsANKBAhBGABKBAhGGABQnA9Ytyhg4SxoAXABeACAAWWIAZIFkgEDNi4xmAEAoAEByAEIwAEB&sclient=gws-wiz#kpvalbx=_PzA1YuvUCZrPtQa3xq_wCw32
+
         return view
     }
+    inner class EventsAdapter(val tasks: ArrayList<Task>, val itemLayout: Int) : RecyclerView.Adapter<CardFragment.EventViewHolder>(){
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(itemLayout, parent, false)
+            return EventViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
+            val currTask = tasks[position]
+            holder.createTaskFrame(currTask)
+        }
+
+        override fun getItemCount(): Int {
+            return tasks.size
+        }
+
+    }
+
+    inner class EventViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+        private var taskTitle: TextView = itemView.findViewById(R.id.taskName)
+        private var taskDesc: TextView = itemView.findViewById(R.id.taskDesc)
+
+        fun createTaskFrame(task: Task){
+            taskTitle.text = task.getName()
+            taskDesc.text = task.getDesc()
+        }
+    }
+
     //Pop-up edit card name screen
     private fun editCardBox(){
 
@@ -149,14 +174,21 @@ class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSet
                 cardId,
                 taskName.text.toString(),
                 taskDesc.text.toString(),
-                MainActivity.convertDateToLong("$selectedYear.$selectedMonth.$selectedDay $selectedHour:$selectedMinute")
+                dateCheck()
+                //MainActivity.convertDateToLong("$selectedYear.$selectedMonth.$selectedDay $selectedHour:$selectedMinute")
                 )
-            // MainActivity.editCardRefresh(MainActivity.dm.getCards())
         }
         //Cancel
         alertDialog.setNegativeButton("Cancel") { _, _ ->
         }
         alertDialog.show()
+    }
+    //Check to see if user entered deadline
+    private fun dateCheck(): Long {
+        return if (selectedYear == 0){
+            0
+        } else
+            MainActivity.convertDateToLong("$selectedYear.$selectedMonth.$selectedDay $selectedHour:$selectedMinute")
     }
     //Set up Calendar for getting current d/m/y
     //and current time from system
