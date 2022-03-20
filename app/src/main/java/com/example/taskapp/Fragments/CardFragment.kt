@@ -21,17 +21,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private var name: String = "Card"
     private var cardId: Int = 0
+    private var tasks: ArrayList<Task>
     private var _binding: FragmentCardBinding? = null
     private val binding get() = _binding!!
     private val alertDialog = MainActivity.alertBuilder //for building popup screens
-
-    //RecyclerView Variables
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>? = null
 
     //Variables needed for deadline creation
     private var day = 0
@@ -51,6 +48,7 @@ class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSet
     init{
         name = nm
         cardId = id
+        tasks = taskList
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,18 +78,19 @@ class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSet
             addTaskBox()
         }
 
+
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var rcyView = R.id.recycler_view
+        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
+        val adapter = RecyclerAdapter(tasks)
 
-        rcyView.apply{
-            layoutManager = LinearLayoutManager(activity)
-            adapter = RecyclerAdapter()
-        }
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
     }
 
 
@@ -147,6 +146,8 @@ class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSet
         alertDialog.setView(dialogLayout)
         alertDialog.setTitle("Add New Task")
 
+
+
         //date pick button
         val selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
         val dateChosen: TextView = dialogLayout.findViewById(R.id.selectedDateText)
@@ -167,8 +168,8 @@ class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSet
                 taskDesc.text.toString(),
                 dateCheck()
                 )
+            //need to find out how to refresh after adding task!!!!!!!!!!!!!!!!!!
             MainActivity.dm.readTask()
-            adapter?.notifyDataSetChanged()
         }
         //Cancel
         alertDialog.setNegativeButton("Cancel") { _, _ ->

@@ -6,8 +6,11 @@ import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.taskapp.Fragments.CardFragment
+import com.example.taskapp.Fragments.RecyclerAdapter
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -87,9 +90,6 @@ class MainActivity : AppCompatActivity() {
         //Cards must be read from the database
         //Before accessing any data, the database must be read to set local variables
         dm.readCards()
-        //dm.readTask()
-
-
 
         //Debugging
         //var nm = db.getCards()[1].getTasks()[0].getDesc()

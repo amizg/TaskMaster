@@ -10,25 +10,10 @@ import com.example.taskapp.MainActivity
 import com.example.taskapp.R
 import com.example.taskapp.Task
 
-class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(taskList: ArrayList<Task>) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    private val taskList: ArrayList<Task> = MainActivity.dm.getTasks()
+    private val tasks: ArrayList<Task> = taskList
 
-
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerAdapter.ViewHolder {
-        val v = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.item_task, viewGroup, false)
-        return ViewHolder(v)
-    }
-
-    override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
-        holder.taskTitle.text = taskList[position].getName()
-        holder.taskDesc.text = taskList[position].getDesc()
-    }
-
-    override fun getItemCount(): Int {
-        return taskList.size
-    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -42,5 +27,19 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 //            itemView.setOnClickListener {
 //            }
         }
+    }
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerAdapter.ViewHolder {
+        val v = LayoutInflater.from(viewGroup.context)
+            .inflate(R.layout.item_task, viewGroup, false)
+        return ViewHolder(v)
+    }
+
+    override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
+        holder.taskTitle.text = tasks[position].getName()
+        holder.taskDesc.text = tasks[position].getDesc()
+    }
+
+    override fun getItemCount(): Int {
+        return tasks.size
     }
 }

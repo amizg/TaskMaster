@@ -27,7 +27,8 @@ class ViewPagerAdapter(fm: FragmentManager?, lifecycle: Lifecycle?) :
             position > 0 && position <= (cards.size) -> {
                 CardFragment(
                     cards[position - 1].getId(),
-                    cards[position - 1].getName())
+                    cards[position - 1].getName(),
+                    cards[position - 1].getTasks())
             }
             position > 0 && position > (cards.size) -> {
                 AddCardFragment()
