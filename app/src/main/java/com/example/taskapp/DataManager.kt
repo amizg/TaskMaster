@@ -182,6 +182,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
     //Returns an arraylist of tasks
     fun getTasks():ArrayList<Task>{
+        readTask()
         return tasks
     }
 }

@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         //dm.readTask()
 
 
+
         //Debugging
         //var nm = db.getCards()[1].getTasks()[0].getDesc()
         //Log.d(TAG,"$nm")

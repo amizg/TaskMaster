@@ -9,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskapp.MainActivity
 import com.example.taskapp.R
@@ -25,6 +28,10 @@ class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSet
     private var _binding: FragmentCardBinding? = null
     private val binding get() = _binding!!
     private val alertDialog = MainActivity.alertBuilder //for building popup screens
+
+    //RecyclerView Variables
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>? = null
 
     //Variables needed for deadline creation
     private var day = 0
@@ -73,37 +80,21 @@ class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSet
             addTaskBox()
         }
 
-        //Watch this to figure out rest of recyclerview?
-        //https://www.google.com/search?q=populate+recyclerview+inside+part+of+a+fragment+kotlin&client=firefox-b-1-d&ei=4S01YtCOGYGttQbhpKeIAw&ved=0ahUKEwiQg9Oa_9D2AhWBVs0KHWHSCTEQ4dUDCA0&uact=5&oq=populate+recyclerview+inside+part+of+a+fragment+kotlin&gs_lcp=Cgdnd3Mtd2l6EAM6BwgAEEcQsANKBAhBGABKBAhGGABQnA9Ytyhg4SxoAXABeACAAWWIAZIFkgEDNi4xmAEAoAEByAEIwAEB&sclient=gws-wiz#kpvalbx=_PzA1YuvUCZrPtQa3xq_wCw32
-
         return view
     }
-    inner class EventsAdapter(val tasks: ArrayList<Task>, val itemLayout: Int) : RecyclerView.Adapter<CardFragment.EventViewHolder>(){
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(itemLayout, parent, false)
-            return EventViewHolder(view)
-        }
 
-        override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-            val currTask = tasks[position]
-            holder.createTaskFrame(currTask)
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        override fun getItemCount(): Int {
-            return tasks.size
-        }
+        var rcyView = R.id.recycler_view
 
-    }
-
-    inner class EventViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        private var taskTitle: TextView = itemView.findViewById(R.id.taskName)
-        private var taskDesc: TextView = itemView.findViewById(R.id.taskDesc)
-
-        fun createTaskFrame(task: Task){
-            taskTitle.text = task.getName()
-            taskDesc.text = task.getDesc()
+        rcyView.apply{
+            layoutManager = LinearLayoutManager(activity)
+            adapter = RecyclerAdapter()
         }
     }
+
+
 
     //Pop-up edit card name screen
     private fun editCardBox(){
@@ -175,8 +166,9 @@ class CardFragment(id: Int, nm: String) : Fragment(), DatePickerDialog.OnDateSet
                 taskName.text.toString(),
                 taskDesc.text.toString(),
                 dateCheck()
-                //MainActivity.convertDateToLong("$selectedYear.$selectedMonth.$selectedDay $selectedHour:$selectedMinute")
                 )
+            MainActivity.dm.readTask()
+            adapter?.notifyDataSetChanged()
         }
         //Cancel
         alertDialog.setNegativeButton("Cancel") { _, _ ->
