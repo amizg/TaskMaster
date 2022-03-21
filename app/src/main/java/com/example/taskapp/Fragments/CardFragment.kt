@@ -1,4 +1,5 @@
 package com.example.taskapp.Fragments
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.app.usage.UsageEvents
@@ -59,15 +60,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         val view = binding.root
         // Inflate the layout for this fragment
         binding.cardName.text = name
-        binding.cardName.text = name
-
-        //Initialize buttons
-        val editCardBtn: Button = view.findViewById(R.id.editCardBtn)
-        val deleteCardBtn: Button = view.findViewById(R.id.deleteCardBtn)
-        val addTaskBtn: Button = view.findViewById(R.id.addTaskBtn)
-        editCardBtn.setOnClickListener(this)
-        deleteCardBtn.setOnClickListener(this)
-        addTaskBtn.setOnClickListener(this)
 
         return view
     }
@@ -81,6 +73,14 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
+
+        //Initialize buttons
+        val editCardBtn: Button = view.findViewById(R.id.editCardBtn)
+        val deleteCardBtn: Button = view.findViewById(R.id.deleteCardBtn)
+        val addTaskBtn: Button = view.findViewById(R.id.addTaskBtn)
+        editCardBtn.setOnClickListener(this)
+        deleteCardBtn.setOnClickListener(this)
+        addTaskBtn.setOnClickListener(this)
     }
 
 
@@ -90,9 +90,8 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.alert_box_edittext, null)
         val editText = dialogLayout.findViewById<EditText>(R.id.editText)
-
-
         alertDialog.setView(dialogLayout)
+
         alertDialog.setTitle("Edit Card Name")
 
         alertDialog.setPositiveButton("Enter") { _, _ ->
@@ -107,6 +106,10 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
     }
     //Pop-up delete card confirmation screen
     private fun deleteCardBox(){
+        //Blank layout for alert dialog
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.alert_box_confirmation, null)
+        alertDialog.setView(dialogLayout)
 
         alertDialog.setTitle("Delete Card?")
                 //"Yes" Button
