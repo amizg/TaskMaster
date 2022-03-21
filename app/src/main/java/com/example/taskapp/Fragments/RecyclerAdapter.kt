@@ -4,6 +4,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskapp.MainActivity
@@ -19,13 +21,17 @@ class RecyclerAdapter(taskList: ArrayList<Task>) : RecyclerView.Adapter<Recycler
 
         var taskTitle: TextView
         var taskDesc: TextView
+        lateinit var deleteTaskBtn: ImageButton
 
         init {
             taskTitle = itemView.findViewById(R.id.taskName)
             taskDesc = itemView.findViewById(R.id.taskDesc)
+            deleteTaskBtn = itemView.findViewById(R.id.deleteTaskBtn)
 
-//            itemView.setOnClickListener {
-//            }
+            deleteTaskBtn.setOnClickListener {
+                MainActivity.dm.deleteTask(tasks[layoutPosition].getTaskId())
+                MainActivity.addTaskRefresh(layoutPosition)
+            }
         }
     }
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerAdapter.ViewHolder {

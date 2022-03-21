@@ -1,11 +1,16 @@
 package com.example.taskapp
 
-class Task(cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long) {
+class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long) {
+    private var taskId:Int = tid
     private var cardId:Int = cid
     private var name:String = nm
     private var desc:String = dsc
     private var deadline:Long = ddln
     private var created:Long = crtd
+
+    fun getTaskId():Int{
+        return taskId
+    }
 
     fun getCardId():Int{
         return cardId

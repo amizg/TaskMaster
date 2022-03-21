@@ -162,6 +162,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
             do {
                 tasks.add(
                     Task(
+                        cursorTasks.getInt(0),
                         cursorTasks.getInt(1),
                         cursorTasks.getString(2),
                         cursorTasks.getString(3),
@@ -198,6 +199,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
             do {
                 tasks.add(
                     Task(
+                        cursorTasks.getInt(0),
                         cursorTasks.getInt(1),
                         cursorTasks.getString(2),
                         cursorTasks.getString(3),
