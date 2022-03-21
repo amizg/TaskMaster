@@ -16,8 +16,6 @@ class ViewPagerAdapter(fm: FragmentManager?, lifecycle: Lifecycle?) :
     FragmentStateAdapter(
         fm!!, lifecycle!!
     ) {
-    //private var cards = ArrayList<Card>()
-
 
     override fun createFragment(position: Int): Fragment {
         Log.d(TAG, "Called Create Fragment")
@@ -29,7 +27,8 @@ class ViewPagerAdapter(fm: FragmentManager?, lifecycle: Lifecycle?) :
             position > 0 && position <= (cards.size) -> {
                 CardFragment(
                     cards[position - 1].getId(),
-                    cards[position - 1].getName())
+                    cards[position - 1].getName(),
+                    cards[position - 1].getTasks())
             }
             position > 0 && position > (cards.size) -> {
                 AddCardFragment()
@@ -40,17 +39,6 @@ class ViewPagerAdapter(fm: FragmentManager?, lifecycle: Lifecycle?) :
 
         }
     }
-
-//    private fun getLeft(pos: Int, cards: ArrayList<Card>): String {
-//
-//        if(pos == 1) {return "Home"}
-//        else return cards[pos - 2].getName()
-//    }
-//    private fun getRight(pos: Int, cards: ArrayList<Card>): String {
-//
-//        if(pos == cards.size && cards.size >= 1) {return "Add Card"}
-//        else return cards[pos].getName()
-//    }
 
     override fun getItemCount(): Int {
         Log.d(TAG, "Called Item Count")

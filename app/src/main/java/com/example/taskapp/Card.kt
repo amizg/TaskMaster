@@ -18,14 +18,15 @@ class Card(id:Int, nm: String) {
     fun getId():Int{
         return cid
     }
-    fun addTask(cid:Int, nm:String, dsc:String, ddln:Long, crtd:Long){
-        val task = Task(cid,nm,dsc,ddln,crtd)
-        tasks.add(task)
-    }
+//    fun addTask(cid:Int, nm:String, dsc:String, ddln:Long, crtd:Long){
+//        val task = Task(cid,nm,dsc,ddln,crtd)
+//        tasks.add(task)
+//    }
     fun addTask(task:Task){
         tasks.add(task)
     }
     fun getTasks():ArrayList<Task>{
+        MainActivity.dm.readTask()
         return tasks
     }
 }

@@ -13,7 +13,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 //    tasks: (id, card_id, name, description, deadline, created)
     companion object {
         private const val DB_NAME = "taskmaster"
-        private const val DB_VER = 3
+        private const val DB_VER = 1
 
         //card table
         private const val TBL_CARDS = "cards"
@@ -87,9 +87,9 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         val db = this.writableDatabase
 
         db.delete(TBL_CARDS, "$COL_CID=?", arrayOf(cardId.toString()))
+        db.delete(TBL_TASKS, "$COL_TCARD_ID=?", arrayOf(cardId.toString()))
         db.close()
     }
-
 
     //Adding a task to the database
     fun addTask(card_id:Int, name:String, desc:String, deadline:Long){
@@ -101,6 +101,30 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         values.put(COL_TCREATED, System.currentTimeMillis())
         val db = this.writableDatabase
         db.insert(TBL_TASKS, null, values)
+        readTask()
+        db.close()
+    }
+
+    //Edit contents of an existing task by TaskId
+    fun editTask(newTitle: String, newDesc: String, newDeadline: Long, taskId: Int){
+
+        val db = this.writableDatabase
+        val values = ContentValues()
+
+        values.put(COL_TNAME, newTitle)
+        values.put(COL_TDESC, newDesc)
+        values.put(COL_TDEADLINE, newDeadline)
+
+        db.update(TBL_TASKS, values, "$COL_TID=?", arrayOf(taskId.toString()))
+        db.close()
+    }
+
+    //Delete Task
+    fun deleteTask(taskId: Int){
+
+        val db = this.writableDatabase
+
+        db.delete(TBL_TASKS, "$COL_TID=?", arrayOf(taskId.toString()))
         db.close()
     }
 
@@ -130,6 +154,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
 
     fun readTask(){
+        tasks.clear()
         val db = this.readableDatabase
 
         val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS", null)
@@ -157,9 +182,35 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                 }
             }
         }
+        db.close()
     }
     //Returns an arraylist of tasks
     fun getTasks():ArrayList<Task>{
         return tasks
     }
+
+    fun getCardTasks(cardId: Int): ArrayList<Task>{
+        tasks.clear()
+        val db = this.readableDatabase
+
+        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TCARD_ID = $cardId", null)
+        if (cursorTasks.moveToFirst()) {
+            do {
+                tasks.add(
+                    Task(
+                        cursorTasks.getInt(1),
+                        cursorTasks.getString(2),
+                        cursorTasks.getString(3),
+                        cursorTasks.getLong(4),
+                        cursorTasks.getLong(5)
+                    )
+                )
+            } while (cursorTasks.moveToNext())
+        }
+        cursorTasks.close()
+
+        return tasks
+        db.close()
+    }
+
 }

@@ -6,8 +6,11 @@ import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.taskapp.Fragments.CardFragment
+import com.example.taskapp.Fragments.RecyclerAdapter
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -38,16 +41,21 @@ class MainActivity : AppCompatActivity() {
             dm.readCards()
         }
         //Refresh viewpager after deleting a card.
-        fun deleteCardRefresh(cards: ArrayList<Card>){
+        fun deleteCardRefresh(pos: Int){
             dm.readCards()
-            val pos = dm.getCards().size
-            adapter.notifyItemRemoved(0)
+            adapter.notifyItemRemoved(pos + 1)
 
             //This is dumb and bad, but it is the only way
             //To refresh the View Pager after a deletion
             //using it the way we are.
             viewpager.currentItem = pos - 5
-            viewpager.currentItem = 0
+            viewpager.currentItem = pos
+        }
+
+        fun addTaskRefresh(pos: Int){
+            adapter.notifyItemRemoved(pos)
+            viewpager.currentItem = pos - 5
+            viewpager.currentItem = pos + 1
         }
 
         fun convertLongToTime(time: Long): String {
@@ -87,8 +95,6 @@ class MainActivity : AppCompatActivity() {
         //Cards must be read from the database
         //Before accessing any data, the database must be read to set local variables
         dm.readCards()
-        //dm.readTask()
-
 
         //Debugging
         //var nm = db.getCards()[1].getTasks()[0].getDesc()
