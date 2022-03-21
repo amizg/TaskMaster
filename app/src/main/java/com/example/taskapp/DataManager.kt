@@ -13,7 +13,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 //    tasks: (id, card_id, name, description, deadline, created)
     companion object {
         private const val DB_NAME = "taskmaster"
-        private const val DB_VER = 5
+        private const val DB_VER = 1
 
         //card table
         private const val TBL_CARDS = "cards"
@@ -87,6 +87,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         val db = this.writableDatabase
 
         db.delete(TBL_CARDS, "$COL_CID=?", arrayOf(cardId.toString()))
+        db.delete(TBL_TASKS, "$COL_TCARD_ID=?", arrayOf(cardId.toString()))
         db.close()
     }
 

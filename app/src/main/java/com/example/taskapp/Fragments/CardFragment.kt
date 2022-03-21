@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.taskapp.Card
 import com.example.taskapp.MainActivity
 import com.example.taskapp.R
 import com.example.taskapp.Task
@@ -79,9 +80,9 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         }
 
 
-
         return view
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -92,8 +93,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
     }
-
-
 
     //Pop-up edit card name screen
     private fun editCardBox(){
@@ -125,7 +124,8 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
             .setPositiveButton("Yes") { _, _ ->
                 // Delete selected card from database
                 MainActivity.dm.deleteCard(cardId)
-                MainActivity.deleteCardRefresh(MainActivity.dm.getCards())
+                MainActivity.deleteCardRefresh(findCardPos(cardId, MainActivity.dm.getCards()))
+
             }
                 //"No" Button
             .setNegativeButton("No") { dialog, _ ->
@@ -145,8 +145,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
 
         alertDialog.setView(dialogLayout)
         alertDialog.setTitle("Add New Task")
-
-
 
         //date pick button
         val selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
@@ -169,7 +167,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
                 dateCheck()
                 )
             //need to find out how to refresh after adding task!!!!!!!!!!!!!!!!!!
-            MainActivity.dm.readTask()
+            MainActivity.addTaskRefresh(findCardPos(cardId, MainActivity.dm.getCards()))
         }
         //Cancel
         alertDialog.setNegativeButton("Cancel") { _, _ ->
@@ -228,6 +226,15 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         else{
             dateTextView.text = "$selectedMonth/$selectedDay/$selectedYear \n AT \n $selectedHour:$selectedMinute $ampm"
         }
+    }
+
+    fun findCardPos(cardId: Int, cardList: ArrayList<Card>): Int{
+
+        for ((index, card) in cardList.withIndex()){
+
+            if (cardId == card.getId()){return index}
+        }
+        return 0
     }
 
     override fun onDestroyView() {
