@@ -37,7 +37,6 @@ class AddCardFragment : Fragment() {
         val dialogLayout = inflater.inflate(R.layout.alert_box_edittext, null)
         val editText = dialogLayout.findViewById<EditText>(R.id.editText)
 
-
         alertDialog.setView(dialogLayout)
         alertDialog.setTitle("Enter Card Name")
 

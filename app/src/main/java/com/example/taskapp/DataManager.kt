@@ -13,7 +13,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 //    tasks: (id, card_id, name, description, deadline, created)
     companion object {
         private const val DB_NAME = "taskmaster"
-        private const val DB_VER = 1
+        private const val DB_VER = 2
 
         //card table
         private const val TBL_CARDS = "cards"
@@ -63,9 +63,10 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 
     //Adding a card to the database
     fun addCard(name : String){
-        val values = ContentValues()
-        values.put(COL_CNAME, name)
         val db = this.writableDatabase
+        val values = ContentValues()
+
+        values.put(COL_CNAME, name)
         db.insert(TBL_CARDS, null, values)
         db.close()
     }
@@ -76,7 +77,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         val db = this.writableDatabase
         val values = ContentValues()
 
-        values.put(COL_CNAME, newName);
+        values.put(COL_CNAME, newName)
         db.update(TBL_CARDS, values, "$COL_CID=?", arrayOf(cardId.toString()))
         db.close()
     }

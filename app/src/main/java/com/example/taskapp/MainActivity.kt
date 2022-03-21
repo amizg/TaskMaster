@@ -29,27 +29,24 @@ class MainActivity : AppCompatActivity() {
 
         //Refresh viewpager after adding a card
         fun refresh(cards:ArrayList<Card>){
-            dm.readCards()
             val pos = dm.getCards().size
             adapter.notifyItemInserted(pos)
 
-            viewpager.currentItem = pos+1
+            viewpager.currentItem = pos + 1
             viewpager.currentItem = pos
         }
         //Refresh viewpager after Editing a card.
-        fun editCardRefresh(cards: ArrayList<Card>){
+        fun editCardRefresh(){
             dm.readCards()
         }
         //Refresh viewpager after deleting a card.
-        fun deleteCardRefresh(pos: Int){
+        fun deleteCardRefresh(){
             dm.readCards()
-            adapter.notifyItemRemoved(pos + 1)
+            val pos = dm.getCards().size
+            adapter.notifyItemRemoved(0)
 
-            //This is dumb and bad, but it is the only way
-            //To refresh the View Pager after a deletion
-            //using it the way we are.
-            viewpager.currentItem = pos - 5
-            viewpager.currentItem = pos
+            viewpager.currentItem = pos - 10
+            viewpager.currentItem = 0
         }
 
         fun addTaskRefresh(pos: Int){
@@ -82,23 +79,12 @@ class MainActivity : AppCompatActivity() {
         dm = DataManager(this)
         alertBuilder = AlertDialog.Builder(this)
 
-        //DUMMY DATA
-//        db.addTask(1,"Meeting","Meeting with randy",1654056000000)
-//        db.addTask(2,"Final Exam","CSC 302",1654056000000)
 
         //Initializing the view pager adapter
         adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         //assigning the layout ViewPager2 to viewpager with the id of viewpager
         viewpager = findViewById(R.id.viewpager)
         viewpager.adapter = adapter
-
-        //Cards must be read from the database
-        //Before accessing any data, the database must be read to set local variables
-        dm.readCards()
-
-        //Debugging
-        //var nm = db.getCards()[1].getTasks()[0].getDesc()
-        //Log.d(TAG,"$nm")
 
     }
 
