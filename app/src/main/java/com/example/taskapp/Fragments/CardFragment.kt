@@ -14,10 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskapp.Card
-import com.example.taskapp.MainActivity
-import com.example.taskapp.R
-import com.example.taskapp.Task
+import com.example.taskapp.*
 import com.example.taskapp.databinding.FragmentCardBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -69,7 +66,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
-        val adapter = RecyclerAdapter(tasks)
+        val adapter = RecyclerAdapter(cardId)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -81,8 +78,20 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         editCardBtn.setOnClickListener(this)
         deleteCardBtn.setOnClickListener(this)
         addTaskBtn.setOnClickListener(this)
+
     }
 
+    //Refresh the recycler view upon adding task
+    private fun addTaskRefresh(){
+        val recyclerView: RecyclerView = requireView().findViewById(R.id.recycler_view)
+        val adapter = RecyclerAdapter(cardId)
+
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+
+        recyclerView.recycledViewPool.clear()
+        adapter.notifyDataSetChanged()
+    }
 
     //Pop-up edit card name screen
     private fun editCardBox(){
@@ -102,7 +111,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         alertDialog.setNegativeButton("Cancel") { _, _ ->
         }
         alertDialog.show()
-
     }
     //Pop-up delete card confirmation screen
     private fun deleteCardBox(){
@@ -115,7 +123,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
                 //"Yes" Button
             .setPositiveButton("Yes") { _, _ ->
                 // Delete selected card from database
-                MainActivity.deleteCardRefresh()
+                refreshCard(findCardPos(cardId, MainActivity.dm.getCards()))
                 MainActivity.dm.deleteCard(cardId)
             }
                 //"No" Button
@@ -157,8 +165,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
                 taskDesc.text.toString(),
                 dateCheck()
                 )
-            //need to find out how to refresh after adding task!!!!!!!!!!!!!!!!!!
-            MainActivity.addTaskRefresh(findCardPos(cardId, MainActivity.dm.getCards()))
+            addTaskRefresh()
         }
         //Cancel
         alertDialog.setNegativeButton("Cancel") { _, _ ->
@@ -234,7 +241,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
     }
 
     override fun onClick(view: View) {
-       when(view?.id){
+       when(view.id){
            R.id.editCardBtn -> {
                editCardBox()
            }
@@ -245,5 +252,15 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
                addTaskBox()
            }
        }
+    }
+    //For refreshing card fragments
+    private fun refreshCard(pos: Int){
+        MainActivity.adapter = ViewPagerAdapter(MainActivity.fm, lifecycle)
+        MainActivity.viewpager = MainActivity.viewpager.findViewById(R.id.viewpager)
+        MainActivity.viewpager.adapter = MainActivity.adapter
+
+
+        MainActivity.adapter.notifyDataSetChanged()
+        MainActivity.viewpager.setCurrentItem(pos, true)
     }
 }

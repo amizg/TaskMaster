@@ -10,10 +10,10 @@ import com.example.taskapp.MainActivity
 import com.example.taskapp.R
 import com.example.taskapp.Task
 
-class RecyclerAdapter(taskList: ArrayList<Task>) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(cid: Int) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    private val tasks: ArrayList<Task> = taskList
-
+    private var cardId = cid
+    private val tasks: ArrayList<Task> = MainActivity.dm.getCardTasks(cardId)
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -39,6 +39,7 @@ class RecyclerAdapter(taskList: ArrayList<Task>) : RecyclerView.Adapter<Recycler
     }
 
     override fun getItemCount(): Int {
+        var tasks = MainActivity.dm.getCardTasks(cardId)
         return tasks.size
     }
 }
