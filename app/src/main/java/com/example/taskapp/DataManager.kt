@@ -13,7 +13,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 //    tasks: (id, card_id, name, description, deadline, created)
     companion object {
         private const val DB_NAME = "taskmaster"
-        private const val DB_VER = 2
+        private const val DB_VER = 3
 
         //card table
         private const val TBL_CARDS = "cards"
@@ -102,7 +102,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         values.put(COL_TCREATED, System.currentTimeMillis())
         val db = this.writableDatabase
         db.insert(TBL_TASKS, null, values)
-        readTask()
         db.close()
     }
 

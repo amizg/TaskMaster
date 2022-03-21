@@ -28,35 +28,9 @@ class MainActivity : AppCompatActivity() {
         lateinit var adapter: ViewPagerAdapter
         lateinit var viewpager:ViewPager2
         lateinit var dm:DataManager
+        lateinit var fm: FragmentManager
         lateinit var alertBuilder: AlertDialog.Builder
 
-        //Refresh viewpager after adding a card
-        fun refresh(cards:ArrayList<Card>){
-            val pos = dm.getCards().size
-            adapter.notifyItemInserted(pos)
-
-            viewpager.currentItem = pos + 1
-            viewpager.currentItem = pos
-        }
-        //Refresh viewpager after Editing a card.
-        fun editCardRefresh(){
-            dm.readCards()
-        }
-        //Refresh viewpager after deleting a card.
-        fun deleteCardRefresh(){
-            dm.readCards()
-            val pos = dm.getCards().size
-            adapter.notifyItemRemoved(0)
-
-            viewpager.currentItem = pos - 10
-            viewpager.currentItem = 0
-        }
-
-        fun addTaskRefresh(pos: Int){
-            adapter.notifyItemRemoved(pos)
-            viewpager.currentItem = pos - 5
-            viewpager.currentItem = pos + 1
-        }
 
         fun convertLongToTime(time: Long): String {
             val date = Date(time)
@@ -85,10 +59,10 @@ class MainActivity : AppCompatActivity() {
 
         //Initializing the view pager adapter
         adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
+        fm = supportFragmentManager
         //assigning the layout ViewPager2 to viewpager with the id of viewpager
         viewpager = findViewById(R.id.viewpager)
         viewpager.adapter = adapter
 
     }
-
 }
