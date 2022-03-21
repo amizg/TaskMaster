@@ -24,8 +24,7 @@ class RecyclerAdapter(taskList: ArrayList<Task>) : RecyclerView.Adapter<Recycler
             taskTitle = itemView.findViewById(R.id.taskName)
             taskDesc = itemView.findViewById(R.id.taskDesc)
 
-//            itemView.setOnClickListener {
-//            }
+//            itemView.setOnClickListener {   }
         }
     }
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerAdapter.ViewHolder {

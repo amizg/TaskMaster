@@ -18,8 +18,6 @@ class ViewPagerAdapter(fm: FragmentManager?, lifecycle: Lifecycle?) :
     ) {
 
     override fun createFragment(position: Int): Fragment {
-        Log.d(TAG, "Called Create Fragment")
-        Log.d(TAG, itemCount.toString())
 
         var cards: ArrayList<Card> = MainActivity.dm.getCards()
 
@@ -41,7 +39,6 @@ class ViewPagerAdapter(fm: FragmentManager?, lifecycle: Lifecycle?) :
     }
 
     override fun getItemCount(): Int {
-        Log.d(TAG, "Called Item Count")
         return MainActivity.dm.getCards().size + 2
     }
 

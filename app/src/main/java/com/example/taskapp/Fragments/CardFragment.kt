@@ -1,4 +1,5 @@
 package com.example.taskapp.Fragments
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.app.usage.UsageEvents
@@ -22,7 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(), View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private var name: String = "Card"
     private var cardId: Int = 0
@@ -60,26 +61,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         // Inflate the layout for this fragment
         binding.cardName.text = name
 
-        //Initialize buttons
-        val editCardBtn: Button = view.findViewById(R.id.editCardBtn)
-        val deleteCardBtn: Button = view.findViewById(R.id.deleteCardBtn)
-        val addTaskBtn: Button = view.findViewById(R.id.addTaskBtn)
-
-
-        //Edit card name button
-        editCardBtn.setOnClickListener{
-            editCardBox()
-        }
-        //Delete card button
-        deleteCardBtn.setOnClickListener{
-            deleteCardBox()
-        }
-        //Add task button
-        addTaskBtn.setOnClickListener {
-            addTaskBox()
-        }
-
-
         return view
     }
 
@@ -92,7 +73,16 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
+
+        //Initialize buttons
+        val editCardBtn: Button = view.findViewById(R.id.editCardBtn)
+        val deleteCardBtn: Button = view.findViewById(R.id.deleteCardBtn)
+        val addTaskBtn: Button = view.findViewById(R.id.addTaskBtn)
+        editCardBtn.setOnClickListener(this)
+        deleteCardBtn.setOnClickListener(this)
+        addTaskBtn.setOnClickListener(this)
     }
+
 
     //Pop-up edit card name screen
     private fun editCardBox(){
@@ -100,14 +90,12 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.alert_box_edittext, null)
         val editText = dialogLayout.findViewById<EditText>(R.id.editText)
-
-
         alertDialog.setView(dialogLayout)
+
         alertDialog.setTitle("Edit Card Name")
 
         alertDialog.setPositiveButton("Enter") { _, _ ->
-            MainActivity.dm.editCard(name, cardId)
-            MainActivity.editCardRefresh(MainActivity.dm.getCards())
+            MainActivity.dm.editCard(editText.text.toString(), cardId)
             binding.cardName.text = editText.text.toString()
         }
 
@@ -118,14 +106,17 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
     }
     //Pop-up delete card confirmation screen
     private fun deleteCardBox(){
+        //Blank layout for alert dialog
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.alert_box_confirmation, null)
+        alertDialog.setView(dialogLayout)
 
         alertDialog.setTitle("Delete Card?")
                 //"Yes" Button
             .setPositiveButton("Yes") { _, _ ->
                 // Delete selected card from database
+                MainActivity.deleteCardRefresh()
                 MainActivity.dm.deleteCard(cardId)
-                MainActivity.deleteCardRefresh(findCardPos(cardId, MainActivity.dm.getCards()))
-
             }
                 //"No" Button
             .setNegativeButton("No") { dialog, _ ->
@@ -240,5 +231,19 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onClick(view: View) {
+       when(view?.id){
+           R.id.editCardBtn -> {
+               editCardBox()
+           }
+           R.id.deleteCardBtn -> {
+               deleteCardBox()
+           }
+           R.id.addTaskBtn -> {
+               addTaskBox()
+           }
+       }
     }
 }
