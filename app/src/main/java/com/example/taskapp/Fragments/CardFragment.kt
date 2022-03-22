@@ -1,22 +1,17 @@
 package com.example.taskapp.Fragments
-import android.app.AlertDialog
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.app.usage.UsageEvents
 import android.os.Bundle
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskapp.*
 import com.example.taskapp.databinding.FragmentCardBinding
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -46,7 +41,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     private var selectedHour = 0
     private var selectedMinute = 0
 
-    lateinit var dateTextView: TextView
+    private lateinit var dateTextView: TextView
 
 
     init{
@@ -65,7 +60,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 
         return view
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -127,6 +121,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     }
 
     //Refresh the recycler view upon adding task
+    @SuppressLint("NotifyDataSetChanged")
     private fun addTaskRefresh(){
         val adapter = RecyclerAdapter(cardId, this)
         val recyclerView: RecyclerView = requireView().findViewById(R.id.recycler_view)
@@ -257,23 +252,12 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         selectedHour = hourOfDay
         selectedMinute = minute
 
-        //hourOfDay arg is passed as Military time by default
-        //check for am/pm and format to standard time
-        var ampm: String = "AM"
-        if(hourOfDay >= 12){
-            if (selectedHour > 12){ selectedHour -= 12}
-            ampm = "PM"
-        }
-        //add zero for minutes under 10
-        if (minute < 10){
-            dateTextView.text = "$selectedMonth/$selectedDay/$selectedYear \n AT \n $selectedHour:0$selectedMinute $ampm"
-        }
-        else{
-            dateTextView.text = "$selectedMonth/$selectedDay/$selectedYear \n AT \n $selectedHour:$selectedMinute $ampm"
-        }
+        var longDate = MainActivity.convertDateToLong("$selectedYear.$selectedMonth.$selectedDay $selectedHour:$selectedMinute")
+
+        dateTextView.text = MainActivity.convertLongToTime(longDate)
     }
 
-    fun findCardPos(cardId: Int, cardList: ArrayList<Card>): Int{
+    private fun findCardPos(cardId: Int, cardList: ArrayList<Card>): Int{
 
         for ((index, card) in cardList.withIndex()){
 
@@ -301,11 +285,11 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
        }
     }
     //For refreshing card fragments
+    @SuppressLint("NotifyDataSetChanged")
     private fun refreshCard(pos: Int){
         MainActivity.adapter = ViewPagerAdapter(MainActivity.fm, lifecycle)
         MainActivity.viewpager = MainActivity.viewpager.findViewById(R.id.viewpager)
         MainActivity.viewpager.adapter = MainActivity.adapter
-
 
         MainActivity.adapter.notifyDataSetChanged()
         MainActivity.viewpager.setCurrentItem(pos, true)
