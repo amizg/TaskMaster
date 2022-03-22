@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         fun convertLongToTime(time: Long): String {
             val date = Date(time)
-            val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+            val format = SimpleDateFormat("E hh:mm a \n 'on' \n MM/dd/yyyy")
             return format.format(date)
         }
 
