@@ -20,7 +20,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(), View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
+    Fragment(),
+    View.OnClickListener,
+    DatePickerDialog.OnDateSetListener,
+    TimePickerDialog.OnTimeSetListener,
+    RecyclerAdapter.OnItemClickListener{
 
     private var name: String = "Card"
     private var cardId: Int = 0
@@ -66,7 +71,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
-        val adapter = RecyclerAdapter(cardId)
+        val adapter = RecyclerAdapter(cardId, this)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -78,13 +83,54 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         editCardBtn.setOnClickListener(this)
         deleteCardBtn.setOnClickListener(this)
         addTaskBtn.setOnClickListener(this)
+    }
+    override fun onItemClick(position: Int) {
+        viewTaskDetails(position)
+    }
 
+    private fun viewTaskDetails(pos: Int){
+
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.expand_task_view, null)
+        val  taskName: TextView = dialogLayout.findViewById(R.id.taskName)
+        val taskDesc: TextView =  dialogLayout.findViewById(R.id.taskDesc)
+        val dateChosen: TextView = dialogLayout.findViewById(R.id.selectedDateText)
+        alertDialog.setView(dialogLayout)
+        alertDialog.setTitle("")
+        tasks = MainActivity.dm.getCardTasks(cardId)
+
+        taskName.text = tasks[pos].getName()
+        taskDesc.text = tasks[pos].getDesc()
+        if(tasks[pos].getDeadline() > 0){
+            dateChosen.text = MainActivity.convertLongToTime(tasks[pos].getDeadline())
+        }
+
+
+
+
+        //date pick button
+        //val selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
+
+        //Button for selecting a deadline
+//        selectDateBtn.setOnClickListener{
+//            pickDate()
+//        }
+
+        //Confirm button
+        alertDialog.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        alertDialog.setNegativeButton("Cancel/Edit/Delete?"){dialog, _ ->
+            dialog.dismiss()
+        }
+        alertDialog.show()
     }
 
     //Refresh the recycler view upon adding task
     private fun addTaskRefresh(){
+        val adapter = RecyclerAdapter(cardId, this)
         val recyclerView: RecyclerView = requireView().findViewById(R.id.recycler_view)
-        val adapter = RecyclerAdapter(cardId)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -142,8 +188,9 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         val  taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
         val taskDesc =  dialogLayout.findViewById<EditText>(R.id.taskDesc)
 
-        alertDialog.setView(dialogLayout)
         alertDialog.setTitle("Add New Task")
+        alertDialog.setView(dialogLayout)
+
 
         //date pick button
         val selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
@@ -168,7 +215,8 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
             addTaskRefresh()
         }
         //Cancel
-        alertDialog.setNegativeButton("Cancel") { _, _ ->
+        alertDialog.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
         }
         alertDialog.show()
     }
@@ -263,4 +311,5 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         MainActivity.adapter.notifyDataSetChanged()
         MainActivity.viewpager.setCurrentItem(pos, true)
     }
+
 }
