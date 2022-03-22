@@ -95,19 +95,18 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         val  taskName: TextView = dialogLayout.findViewById(R.id.taskName)
         val taskDesc: TextView =  dialogLayout.findViewById(R.id.taskDesc)
         val dateChosen: TextView = dialogLayout.findViewById(R.id.selectedDateText)
+
         alertDialog.setView(dialogLayout)
         alertDialog.setTitle("")
+        //Refresh task list for indexing
         tasks = MainActivity.dm.getCardTasks(cardId)
 
         taskName.text = tasks[pos].getName()
         taskDesc.text = tasks[pos].getDesc()
+        //Only show deadline if it was set
         if(tasks[pos].getDeadline() > 0){
             dateChosen.text = MainActivity.convertLongToTime(tasks[pos].getDeadline())
         }
-
-
-
-
         //date pick button
         //val selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
 
