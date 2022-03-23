@@ -30,26 +30,27 @@
         android:text="Task Desc"
         android:textSize="16sp" />
 
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:checked="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/taskName"
-            android:layout_alignBottom="@id/taskDesc"
-            android:layout_alignParentEnd="true"
-            android:gravity="center"
-            android:scaleX="1.5"
-            android:scaleY="1.5" />
-
-    <ImageButton
-        android:id="@+id/deleteTaskBtn"
+    <CheckBox
+        android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/checkBox"
-        android:layout_marginRight="20dp"
         android:layout_alignTop="@id/taskName"
         android:layout_alignBottom="@id/taskDesc"
-        app:srcCompat="@drawable/ic_delete_task" />
+        android:layout_alignParentEnd="true"
+        android:checked="false"
+        android:gravity="center"
+        android:scaleX="1.5"
+        android:scaleY="1.5" />
+
+    <ImageView
+        android:id="@+id/taskOptions"
+        android:src="@drawable/ic_task_options"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/checkBox"
+        />
 
 </RelativeLayout>

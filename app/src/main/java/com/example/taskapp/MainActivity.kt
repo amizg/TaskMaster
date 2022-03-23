@@ -83,8 +83,8 @@ class MainActivity : AppCompatActivity() {
         alertBuilder = AlertDialog.Builder(this)
 
         //DUMMY DATA
-//        db.addTask(1,"Meeting","Meeting with randy",1654056000000)
-//        db.addTask(2,"Final Exam","CSC 302",1654056000000)
+//        dm.addTask(1,"Meeting","Meeting with randy",1654056000000)
+//        dm.editTask("Final Exam","CSC 302",1654056000000, 1)
 
         //Initializing the view pager adapter
         adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)

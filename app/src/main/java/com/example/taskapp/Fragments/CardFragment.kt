@@ -45,7 +45,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
 
     lateinit var dateTextView: TextView
 
-
     init{
         name = nm
         cardId = id
@@ -88,7 +87,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
-        val adapter = RecyclerAdapter(tasks)
+        val adapter = RecyclerAdapter(requireContext(),tasks)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -140,7 +139,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         //For the outer alert box
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.alert_box_addtask, null)
-        val  taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
+        val taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
         val taskDesc =  dialogLayout.findViewById<EditText>(R.id.taskDesc)
 
         alertDialog.setView(dialogLayout)
@@ -174,6 +173,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) : Fragment(),
         }
         alertDialog.show()
     }
+
     //Check to see if user entered deadline
     private fun dateCheck(): Long {
         return if (selectedYear == 0){
