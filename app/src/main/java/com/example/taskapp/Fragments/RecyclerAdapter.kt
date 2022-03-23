@@ -8,16 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.AdapterView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskapp.MainActivity
 import com.example.taskapp.R
 import com.example.taskapp.Task
 import java.util.*
 import kotlin.collections.ArrayList
+import javax.sql.RowSetListener
 
-class RecyclerAdapter(val c: Context, taskList: ArrayList<Task>) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(val c: Context, taskList: ArrayList<Task>, cid: Int, private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    private var tasks: ArrayList<Task> = taskList
+    private val tasks: ArrayList<Task> = MainActivity.dm.getCardTasks(cardId)
+    private var cardId = cid
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
@@ -189,6 +193,30 @@ class RecyclerAdapter(val c: Context, taskList: ArrayList<Task>) : RecyclerView.
     }
 
     override fun getItemCount(): Int {
+        var tasks = MainActivity.dm.getCardTasks(cardId)
         return tasks.size
     }
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+    View.OnClickListener{
+
+        var taskTitle: TextView = itemView.findViewById(R.id.taskName)
+        var taskDesc: TextView = itemView.findViewById(R.id.taskDesc)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position: Int = adapterPosition
+            if(position != RecyclerView.NO_POSITION){
+                listener.onItemClick(position)
+            }
+        }
+    }
+
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+    }
 }
+
