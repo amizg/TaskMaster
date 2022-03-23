@@ -43,12 +43,12 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 
     private lateinit var dateTextView: TextView
 
-
     init{
         name = nm
         cardId = id
         tasks = taskList
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -120,19 +120,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         alertDialog.show()
     }
 
-    //Refresh the recycler view upon adding task
-    @SuppressLint("NotifyDataSetChanged")
-    private fun addTaskRefresh(){
-        val adapter = RecyclerAdapter(cardId, this)
-        val recyclerView: RecyclerView = requireView().findViewById(R.id.recycler_view)
-
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
-
-        recyclerView.recycledViewPool.clear()
-        adapter.notifyDataSetChanged()
-    }
-
     //Pop-up edit card name screen
     private fun editCardBox(){
 
@@ -152,6 +139,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         }
         alertDialog.show()
     }
+
     //Pop-up delete card confirmation screen
     private fun deleteCardBox(){
         //Blank layout for alert dialog
@@ -174,6 +162,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         val alert = alertDialog.create()
         alert.show()
     }
+
     //popup for adding task
     private fun addTaskBox() {
         //For the outer alert box
@@ -184,7 +173,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 
         alertDialog.setTitle("Add New Task")
         alertDialog.setView(dialogLayout)
-
 
         //date pick button
         val selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
@@ -214,6 +202,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         }
         alertDialog.show()
     }
+
     //Check to see if user entered deadline
     private fun dateCheck(): Long {
         return if (selectedYear == 0){
@@ -221,6 +210,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         } else
             MainActivity.convertDateToLong("$selectedYear.$selectedMonth.$selectedDay $selectedHour:$selectedMinute")
     }
+
     //Set up Calendar for getting current d/m/y
     //and current time from system
     private fun getDateTimeCalendar(){
@@ -231,6 +221,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         hour = cal.get(Calendar.HOUR)
         minute = cal.get(Calendar.MINUTE)
     }
+
     //Function for opening up and instance of the date and time selection UI
     private fun pickDate(){
 
@@ -238,6 +229,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 
         DatePickerDialog(requireContext(), this, year, month, day).show()
     }
+
     //Called when the date is selected and the user selects "Ok"
     override fun onDateSet(view:DatePicker?, year: Int, month: Int, dayOfMonth: Int){
         selectedDay = dayOfMonth
@@ -247,6 +239,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         getDateTimeCalendar()
         TimePickerDialog(requireContext(), this, hour, minute, false).show()
     }
+
     //Called when the time is set and user selects "Ok"
     override fun onTimeSet(view:TimePicker?, hourOfDay: Int, minute: Int ){
         selectedHour = hourOfDay
@@ -266,11 +259,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         return 0
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun onClick(view: View) {
        when(view.id){
            R.id.editCardBtn -> {
@@ -284,6 +272,19 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
            }
        }
     }
+
+    //Refresh the recycler view upon adding task
+    @SuppressLint("NotifyDataSetChanged")
+    private fun addTaskRefresh(){
+        val adapter = RecyclerAdapter(cardId, this)
+        val recyclerView: RecyclerView = requireView().findViewById(R.id.recycler_view)
+
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+
+        recyclerView.recycledViewPool.clear()
+        adapter.notifyDataSetChanged()
+    }
     //For refreshing card fragments
     @SuppressLint("NotifyDataSetChanged")
     private fun refreshCard(pos: Int){
@@ -295,4 +296,8 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         MainActivity.viewpager.setCurrentItem(pos, true)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
