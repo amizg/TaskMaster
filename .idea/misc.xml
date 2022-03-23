@@ -3,10 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/drawable-anydpi/ic_delete_task.xml" value="0.38385416666666666" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_addtask.xml" value="0.28351449275362317" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_blank.xml" value="0.24375" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_edittask.xml" value="0.36770833333333336" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_edittext.xml" value="0.28351449275362317" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/fragment_add_card.xml" value="0.27943840579710144" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/fragment_card.xml" value="0.1" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/item_task.xml" value="0.4" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/menu/task_menu.xml" value="0.36770833333333336" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/activity_main.xml" value="0.22" />

@@ -41,6 +41,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     private var selectedHour = 0
     private var selectedMinute = 0
 
+
     private lateinit var dateTextView: TextView
 
     init{
@@ -65,7 +66,9 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
-        val adapter = RecyclerAdapter(cardId, this)
+
+        val adapter = RecyclerAdapter(requireContext(),tasks, cardId, this)
+
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -168,7 +171,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         //For the outer alert box
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.alert_box_addtask, null)
-        val  taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
+        val taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
         val taskDesc =  dialogLayout.findViewById<EditText>(R.id.taskDesc)
 
         alertDialog.setTitle("Add New Task")

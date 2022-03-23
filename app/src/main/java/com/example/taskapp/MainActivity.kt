@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
         dm = DataManager(this)
         alertBuilder = AlertDialog.Builder(this)
 
-
         //Initializing the view pager adapter
         adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         fm = supportFragmentManager
