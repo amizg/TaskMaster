@@ -1,22 +1,11 @@
 package com.example.taskapp
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.size
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.example.taskapp.Fragments.CardFragment
-import com.example.taskapp.Fragments.RecyclerAdapter
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 //For debugging Log.d(TAG,"")
 private val TAG: String = MainActivity::class.java.simpleName //Debugging tag
