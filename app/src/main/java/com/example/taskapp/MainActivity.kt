@@ -53,4 +53,5 @@ class MainActivity : AppCompatActivity() {
         viewpager.adapter = adapter
 
     }
+
 }

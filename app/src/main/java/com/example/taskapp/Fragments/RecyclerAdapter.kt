@@ -152,6 +152,10 @@ class RecyclerAdapter(val c: Context, taskList: ArrayList<Task>, cid: Int, priva
 
             DatePickerDialog(c, this, year, month, day).show()
         }
+//        private fun checkBoxClicked(view:View?){
+//            println("fuck")
+//
+//        }
         //Called when the date is selected and the user selects "Ok"
         override fun onDateSet(view:DatePicker?, year: Int, month: Int, dayOfMonth: Int){
             selectedDay = dayOfMonth
@@ -186,7 +190,10 @@ class RecyclerAdapter(val c: Context, taskList: ArrayList<Task>, cid: Int, priva
             val position: Int = adapterPosition
             if(position != RecyclerView.NO_POSITION){
                 listener.onItemClick(position)
+
             }
+
+//            checkBoxClicked(v)
         }
     }
 

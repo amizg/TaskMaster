@@ -13,7 +13,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 //    tasks: (id, card_id, name, description, deadline, created)
     companion object {
         private const val DB_NAME = "taskmaster"
-        private const val DB_VER = 2
+        private const val DB_VER = 4
 
         //card table
         private const val TBL_CARDS = "cards"
@@ -28,6 +28,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         private const val COL_TDESC = "description"
         private const val COL_TDEADLINE = "deadline"
         private const val COL_TCREATED = "created"
+        private const val COL_TCOMPLETED = "completed"
     }
 
     //Primary array of card objects
@@ -40,7 +41,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     //Execute SQL statements
     override fun onCreate(db: SQLiteDatabase?) {
         val createCardTable = "CREATE TABLE $TBL_CARDS($COL_CID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_CNAME TEXT)"
-        val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT(100), $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER)"
+        val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT(100), $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER, $COL_TCOMPLETED INTEGER)"
         db?.execSQL(createCardTable)
         db?.execSQL(createTaskTable)
     }
@@ -93,13 +94,14 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
 
     //Adding a task to the database
-    fun addTask(card_id:Int, name:String, desc:String, deadline:Long){
+    fun addTask(card_id:Int, name:String, desc:String, deadline:Long, completed: Int){
         val values = ContentValues()
         values.put(COL_TCARD_ID, card_id)
         values.put(COL_TNAME, name)
         values.put(COL_TDESC, desc)
         values.put(COL_TDEADLINE, deadline)
         values.put(COL_TCREATED, System.currentTimeMillis())
+        values.put(COL_TCOMPLETED, completed) //get this from the xml
         val db = this.writableDatabase
         db.insert(TBL_TASKS, null, values)
         db.close()
@@ -167,7 +169,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                         cursorTasks.getString(2),
                         cursorTasks.getString(3),
                         cursorTasks.getLong(4),
-                        cursorTasks.getLong(5)
+                        cursorTasks.getLong(5),
+                        cursorTasks.getInt(6)
                     )
                 )
             } while (cursorTasks.moveToNext())
@@ -204,7 +207,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                         cursorTasks.getString(2),
                         cursorTasks.getString(3),
                         cursorTasks.getLong(4),
-                        cursorTasks.getLong(5)
+                        cursorTasks.getLong(5),
+                        cursorTasks.getInt(6)
                     )
                 )
             } while (cursorTasks.moveToNext())
