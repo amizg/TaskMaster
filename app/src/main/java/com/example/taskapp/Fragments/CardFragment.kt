@@ -88,7 +88,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     }
 
     private fun viewTaskDetails(pos: Int){
-
+        // this functions also as the way to complete tasks for now
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.expand_task_view, null)
         val  taskName: TextView = dialogLayout.findViewById(R.id.taskName)
@@ -114,12 +114,13 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 //            pickDate()
 //        }
 
-        //Confirm button
-        alertDialog.setPositiveButton("OK") { dialog, _ ->
+        //Mark Tasks Complete button
+        alertDialog.setPositiveButton("Mark Complete") { dialog, _ ->
+            MainActivity.dm.markCompleted(tasks[pos].getTaskId(), tasks[pos].getCompleted(), tasks[pos])
             dialog.dismiss()
         }
-
-        alertDialog.setNegativeButton("Cancel/Edit/Delete?"){dialog, _ ->
+        //Back Button
+        alertDialog.setNegativeButton("Back"){dialog, _ ->
             dialog.dismiss()
         }
         alertDialog.show()
@@ -213,6 +214,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     }
 
 
+
     //Check to see if user entered deadline
     private fun dateCheck(): Long {
         return if (selectedYear == 0){
@@ -269,15 +271,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         return 0
     }
 
-//    private fun checkBoxClicked(){
-//        Log.d(TAG, "this is a checked box")
-//        println("FUUUUUUUUUUUUUUUUUUUUCK")
-//
-//    }
-    fun checkBoxClicked(view:View?){
-        println("fuck")
 
-    }
     override fun onClick(view: View) {
        when(view.id){
            R.id.editCardBtn -> {
@@ -288,9 +282,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
            }
            R.id.addTaskBtn -> {
                addTaskBox()
-           }
-           R.id.checkBox ->{
-               checkBoxClicked(view) // maybe not useful here
            }
        }
     }

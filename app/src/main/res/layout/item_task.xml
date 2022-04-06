@@ -29,6 +29,7 @@
         android:gravity="center"
         android:scaleX="1.5"
         android:scaleY="1.5"
+
         />
 
       <TextView

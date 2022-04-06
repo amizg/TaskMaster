@@ -3,6 +3,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.view.View
+import androidx.core.content.contentValuesOf
 
 //For debugging Log.d(TAG,"")
 private val TAG: String = DataManager::class.java.simpleName //Debugging tag
@@ -216,6 +218,24 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         cursorTasks.close()
 
         return tasks
+        db.close()
+    }
+    fun markCompleted(tid: Int, completed: Int, task: Task){
+        val values = ContentValues()
+        val db=this.writableDatabase
+/*        val completed = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TID= $tid", null)*/
+
+        if (completed==0){
+            values.put(COL_TCOMPLETED, 1)
+            task.setCompleted(1)
+
+        }
+        else if (completed==1){
+            values.put(COL_TCOMPLETED, 0)
+            task.setCompleted(0)
+
+        }
+        db.update(TBL_TASKS, values, "$COL_TID=?", arrayOf(tid.toString()))
         db.close()
     }
 
