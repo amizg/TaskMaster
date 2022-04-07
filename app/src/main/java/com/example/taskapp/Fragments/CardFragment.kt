@@ -1,5 +1,7 @@
 package com.example.taskapp.Fragments
+
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -15,6 +17,9 @@ import com.example.taskapp.*
 import com.example.taskapp.databinding.FragmentCardBinding
 import java.util.*
 import kotlin.collections.ArrayList
+import android.content.Context
+import android.view.Gravity
+
 private val TAG: String = CardFragment::class.java.simpleName //Debugging tag
 
 class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
@@ -43,7 +48,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     private var selectedHour = 0
     private var selectedMinute = 0
 
-
     private lateinit var dateTextView: TextView
 
     init{
@@ -68,21 +72,78 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
-
         val adapter = RecyclerAdapter(requireContext(),tasks, cardId, this)
-
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
         //Initialize buttons
-        val editCardBtn: Button = view.findViewById(R.id.editCardBtn)
-        val deleteCardBtn: Button = view.findViewById(R.id.deleteCardBtn)
         val addTaskBtn: Button = view.findViewById(R.id.addTaskBtn)
-        editCardBtn.setOnClickListener(this)
-        deleteCardBtn.setOnClickListener(this)
+        val menu: ImageView = view.findViewById(R.id.cardOptions)
+
         addTaskBtn.setOnClickListener(this)
+
+        view.setOnClickListener(this)
+        menu.setOnClickListener {
+            popupCardMenu(view, requireContext())
+        }
     }
+
+    private fun popupCardMenu(v: View, c: Context) {
+        val popupCardMenu = PopupMenu(c, v, Gravity.RIGHT, R.attr.actionOverflowMenuStyle, 0)
+        val inflater = layoutInflater
+        popupCardMenu.inflate(R.menu.card_menu)
+        popupCardMenu.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.editCard -> {
+                    val dialogLayout = inflater.inflate(R.layout.alert_box_edittext, null)
+                    val editText = dialogLayout.findViewById<EditText>(R.id.editText)
+
+                    alertDialog.setView(dialogLayout)
+                    alertDialog.setTitle("Edit Card Name")
+
+                    alertDialog.setPositiveButton("Enter") { _, _ ->
+                        MainActivity.dm.editCard(editText.text.toString(), cardId)
+                        binding.cardName.text = editText.text.toString()
+                    }
+
+                    alertDialog.setNegativeButton("Cancel") { _, _ ->
+                    }
+
+                    alertDialog.show()
+                    true
+                }
+                R.id.deleteCard -> {
+                    val dialogLayout = inflater.inflate(R.layout.alert_box_confirmation, null)
+
+                    alertDialog.setView(dialogLayout)
+                    alertDialog.setTitle("Delete Card?")
+
+                    alertDialog.setPositiveButton("Yes") { _, _ ->
+                        refreshCard(findCardPos(cardId, MainActivity.dm.getCards()))
+                        MainActivity.dm.deleteCard(cardId)
+                    }
+
+                    alertDialog.setNegativeButton("No") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+
+                    alertDialog.show()
+                    true
+                }
+                else -> true
+            }
+        }
+
+        popupCardMenu.show()
+        val popup = PopupMenu::class.java.getDeclaredField("mPopup")
+        popup.isAccessible = true
+        val menu = popup.get(popupCardMenu)
+        menu.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java)
+            .invoke(menu, true)
+
+    }
+
     override fun onItemClick(position: Int) {
         viewTaskDetails(position)
     }
@@ -124,49 +185,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
             dialog.dismiss()
         }
         alertDialog.show()
-    }
-
-    //Pop-up edit card name screen
-    private fun editCardBox(){
-
-        val inflater = layoutInflater
-        val dialogLayout = inflater.inflate(R.layout.alert_box_edittext, null)
-        val editText = dialogLayout.findViewById<EditText>(R.id.editText)
-        alertDialog.setView(dialogLayout)
-
-        alertDialog.setTitle("Edit Card Name")
-
-        alertDialog.setPositiveButton("Enter") { _, _ ->
-            MainActivity.dm.editCard(editText.text.toString(), cardId)
-            binding.cardName.text = editText.text.toString()
-        }
-
-        alertDialog.setNegativeButton("Cancel") { _, _ ->
-        }
-        alertDialog.show()
-    }
-
-    //Pop-up delete card confirmation screen
-    private fun deleteCardBox(){
-        //Blank layout for alert dialog
-        val inflater = layoutInflater
-        val dialogLayout = inflater.inflate(R.layout.alert_box_confirmation, null)
-        alertDialog.setView(dialogLayout)
-
-        alertDialog.setTitle("Delete Card?")
-                //"Yes" Button
-            .setPositiveButton("Yes") { _, _ ->
-                // Delete selected card from database
-                refreshCard(findCardPos(cardId, MainActivity.dm.getCards()))
-                MainActivity.dm.deleteCard(cardId)
-            }
-                //"No" Button
-            .setNegativeButton("No") { dialog, _ ->
-                // Dismiss the dialog
-                dialog.dismiss()
-            }
-        val alert = alertDialog.create()
-        alert.show()
     }
 
     //popup for adding task
@@ -212,8 +230,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         }
         alertDialog.show()
     }
-
-
 
     //Check to see if user entered deadline
     private fun dateCheck(): Long {
@@ -271,21 +287,13 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         return 0
     }
 
-
     override fun onClick(view: View) {
        when(view.id){
-           R.id.editCardBtn -> {
-               editCardBox()
-           }
-           R.id.deleteCardBtn -> {
-               deleteCardBox()
-           }
            R.id.addTaskBtn -> {
                addTaskBox()
            }
        }
     }
-
 
     //Refresh the recycler view upon adding task
     @SuppressLint("NotifyDataSetChanged")

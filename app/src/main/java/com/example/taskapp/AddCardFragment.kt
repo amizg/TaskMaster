@@ -32,6 +32,7 @@ class AddCardFragment : Fragment() {
         return view
     }
 
+    // Jeremy
     private fun addCardBox() {
 
         val inflater = layoutInflater
