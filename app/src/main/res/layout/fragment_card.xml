@@ -20,7 +20,9 @@
             android:layout_marginTop="55dp"
             android:text="Card"
             android:textColor="#222222"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:singleLine="true"
+            android:maxLength="16"/>
 
         <Button
             android:id="@+id/addTaskBtn"

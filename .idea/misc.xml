@@ -7,6 +7,9 @@
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/drawable/ic_delete_task.xml" value="0.3828125" />
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/drawable/ic_edit_task.xml" value="0.3828125" />
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/drawable/ic_task_options.xml" value="0.3828125" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/alert_box_addtask.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/alert_box_blank.xml" value="0.36666666666666664" />
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/alert_box_confirmation.xml" value="0.36666666666666664" />
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/alert_box_editcard.xml" value="0.36666666666666664" />
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/alert_box_edittask.xml" value="0.36666666666666664" />
@@ -14,6 +17,7 @@
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/expand_task_view.xml" value="0.36666666666666664" />
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/fragment_add_card.xml" value="0.36666666666666664" />
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/fragment_card.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/item_task.xml" value="0.36666666666666664" />
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/menu/card_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/menu/task_menu.xml" value="0.36666666666666664" />
