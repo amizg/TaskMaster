@@ -3,6 +3,7 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.example.taskapp.*
 import com.example.taskapp.databinding.FragmentCardBinding
 import java.util.*
 import kotlin.collections.ArrayList
+private val TAG: String = CardFragment::class.java.simpleName //Debugging tag
 
 class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     Fragment(),
@@ -86,7 +88,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     }
 
     private fun viewTaskDetails(pos: Int){
-
+        // this functions also as the way to complete tasks for now
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.expand_task_view, null)
         val  taskName: TextView = dialogLayout.findViewById(R.id.taskName)
@@ -112,12 +114,13 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 //            pickDate()
 //        }
 
-        //Confirm button
-        alertDialog.setPositiveButton("OK") { dialog, _ ->
+        //Mark Tasks Complete button
+        alertDialog.setPositiveButton("Mark Complete") { dialog, _ ->
+            MainActivity.dm.markCompleted(tasks[pos].getTaskId(), tasks[pos].getCompleted(), tasks[pos])
             dialog.dismiss()
         }
-
-        alertDialog.setNegativeButton("Cancel/Edit/Delete?"){dialog, _ ->
+        //Back Button
+        alertDialog.setNegativeButton("Back"){dialog, _ ->
             dialog.dismiss()
         }
         alertDialog.show()
@@ -173,6 +176,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         val dialogLayout = inflater.inflate(R.layout.alert_box_addtask, null)
         val taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
         val taskDesc =  dialogLayout.findViewById<EditText>(R.id.taskDesc)
+        val completed = dialogLayout.findViewById<EditText>(R.id.checkBox)
 
         alertDialog.setTitle("Add New Task")
         alertDialog.setView(dialogLayout)
@@ -195,8 +199,11 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 cardId,
                 taskName.text.toString(),
                 taskDesc.text.toString(),
-                dateCheck()
-                )
+                dateCheck(),
+                0
+
+            )
+            println("here")
             addTaskRefresh()
         }
         //Cancel
@@ -205,6 +212,8 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         }
         alertDialog.show()
     }
+
+
 
     //Check to see if user entered deadline
     private fun dateCheck(): Long {
@@ -262,6 +271,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         return 0
     }
 
+
     override fun onClick(view: View) {
        when(view.id){
            R.id.editCardBtn -> {
@@ -275,6 +285,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
            }
        }
     }
+
 
     //Refresh the recycler view upon adding task
     @SuppressLint("NotifyDataSetChanged")

@@ -1,9 +1,12 @@
 package com.example.taskapp
 import android.os.Bundle
+import android.view.View
+import android.widget.CheckBox
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
+import com.example.taskapp.Fragments.RecyclerAdapter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -14,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     // refresh function to add fragment changes
     companion object{
+        lateinit var rcy: RecyclerAdapter
         lateinit var adapter: ViewPagerAdapter
         lateinit var viewpager:ViewPager2
         lateinit var dm:DataManager
@@ -53,4 +57,5 @@ class MainActivity : AppCompatActivity() {
         viewpager.adapter = adapter
 
     }
+
 }
