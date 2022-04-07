@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         //Declaring and setting up the database
         dm = DataManager(this)
-        alertBuilder = AlertDialog.Builder(this)
+        alertBuilder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
 
         //Initializing the view pager adapter
         adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)

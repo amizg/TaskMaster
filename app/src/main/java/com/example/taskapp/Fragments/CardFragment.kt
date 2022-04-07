@@ -5,11 +5,11 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -156,35 +156,43 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         val taskDesc: TextView =  dialogLayout.findViewById(R.id.taskDesc)
         val dateChosen: TextView = dialogLayout.findViewById(R.id.selectedDateText)
 
+
+
         alertDialog.setView(dialogLayout)
         alertDialog.setTitle("")
+
+
         //Refresh task list for indexing
         tasks = MainActivity.dm.getCardTasks(cardId)
 
         taskName.text = tasks[pos].getName()
         taskDesc.text = tasks[pos].getDesc()
+
         //Only show deadline if it was set
         if(tasks[pos].getDeadline() > 0){
             dateChosen.text = MainActivity.convertLongToTime(tasks[pos].getDeadline())
         }
-        //date pick button
-        //val selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
-
-        //Button for selecting a deadline
-//        selectDateBtn.setOnClickListener{
-//            pickDate()
-//        }
 
         //Mark Tasks Complete button
         alertDialog.setPositiveButton("Mark Complete") { dialog, _ ->
             MainActivity.dm.markCompleted(tasks[pos].getTaskId(), tasks[pos].getCompleted(), tasks[pos])
             dialog.dismiss()
         }
-        //Back Button
-        alertDialog.setNegativeButton("Back"){dialog, _ ->
+
+        //Edit Btn
+        alertDialog.setNegativeButton("Edit"){dialog, _ ->
+            //edit go here
+            dialog.dismiss()
+        }
+
+        //Delete Btn
+        alertDialog.setNeutralButton("Delete"){dialog, _ ->
+            MainActivity.dm.deleteTask(tasks[pos].getTaskId())
+            addTaskRefresh()
             dialog.dismiss()
         }
         alertDialog.show()
+
     }
 
     //popup for adding task
@@ -194,7 +202,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         val dialogLayout = inflater.inflate(R.layout.alert_box_addtask, null)
         val taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
         val taskDesc =  dialogLayout.findViewById<EditText>(R.id.taskDesc)
-        val completed = dialogLayout.findViewById<EditText>(R.id.checkBox)
 
         alertDialog.setTitle("Add New Task")
         alertDialog.setView(dialogLayout)
@@ -225,7 +232,10 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
             addTaskRefresh()
         }
         //Cancel
-        alertDialog.setNegativeButton("Cancel") { dialog, _ ->
+        alertDialog.setNegativeButton("") { dialog, _ ->
+            dialog.dismiss()
+        }
+        alertDialog.setNeutralButton("Cancel"){dialog, _ ->
             dialog.dismiss()
         }
         alertDialog.show()
