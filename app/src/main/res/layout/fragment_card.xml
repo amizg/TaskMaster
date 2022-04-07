@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".Fragments.CardFragment">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp">
@@ -16,58 +15,31 @@
         <TextView
             android:id="@+id/cardName"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_centerInParent="true"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="55dp"
             android:text="Card"
             android:textColor="#222222"
-            android:textSize="30sp" />
-
-        <Button
-            android:id="@+id/editCardBtn"
-            android:layout_width="90dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="250dp"
-            android:layout_marginRight="250dp"
-            android:layout_marginBottom="80dp"
-            android:gravity="center"
-            android:text="Edit" />
-
-        <Button
-            android:id="@+id/deleteCardBtn"
-            android:layout_width="90dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="250dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="80dp"
-            android:gravity="center"
-            android:text="Delete" />
+            android:textSize="30sp"
+            android:singleLine="true"
+            android:maxLength="16"/>
 
         <Button
             android:id="@+id/addTaskBtn"
-            android:layout_width="90dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="125dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="125dp"
-            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/cardName"
             android:text="Add Task"/>
+
+        <ImageView
+            android:id="@+id/cardOptions"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_task_options"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"/>
 
     </RelativeLayout>
 
@@ -77,11 +49,12 @@
         android:paddingTop="150dp"
         >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20sp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20sp"
+            tools:layout_editor_absoluteY="150dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

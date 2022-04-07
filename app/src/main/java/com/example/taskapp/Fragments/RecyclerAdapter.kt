@@ -211,8 +211,6 @@ class RecyclerAdapter(val c: Context, taskList: ArrayList<Task>, cid: Int, priva
         return tasks.size
     }
 
-
-
     interface OnItemClickListener{
         fun onItemClick(position: Int)
     }
