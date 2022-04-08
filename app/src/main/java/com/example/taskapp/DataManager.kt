@@ -161,7 +161,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         tasks.clear()
         val db = this.readableDatabase
 
-        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TCOMPLETED = 0", null)
+        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS", null)
         if (cursorTasks.moveToFirst()) {
             do {
                 tasks.add(
@@ -199,7 +199,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         tasks.clear()
         val db = this.readableDatabase
 
-        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TCARD_ID = $cardId ORDER BY $COL_TCOMPLETED ASC", null)
+        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TCARD_ID = $cardId ORDER BY $COL_TCOMPLETED ASC, $COL_TDEADLINE = 0, $COL_TDEADLINE ASC, $COL_TNAME ASC", null)
         if (cursorTasks.moveToFirst()) {
             do {
                 tasks.add(
