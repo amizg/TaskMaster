@@ -27,13 +27,19 @@ class MainActivity : AppCompatActivity() {
 
         fun convertLongToTime(time: Long): String {
             val date = Date(time)
-            val format = SimpleDateFormat("E hh:mm a \n 'on' \n MM/dd/yyyy")
+            val format = SimpleDateFormat("E h:mm a \n 'on' \n MM/dd/yyyy")
             return format.format(date)
         }
 
         fun convertDateToLong(date: String): Long {
             val df = SimpleDateFormat("yyyy.MM.dd HH:mm")
             return df.parse(date).time
+        }
+
+        fun covertLongToSimpleTime(time: Long): String{
+            val date = Date(time)
+            val format = SimpleDateFormat("h:mm a")
+            return format.format(date)
         }
 
         fun currentTimeToLong(): Long {
