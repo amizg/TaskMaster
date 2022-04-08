@@ -194,6 +194,13 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 
     //popup for adding task
     private fun addTaskBox() {
+        //Reset Dates for next task
+        selectedDay = 0
+        selectedMonth = 0
+        selectedYear = 0
+        selectedHour = 0
+        selectedMinute = 0
+
         //For the outer alert box
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.alert_box_addtask, null)

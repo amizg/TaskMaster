@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         fun covertLongToSimpleTime(time: Long): String{
             val date = Date(time)
-            val format = SimpleDateFormat("h:mm a")
+            val format = SimpleDateFormat("h:mm a \n M/dd")
             return format.format(date)
         }
 
