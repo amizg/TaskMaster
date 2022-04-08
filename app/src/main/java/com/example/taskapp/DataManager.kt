@@ -15,7 +15,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 //    tasks: (id, card_id, name, description, deadline, created)
     companion object {
         private const val DB_NAME = "taskmaster"
-        private const val DB_VER = 1
+        private const val DB_VER = 2
 
         //card table
         private const val TBL_CARDS = "cards"
@@ -161,7 +161,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         tasks.clear()
         val db = this.readableDatabase
 
-        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS", null)
+        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TCOMPLETED = 0", null)
         if (cursorTasks.moveToFirst()) {
             do {
                 tasks.add(
@@ -199,7 +199,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         tasks.clear()
         val db = this.readableDatabase
 
-        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TCARD_ID = $cardId", null)
+        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TCARD_ID = $cardId ORDER BY $COL_TCOMPLETED ASC", null)
         if (cursorTasks.moveToFirst()) {
             do {
                 tasks.add(

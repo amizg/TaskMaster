@@ -59,6 +59,9 @@ class RecyclerAdapter(cid: Int, private val listener: OnItemClickListener) : Rec
         if(tasks[position].getDeadline() > 0){
             holder.timeText.text = MainActivity.covertLongToSimpleTime(tasks[position].getDeadline())
         }
+        if(tasks[position].getCompleted() == 1){
+            holder.timeText.text = "Completed"
+        }
     }
 
     override fun getItemCount(): Int {

@@ -172,6 +172,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         //Mark Tasks Complete button
         alertDialog.setPositiveButton("Mark Complete") { dialog, _ ->
             MainActivity.dm.markCompleted(tasks[pos].getTaskId(), tasks[pos].getCompleted(), tasks[pos])
+            refreshTasks()
             dialog.dismiss()
         }
 
@@ -184,7 +185,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         //Delete Btn
         alertDialog.setNeutralButton("Delete"){dialog, _ ->
             MainActivity.dm.deleteTask(tasks[pos].getTaskId())
-            addTaskRefresh()
+            refreshTasks()
             dialog.dismiss()
         }
         alertDialog.show()
@@ -225,7 +226,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 
             )
             println("here")
-            addTaskRefresh()
+            refreshTasks()
         }
         //Cancel
         alertDialog.setNegativeButton("") { dialog, _ ->
@@ -303,7 +304,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 
     //Refresh the recycler view upon adding task
     @SuppressLint("NotifyDataSetChanged")
-    private fun addTaskRefresh(){
+    private fun refreshTasks(){
         val adapter = RecyclerAdapter(cardId, this)
         val recyclerView: RecyclerView = requireView().findViewById(R.id.recycler_view)
 
