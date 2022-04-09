@@ -179,6 +179,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         //Edit Btn
         alertDialog.setNegativeButton("Edit"){dialog, _ ->
             //edit go here
+            editTaskBox(tasks[pos])
             dialog.dismiss()
         }
 
@@ -189,7 +190,54 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
             dialog.dismiss()
         }
         alertDialog.show()
+    }
+    private fun editTaskBox(task: Task){
+        //For the outer alert box
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.alert_box_edittask, null)
+        val taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
+        val taskDesc =  dialogLayout.findViewById<EditText>(R.id.taskDesc)
 
+        alertDialog.setTitle("Edit Task")
+        alertDialog.setView(dialogLayout)
+
+        //date pick button
+        val selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
+        val dateChosen: TextView = dialogLayout.findViewById(R.id.selectedDateText)
+
+        //Set outer variable for changing if needed
+        dateTextView = dateChosen
+
+        taskName.setText(task.getName())
+        taskDesc.setText(task.getDesc())
+
+        if (task.getDeadline() > 0){
+            dateChosen.text = MainActivity.convertLongToTime(task.getDeadline())
+        }
+
+        //Button for selecting a deadline
+        selectDateBtn.setOnClickListener{
+            pickDate()
+        }
+
+        //Confirm Task button
+        alertDialog.setPositiveButton("Confirm") { _, _ ->
+            MainActivity.dm.editTask(
+                taskName.text.toString(),
+                taskDesc.text.toString(),
+                dateCheck(),
+                task.getTaskId()
+            )
+            refreshTasks()
+        }
+        //Cancel
+        alertDialog.setNegativeButton("") { dialog, _ ->
+            dialog.dismiss()
+        }
+        alertDialog.setNeutralButton("Cancel"){dialog, _ ->
+            dialog.dismiss()
+        }
+        alertDialog.show()
     }
 
     //popup for adding task
@@ -230,9 +278,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 taskDesc.text.toString(),
                 dateCheck(),
                 0
-
             )
-            println("here")
             refreshTasks()
         }
         //Cancel

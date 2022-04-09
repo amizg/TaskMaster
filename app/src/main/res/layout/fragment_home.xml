@@ -7,23 +7,27 @@
     android:gravity="center"
     android:background="#EEEEEE"
     android:orientation="vertical"
-    tools:context=".Fragments.HomeFragment"
-    android:backgroundTint="#464B4B">
+    tools:context=".Fragments.HomeFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         app:cardCornerRadius="30dp"
-        android:elevation="15dp">
+        android:elevation="50dp"
+        android:backgroundTint="@color/offwhite">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"
-        android:textColor="#222222"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:elegantTextHeight="true"
+            android:paddingTop="15dp"
+            android:text="TaskMaster"
+            android:textColor="#222222"
+            android:textSize="40sp"
+            android:fontFamily="@font/orbitron"
+            android:textStyle="bold"/>
 
     </androidx.cardview.widget.CardView>
 
