@@ -7,18 +7,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEEEEE"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".Fragments.CardFragment"
-    android:backgroundTint="#464B4B">
+    >
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         app:cardCornerRadius="30dp"
-        android:elevation="10dp">
+        android:elevation="50dp"
+        android:backgroundTint="@color/offwhite">
 
     <RelativeLayout
         android:layout_width="match_parent"

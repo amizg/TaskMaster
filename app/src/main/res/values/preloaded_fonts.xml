@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/alatsi</item>
+        <item>@font/aleo_light</item>
+        <item>@font/amiri</item>
+        <item>@font/audiowide</item>
+        <item>@font/belgrano</item>
+        <item>@font/convergence</item>
+        <item>@font/orbitron</item>
+        <item>@font/titan_one</item>
+        <item>@font/unica_one</item>
+        <item>@font/viga</item>
+    </array>
+</resources>
