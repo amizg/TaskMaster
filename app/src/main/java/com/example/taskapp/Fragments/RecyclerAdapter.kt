@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,6 +62,12 @@ class RecyclerAdapter(cid: Int, private val listener: OnItemClickListener) : Rec
         }
         if(tasks[position].getCompleted() == 1){
             holder.timeText.text = "Completed"
+        }
+        if(tasks[position].getDeadline() < MainActivity.currentTimeToLong()) {
+            holder.timeText.setTextColor(Color.parseColor("#F44336"))
+        }
+        else if(tasks[position].getDeadline()-3600000 < MainActivity.currentTimeToLong()) {
+            holder.timeText.setTextColor(Color.parseColor("#FFAE42"))
         }
     }
 
