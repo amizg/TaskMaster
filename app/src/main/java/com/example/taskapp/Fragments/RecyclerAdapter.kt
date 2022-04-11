@@ -63,7 +63,7 @@ class RecyclerAdapter(cid: Int, private val listener: OnItemClickListener) : Rec
         if(tasks[position].getCompleted() == 1){
             holder.timeText.text = "Completed"
         }
-        //color tasks blue if they are due on this day of the week
+        //TODO: color tasks blue if they are due on this day of the week
 
 
         //color tasks red if they are overdue, orange if they are due in the next hour
