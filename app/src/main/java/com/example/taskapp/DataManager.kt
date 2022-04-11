@@ -222,7 +222,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
     fun markCompleted(tid: Int, completed: Int, task: Task){
         val values = ContentValues()
-        val db=this.writableDatabase
+        val db = this.writableDatabase
 /*        val completed = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TID= $tid", null)*/
 
         if (completed==0){
@@ -237,6 +237,13 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         }
         db.update(TBL_TASKS, values, "$COL_TID=?", arrayOf(tid.toString()))
         db.close()
+    }
+
+    fun clearCompleted(cardId: Int){
+        val db = this.writableDatabase
+
+        db.delete(TBL_TASKS, "$COL_TCOMPLETED=1 AND $COL_TCARD_ID=?", arrayOf(cardId.toString()))
+
     }
 
 }

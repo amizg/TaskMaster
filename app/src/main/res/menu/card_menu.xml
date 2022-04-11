@@ -3,12 +3,16 @@
 
     <item
         android:id="@+id/editCard"
-        android:title="Edit"
+        android:title="Edit Card"
         />
 
     <item
         android:id="@+id/deleteCard"
-        android:title="Delete"
+        android:title="Delete Card"
         />
 
+    <item
+        android:id="@+id/clearCompletedTasks"
+        android:title="Clear Completed Tasks"
+        />
 </menu>
