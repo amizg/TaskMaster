@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.taskapp.Fragments.RecyclerAdapter
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 //For debugging Log.d(TAG,"")
@@ -39,6 +40,12 @@ class MainActivity : AppCompatActivity() {
         fun covertLongToSimpleTime(time: Long): String{
             val date = Date(time)
             val format = SimpleDateFormat("MMM d \n h:mm a")
+            return format.format(date)
+        }
+
+        fun covertLongToSimpleDate(time: Long): String{
+            val date = Date(time)
+            val format = SimpleDateFormat("yyyyMMdd")
             return format.format(date)
         }
 

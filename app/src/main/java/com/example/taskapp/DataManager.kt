@@ -3,8 +3,9 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.view.View
-import androidx.core.content.contentValuesOf
+import java.time.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 //For debugging Log.d(TAG,"")
 private val TAG: String = DataManager::class.java.simpleName //Debugging tag
@@ -43,7 +44,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     //Execute SQL statements
     override fun onCreate(db: SQLiteDatabase?) {
         val createCardTable = "CREATE TABLE $TBL_CARDS($COL_CID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_CNAME TEXT)"
-        val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT(100), $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER, $COL_TCOMPLETED INTEGER)"
+        val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT(100), $COL_TDEADLINE LONG, $COL_TCREATED LONG, $COL_TCOMPLETED INTEGER)"
         db?.execSQL(createCardTable)
         db?.execSQL(createTaskTable)
     }
@@ -217,8 +218,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         }
         cursorTasks.close()
 
-        return tasks
         db.close()
+        return tasks
     }
     fun markCompleted(tid: Int, completed: Int, task: Task){
         val values = ContentValues()
@@ -237,6 +238,38 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         }
         db.update(TBL_TASKS, values, "$COL_TID=?", arrayOf(tid.toString()))
         db.close()
+    }
+
+    fun dagTasks(): ArrayList<Task>{
+
+        tasks.clear()
+        val db = this.readableDatabase
+
+        val date = Date()
+        val start = date.time
+        val end = date.time + 5184000
+
+        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TDEADLINE>$start AND $COL_TDEADLINE<$end OR $COL_TDEADLINE=0" , null)
+
+        if (cursorTasks.moveToFirst()) {
+            do {
+                tasks.add(
+                    Task(
+                        cursorTasks.getInt(0),
+                        cursorTasks.getInt(1),
+                        cursorTasks.getString(2),
+                        cursorTasks.getString(3),
+                        cursorTasks.getLong(4),
+                        cursorTasks.getLong(5),
+                        cursorTasks.getInt(6)
+                    )
+                )
+            } while (cursorTasks.moveToNext())
+        }
+        cursorTasks.close()
+
+        db.close()
+        return tasks
     }
 
 }
