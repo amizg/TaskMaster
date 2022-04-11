@@ -63,12 +63,17 @@ class RecyclerAdapter(cid: Int, private val listener: OnItemClickListener) : Rec
         if(tasks[position].getCompleted() == 1){
             holder.timeText.text = "Completed"
         }
+        //color tasks blue if they are due on this day of the week
+
+
+        //color tasks red if they are overdue, orange if they are due in the next hour
         if(tasks[position].getDeadline() < MainActivity.currentTimeToLong()) {
             holder.timeText.setTextColor(Color.parseColor("#F44336"))
         }
         else if(tasks[position].getDeadline()-3600000 < MainActivity.currentTimeToLong()) {
             holder.timeText.setTextColor(Color.parseColor("#FFAE42"))
         }
+
     }
 
     override fun getItemCount(): Int {
