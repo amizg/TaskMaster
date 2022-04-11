@@ -245,5 +245,9 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         db.delete(TBL_TASKS, "$COL_TCOMPLETED=1 AND $COL_TCARD_ID=?", arrayOf(cardId.toString()))
 
     }
+    fun clearAllComplete(){
+        val db = this.writableDatabase
 
+        db.delete(TBL_TASKS, "$COL_TCOMPLETED=?", arrayOf(1.toString()))
+    }
 }
