@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.view.View
 import androidx.core.content.contentValuesOf
+import java.time.DayOfWeek
 
 //For debugging Log.d(TAG,"")
 private val TAG: String = DataManager::class.java.simpleName //Debugging tag
@@ -31,6 +32,13 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         private const val COL_TDEADLINE = "deadline"
         private const val COL_TCREATED = "created"
         private const val COL_TCOMPLETED = "completed"
+        private const val COL_TMON = "monday"
+        private const val COL_TTUE = "tuesday"
+        private const val COL_TWED = "wednesday"
+        private const val COL_TTHU = "thursday"
+        private const val COL_TFRI = "friday"
+        private const val COL_TSAT = "saturday"
+        private const val COL_TSUN = "sunday"
     }
 
     //Primary array of card objects
@@ -43,7 +51,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     //Execute SQL statements
     override fun onCreate(db: SQLiteDatabase?) {
         val createCardTable = "CREATE TABLE $TBL_CARDS($COL_CID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_CNAME TEXT)"
-        val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT(100), $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER, $COL_TCOMPLETED INTEGER)"
+        val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT(100), $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER, $COL_TCOMPLETED INTEGER, $COL_TMON INTEGER, $COL_TTUE INTEGER, $COL_TWED INTEGER, $COL_TTHU INTEGER, $COL_TFRI INTEGER, $COL_TSAT INTEGER, $COL_TSUN INTEGER)"
         db?.execSQL(createCardTable)
         db?.execSQL(createTaskTable)
     }
@@ -56,7 +64,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         onCreate(db)
     }
 
-    //When DB_VER is incremented by 1, this will reset the entire database and its data
+    //When DB_VER is decremented by 1, this will reset the entire database and its data
     //dropping both tasks and cards table
     override fun onDowngrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TBL_CARDS")
@@ -96,7 +104,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
 
     //Adding a task to the database
-    fun addTask(card_id:Int, name:String, desc:String, deadline:Long, completed: Int){
+    fun addTask(card_id:Int, name:String, desc:String, deadline:Long, completed: Int, mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int){
         val values = ContentValues()
         values.put(COL_TCARD_ID, card_id)
         values.put(COL_TNAME, name)
@@ -104,13 +112,20 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         values.put(COL_TDEADLINE, deadline)
         values.put(COL_TCREATED, System.currentTimeMillis())
         values.put(COL_TCOMPLETED, completed) //get this from the xml
+        values.put(COL_TMON, mon)
+        values.put(COL_TTUE, tues)
+        values.put(COL_TWED, wed)
+        values.put(COL_TTHU, thu)
+        values.put(COL_TFRI, fri)
+        values.put(COL_TSAT, sat)
+        values.put(COL_TSUN, sun)
         val db = this.writableDatabase
         db.insert(TBL_TASKS, null, values)
         db.close()
     }
 
     //Edit contents of an existing task by TaskId
-    fun editTask(newTitle: String, newDesc: String, newDeadline: Long, taskId: Int){
+    fun editTask(newTitle: String, newDesc: String, newDeadline: Long, taskId: Int, mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int){
 
         val db = this.writableDatabase
         val values = ContentValues()
@@ -118,6 +133,13 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         values.put(COL_TNAME, newTitle)
         values.put(COL_TDESC, newDesc)
         values.put(COL_TDEADLINE, newDeadline)
+        values.put(COL_TMON, mon)
+        values.put(COL_TTUE, tues)
+        values.put(COL_TWED, wed)
+        values.put(COL_TTHU, thu)
+        values.put(COL_TFRI, fri)
+        values.put(COL_TSAT, sat)
+        values.put(COL_TSUN, sun)
 
         db.update(TBL_TASKS, values, "$COL_TID=?", arrayOf(taskId.toString()))
         db.close()
@@ -172,7 +194,15 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                         cursorTasks.getString(3),
                         cursorTasks.getLong(4),
                         cursorTasks.getLong(5),
-                        cursorTasks.getInt(6)
+                        cursorTasks.getInt(6),
+                        cursorTasks.getInt(7),
+                        cursorTasks.getInt(8),
+                        cursorTasks.getInt(9),
+                        cursorTasks.getInt(10),
+                        cursorTasks.getInt(11),
+                        cursorTasks.getInt(12),
+                        cursorTasks.getInt(13)
+
                     )
                 )
             } while (cursorTasks.moveToNext())
@@ -210,7 +240,14 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                         cursorTasks.getString(3),
                         cursorTasks.getLong(4),
                         cursorTasks.getLong(5),
-                        cursorTasks.getInt(6)
+                        cursorTasks.getInt(6),
+                        cursorTasks.getInt(7),
+                        cursorTasks.getInt(8),
+                        cursorTasks.getInt(9),
+                        cursorTasks.getInt(10),
+                        cursorTasks.getInt(11),
+                        cursorTasks.getInt(12),
+                        cursorTasks.getInt(13)
                     )
                 )
             } while (cursorTasks.moveToNext())

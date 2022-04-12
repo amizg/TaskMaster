@@ -205,11 +205,36 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         val selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
         val dateChosen: TextView = dialogLayout.findViewById(R.id.selectedDateText)
 
+        //vars to store days of the week
+        var mon = 0
+        var tue = 0
+        var wed = 0
+        var thu = 0
+        var fri = 0
+        var sat = 0
+        var sun = 0
+
+        val monCB: CheckBox = dialogLayout.findViewById(R.id.monCB)
+        val tueCB: CheckBox = dialogLayout.findViewById(R.id.tueCB)
+        val wedCB: CheckBox = dialogLayout.findViewById(R.id.wedCB)
+        val thuCB: CheckBox = dialogLayout.findViewById(R.id.thuCB)
+        val friCB: CheckBox = dialogLayout.findViewById(R.id.friCB)
+        val satCB: CheckBox = dialogLayout.findViewById(R.id.satCB)
+        val sunCB: CheckBox = dialogLayout.findViewById(R.id.sunCB)
+
         //Set outer variable for changing if needed
         dateTextView = dateChosen
 
         taskName.setText(task.getName())
         taskDesc.setText(task.getDesc())
+
+        monCB.isChecked = getDayState(task.mon)
+        tueCB.isChecked = getDayState(task.tue)
+        wedCB.isChecked = getDayState(task.wed)
+        thuCB.isChecked = getDayState(task.thu)
+        friCB.isChecked = getDayState(task.fri)
+        satCB.isChecked = getDayState(task.sat)
+        sunCB.isChecked = getDayState(task.sun)
 
         if (task.getDeadline() > 0){
             dateChosen.text = MainActivity.convertLongToTime(task.getDeadline())
@@ -222,11 +247,20 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 
         //Confirm Task button
         alertDialog.setPositiveButton("Confirm") { _, _ ->
+            //check status of checkboxes
+            if (monCB.isChecked) mon = 1
+            if (tueCB.isChecked) tue = 1
+            if (wedCB.isChecked) wed = 1
+            if (thuCB.isChecked) thu = 1
+            if (friCB.isChecked) fri = 1
+            if (satCB.isChecked) sat = 1
+            if (sunCB.isChecked) sun = 1
             MainActivity.dm.editTask(
                 taskName.text.toString(),
                 taskDesc.text.toString(),
                 dateCheck(),
-                task.getTaskId()
+                task.getTaskId(),
+                mon, tue, wed, thu, fri, sat, sun
             )
             refreshTasks()
         }
@@ -240,6 +274,10 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         alertDialog.show()
     }
 
+    fun getDayState(day: Int):Boolean{
+        return day==1
+    }
+
     //popup for adding task
     private fun addTaskBox() {
         //Reset Dates for next task
@@ -248,6 +286,15 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         selectedYear = 0
         selectedHour = 0
         selectedMinute = 0
+
+        //vars to store days of the week
+        var mon = 0
+        var tue = 0
+        var wed = 0
+        var thu = 0
+        var fri = 0
+        var sat = 0
+        var sun = 0
 
         //For the outer alert box
         val inflater = layoutInflater
@@ -262,6 +309,15 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         val selectDateBtn: Button = dialogLayout.findViewById(R.id.DateBtn)
         val dateChosen: TextView = dialogLayout.findViewById(R.id.selectedDateText)
 
+        //checkboxes for days of week
+        val monCB: CheckBox = dialogLayout.findViewById(R.id.monCB)
+        val tueCB: CheckBox = dialogLayout.findViewById(R.id.tueCB)
+        val wedCB: CheckBox = dialogLayout.findViewById(R.id.wedCB)
+        val thuCB: CheckBox = dialogLayout.findViewById(R.id.thuCB)
+        val friCB: CheckBox = dialogLayout.findViewById(R.id.friCB)
+        val satCB: CheckBox = dialogLayout.findViewById(R.id.satCB)
+        val sunCB: CheckBox = dialogLayout.findViewById(R.id.sunCB)
+
         //Set outer variable for changing if needed
         dateTextView = dateChosen
 
@@ -272,12 +328,21 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 
         //Confirm Task button
         alertDialog.setPositiveButton("Add Task") { _, _ ->
+            //check status of checkboxes
+            if (monCB.isChecked) mon = 1
+            if (tueCB.isChecked) tue = 1
+            if (wedCB.isChecked) wed = 1
+            if (thuCB.isChecked) thu = 1
+            if (friCB.isChecked) fri = 1
+            if (satCB.isChecked) sat = 1
+            if (sunCB.isChecked) sun = 1
             MainActivity.dm.addTask(
                 cardId,
                 taskName.text.toString(),
                 taskDesc.text.toString(),
                 dateCheck(),
-                0
+                0,
+                mon, tue, wed, thu, fri, sat, sun
             )
             refreshTasks()
         }
