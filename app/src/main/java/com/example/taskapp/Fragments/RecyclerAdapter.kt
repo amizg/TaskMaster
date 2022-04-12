@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Color
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,6 +58,8 @@ class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickL
         holder.taskDesc.text = tasks[position].getDesc()
         if(tasks[position].getDeadline() > 0){
             holder.timeText.text = MainActivity.covertLongToSimpleTime(tasks[position].getDeadline())
+            holder.timeText.gravity = Gravity.LEFT
+
         }
         if(tasks[position].getCompleted() == 1){
             holder.timeText.text = "Completed"
