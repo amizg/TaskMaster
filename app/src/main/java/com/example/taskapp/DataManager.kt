@@ -224,7 +224,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     fun markCompleted(tid: Int, completed: Int, task: Task){
         val values = ContentValues()
         val db=this.writableDatabase
-/*        val completed = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TID= $tid", null)*/
 
         if (completed==0){
             values.put(COL_TCOMPLETED, 1)
@@ -246,8 +245,13 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         val db = this.readableDatabase
 
         val date = Date()
-        val start = date.time
-        val end = date.time + 5184000
+        val start = getStartOfDay(date)
+        val end = getEndOfDay(date)
+
+        //TODO
+        // Clear completed from DAG
+        // Sort by time
+        // Design: leave out passed tasks?
 
         val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TDEADLINE>$start AND $COL_TDEADLINE<$end OR $COL_TDEADLINE=0" , null)
 
@@ -270,6 +274,26 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 
         db.close()
         return tasks
+    }
+
+    fun getStartOfDay(date: Date?): Long {
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar[Calendar.HOUR_OF_DAY] = 0
+        calendar[Calendar.MINUTE] = 0
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MILLISECOND] = 0
+        return calendar.timeInMillis
+    }
+
+    fun getEndOfDay(date: Date?): Long {
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar[Calendar.HOUR_OF_DAY] = 23
+        calendar[Calendar.MINUTE] = 59
+        calendar[Calendar.SECOND] = 59
+        calendar[Calendar.MILLISECOND] = 999
+        return calendar.timeInMillis
     }
 
 }

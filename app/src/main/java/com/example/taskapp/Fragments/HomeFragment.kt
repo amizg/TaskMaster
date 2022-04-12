@@ -29,11 +29,13 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
         val dagBtn: View = view.findViewById(R.id.dagBtn)
 
         dagBtn.setOnClickListener {
-            dayAtAGlace()
+            dayAtAGlance()
         }
     }
 
-    private fun dayAtAGlace(){
+    private fun dayAtAGlance(){
+
+        val tasks = MainActivity.dm.dagTasks()
 
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.alert_box_dag, null)
@@ -44,7 +46,7 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
         alertDialog.setTitle("")
 
         val recyclerView: RecyclerView = dialogLayout.findViewById(R.id.recycler)
-        val adapter = RecyclerAdapter(MainActivity.dm.dagTasks(), this)
+        val adapter = RecyclerAdapter(tasks, this)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -62,7 +64,7 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+
     }
 
 }

@@ -1,7 +1,5 @@
 package com.example.taskapp
 import android.os.Bundle
-import android.view.View
-import android.widget.CheckBox
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
@@ -9,6 +7,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.taskapp.Fragments.RecyclerAdapter
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.*
 
 //For debugging Log.d(TAG,"")
@@ -52,6 +52,8 @@ class MainActivity : AppCompatActivity() {
         fun currentTimeToLong(): Long {
             return System.currentTimeMillis()
         }
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
