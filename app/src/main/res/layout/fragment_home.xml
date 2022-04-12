@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="#EEEEEE"
     android:orientation="vertical"
     tools:context=".Fragments.HomeFragment">
 
@@ -16,7 +15,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/offwhite"
         android:elevation="50dp"
         app:cardCornerRadius="30dp">
 
@@ -28,7 +26,6 @@
             android:fontFamily="@font/orbitron"
             android:paddingTop="15dp"
             android:text="TaskMaster"
-            android:textColor="#222222"
             android:textSize="40sp"
             android:textStyle="bold" />
 
@@ -39,7 +36,6 @@
             android:layout_gravity="center_horizontal"
             android:text="Day at a Glance"
             android:layout_marginTop="100dp"
-            android:backgroundTint="@color/blue"
             />
 
     </androidx.cardview.widget.CardView>

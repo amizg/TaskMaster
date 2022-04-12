@@ -17,7 +17,6 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/offwhite"
         >
     <TextView
         android:id="@+id/taskName"
@@ -55,7 +54,6 @@
         android:layout_toEndOf="@id/taskName"
         android:gravity="center"
         android:textSize="16dp"
-        android:textColor="#878787"
         android:text="" />
 
 </RelativeLayout>
