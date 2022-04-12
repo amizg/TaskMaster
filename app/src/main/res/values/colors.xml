@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#706E6E</color>
-    <color name="purple_500">#5F5F5F</color>
-    <color name="purple_700">#7E7C7C</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="green_1">#4CAF50</color>
+    <color name="black">#121212</color>
+    <color name="white">#E7E7E7</color>
 
-<!--TaskMaster color scheme-->
-    <color name="offwhite">#E9E7E7</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="blue">#0B75CA</color>
+<!--TaskMaster day color scheme-->
+    <color name="primaryLight">#3D5A80</color>
+    <color name="primaryVariantLight">#1E3C65</color>
+    <color name="secondaryLight">#03DAC6</color>
+    <color name="secondaryVariantLight">#018786</color>
+    <color name="errorLight">#B00020</color>
 
+<!--TaskMaster night color scheme-->
+    <color name="primaryDark">#985AE4</color>
+    <color name="primaryVariantDark">#281A65</color>
+    <color name="secondaryDark">#03DAC6</color>
+    <color name="secondaryVariantDark">#018786</color>
+    <color name="errorDark">#CF6679</color>
 
 </resources>
