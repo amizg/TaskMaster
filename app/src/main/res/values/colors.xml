@@ -5,8 +5,8 @@
     <color name="white">#E7E7E7</color>
 
 <!--TaskMaster day color scheme-->
-    <color name="primaryLight">#6200EE</color>
-    <color name="primaryVariantLight">#3700B3</color>
+    <color name="primaryLight">#3D5A80</color>
+    <color name="primaryVariantLight">#1E3C65</color>
     <color name="secondaryLight">#03DAC6</color>
     <color name="secondaryVariantLight">#018786</color>
     <color name="errorLight">#B00020</color>
