@@ -12,22 +12,35 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/offwhite"
         android:elevation="50dp"
-        android:backgroundTint="@color/offwhite">
+        app:cardCornerRadius="30dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:elegantTextHeight="true"
+            android:fontFamily="@font/orbitron"
             android:paddingTop="15dp"
             android:text="TaskMaster"
             android:textColor="#222222"
             android:textSize="40sp"
-            android:fontFamily="@font/orbitron"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/dagBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Day at a Glance"
+            android:layout_marginTop="100dp"
+            android:backgroundTint="@color/blue"
+            />
 
     </androidx.cardview.widget.CardView>
 
