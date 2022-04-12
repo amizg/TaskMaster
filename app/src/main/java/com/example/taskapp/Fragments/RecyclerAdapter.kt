@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +61,17 @@ class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickL
         if(tasks[position].getCompleted() == 1){
             holder.timeText.text = "Completed"
         }
+        //TODO: color tasks blue if they are due on this day of the week
+
+
+        //color tasks red if they are overdue, orange if they are due in the next hour
+        if(tasks[position].getDeadline() < MainActivity.currentTimeToLong()) {
+            holder.timeText.setTextColor(Color.parseColor("#F44336"))
+        }
+        else if(tasks[position].getDeadline()-3600000 < MainActivity.currentTimeToLong()) {
+            holder.timeText.setTextColor(Color.parseColor("#FFAE42"))
+        }
+
     }
 
     override fun getItemCount(): Int {
