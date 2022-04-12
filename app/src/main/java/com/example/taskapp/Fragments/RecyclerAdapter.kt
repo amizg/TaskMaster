@@ -19,24 +19,22 @@ import java.util.*
 import kotlin.collections.ArrayList
 import javax.sql.RowSetListener
 
-class RecyclerAdapter(cid: Int, private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    private var cardId = cid
-    private var tasks: ArrayList<Task> = MainActivity.dm.getCardTasks(cardId)
+//    private var cardId = cid
+//    private var tasks: ArrayList<Task> = MainActivity.dm.getCardTasks(cardId)
+    var tasks = tasks
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 
-        var taskTitle: TextView
-        var taskDesc: TextView
-        var timeText: TextView
+        var taskTitle: TextView = itemView.findViewById(R.id.taskName)
+        var taskDesc: TextView = itemView.findViewById(R.id.taskDesc)
+        var timeText: TextView = itemView.findViewById(R.id.timeText)
 
 
         init {
-            taskTitle = itemView.findViewById(R.id.taskName)
-            taskDesc = itemView.findViewById(R.id.taskDesc)
-            timeText = itemView.findViewById(R.id.timeText)
             itemView.setOnClickListener(this)
         }
 
@@ -77,7 +75,6 @@ class RecyclerAdapter(cid: Int, private val listener: OnItemClickListener) : Rec
     }
 
     override fun getItemCount(): Int {
-        var tasks = MainActivity.dm.getCardTasks(cardId)
         return tasks.size
     }
 

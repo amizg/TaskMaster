@@ -71,7 +71,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
-        val adapter = RecyclerAdapter(cardId, this)
+        val adapter = RecyclerAdapter(MainActivity.dm.getCardTasks(cardId), this)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -380,7 +380,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     //Refresh the recycler view upon adding task
     @SuppressLint("NotifyDataSetChanged")
     private fun refreshTasks(){
-        val adapter = RecyclerAdapter(cardId, this)
+        val adapter = RecyclerAdapter(MainActivity.dm.getCardTasks(cardId), this)
         val recyclerView: RecyclerView = requireView().findViewById(R.id.recycler_view)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
