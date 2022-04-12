@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<!--TaskMaster color scheme-->
-    <color name="offwhite">#E9E7E7</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="blue">#2A7ABA</color>
-    <color name="gray1">#706E6E</color>
-    <color name="gray2">#5F5F5F</color>
-    <color name="gray3">#7E7C7C</color>
+    <color name="black">#121212</color>
+    <color name="white">#E7E7E7</color>
+
+<!--TaskMaster day color scheme-->
+    <color name="primaryLight">#6200EE</color>
+    <color name="primaryVariantLight">#3700B3</color>
+    <color name="secondaryLight">#03DAC6</color>
+    <color name="secondaryVariantLight">#018786</color>
+    <color name="errorLight">#B00020</color>
+
+<!--TaskMaster night color scheme-->
+    <color name="primaryDark">#985AE4</color>
+    <color name="primaryVariantDark">#281A65</color>
+    <color name="secondaryDark">#03DAC6</color>
+    <color name="secondaryVariantDark">#018786</color>
+    <color name="errorDark">#CF6679</color>
 
 </resources>
