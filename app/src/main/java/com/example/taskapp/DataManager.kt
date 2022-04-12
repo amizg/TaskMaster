@@ -248,12 +248,13 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         val start = getStartOfDay(date)
         val end = getEndOfDay(date)
 
-        //TODO
-        // Clear completed from DAG
-        // Sort by time
+        // TODO ????????????
         // Design: leave out passed tasks?
+        // Call "Day Ahead" or "Tasks for Today"?
 
-        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TDEADLINE>$start AND $COL_TDEADLINE<$end OR $COL_TDEADLINE=0" , null)
+        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TCOMPLETED=0 AND " +
+                                            "$COL_TDEADLINE>$start AND $COL_TDEADLINE<$end OR $COL_TDEADLINE=0 " +
+                                             "ORDER BY $COL_TDEADLINE = 0, $COL_TDEADLINE ASC, $COL_TNAME ASC", null)
 
         if (cursorTasks.moveToFirst()) {
             do {
@@ -276,7 +277,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         return tasks
     }
 
-    fun getStartOfDay(date: Date?): Long {
+    fun getStartOfDay(date: Date): Long {
         val calendar = Calendar.getInstance()
         calendar.time = date
         calendar[Calendar.HOUR_OF_DAY] = 0
@@ -286,7 +287,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         return calendar.timeInMillis
     }
 
-    fun getEndOfDay(date: Date?): Long {
+    fun getEndOfDay(date: Date): Long {
         val calendar = Calendar.getInstance()
         calendar.time = date
         calendar[Calendar.HOUR_OF_DAY] = 23
