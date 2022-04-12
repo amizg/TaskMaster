@@ -48,7 +48,12 @@ class AddCardFragment : Fragment() {
             refreshCard()
         }
 
-        alertDialog.setNegativeButton("Cancel") { _, _ ->
+        alertDialog.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        alertDialog.setNeutralButton(""){dialog, _ ->
+            dialog.dismiss()
         }
         alertDialog.show()
     }
