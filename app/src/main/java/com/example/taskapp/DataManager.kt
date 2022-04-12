@@ -223,7 +223,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
     fun markCompleted(tid: Int, completed: Int, task: Task){
         val values = ContentValues()
-        val db=this.writableDatabase
+
+        val db = this.writableDatabase
 
         if (completed==0){
             values.put(COL_TCOMPLETED, 1)
@@ -239,6 +240,17 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         db.close()
     }
 
+    fun clearCompleted(cardId: Int){
+        val db = this.writableDatabase
+
+        db.delete(TBL_TASKS, "$COL_TCOMPLETED=1 AND $COL_TCARD_ID=?", arrayOf(cardId.toString()))
+
+    }
+    fun clearAllComplete(){
+        val db = this.writableDatabase
+
+        db.delete(TBL_TASKS, "$COL_TCOMPLETED=?", arrayOf(1.toString()))
+    }
     fun dagTasks(): ArrayList<Task>{
 
         tasks.clear()
