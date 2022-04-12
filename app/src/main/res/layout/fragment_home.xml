@@ -45,7 +45,6 @@
             android:text="Clear All Completed Tasks"
             android:translationY="500dp"
             android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/green_1"
             />
 
     </androidx.cardview.widget.CardView>
