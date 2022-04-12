@@ -19,7 +19,7 @@
         >
         <TextView
             android:id="@+id/taskName"
-            android:layout_width="240dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:gravity="center_vertical"
@@ -36,9 +36,9 @@
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@id/taskName"
             android:gravity="center"
-            android:textSize="16dp"
+            android:text=""
             android:textColor="#878787"
-            android:text="" />
+            android:textSize="16dp" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
