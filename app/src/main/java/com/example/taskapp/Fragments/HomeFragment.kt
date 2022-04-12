@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskapp.MainActivity
 import com.example.taskapp.R
-import com.example.taskapp.databinding.ActivityMainBinding.inflate
 
 
 
@@ -44,7 +43,8 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
         }
     }
 
-    }
+
+
 
     private fun dayAtAGlance(){
 
