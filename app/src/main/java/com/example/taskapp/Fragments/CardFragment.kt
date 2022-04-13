@@ -214,6 +214,10 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         var sat = 0
         var sun = 0
 
+        // repeatable
+        var rp = 0
+
+        // checkboxes
         val monCB: CheckBox = dialogLayout.findViewById(R.id.monCB)
         val tueCB: CheckBox = dialogLayout.findViewById(R.id.tueCB)
         val wedCB: CheckBox = dialogLayout.findViewById(R.id.wedCB)
@@ -248,18 +252,40 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         //Confirm Task button
         alertDialog.setPositiveButton("Confirm") { _, _ ->
             //check status of checkboxes
-            if (monCB.isChecked) mon = 1
-            if (tueCB.isChecked) tue = 1
-            if (wedCB.isChecked) wed = 1
-            if (thuCB.isChecked) thu = 1
-            if (friCB.isChecked) fri = 1
-            if (satCB.isChecked) sat = 1
-            if (sunCB.isChecked) sun = 1
+            if (monCB.isChecked) {
+                mon = 1
+                rp = 1
+            }
+            if (tueCB.isChecked){
+                tue = 1
+                rp = 1
+            }
+            if (wedCB.isChecked){
+                wed = 1
+                rp = 1
+            }
+            if (thuCB.isChecked){
+                thu = 1
+                rp = 1
+            }
+            if (friCB.isChecked){
+                fri = 1
+                rp = 1
+            }
+            if (satCB.isChecked){
+                sat = 1
+                rp = 1
+            }
+            if (sunCB.isChecked){
+                sun = 1
+                rp = 1
+            }
             MainActivity.dm.editTask(
                 taskName.text.toString(),
                 taskDesc.text.toString(),
                 dateCheck(),
                 task.getTaskId(),
+                rp,
                 mon, tue, wed, thu, fri, sat, sun
             )
             refreshTasks()
@@ -286,6 +312,9 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         selectedYear = 0
         selectedHour = 0
         selectedMinute = 0
+
+        // repeatable
+        var rp = 0
 
         //vars to store days of the week
         var mon = 0
@@ -329,19 +358,41 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         //Confirm Task button
         alertDialog.setPositiveButton("Add Task") { _, _ ->
             //check status of checkboxes
-            if (monCB.isChecked) mon = 1
-            if (tueCB.isChecked) tue = 1
-            if (wedCB.isChecked) wed = 1
-            if (thuCB.isChecked) thu = 1
-            if (friCB.isChecked) fri = 1
-            if (satCB.isChecked) sat = 1
-            if (sunCB.isChecked) sun = 1
+            if (monCB.isChecked){
+                mon = 1
+                rp = 1
+            }
+            if (tueCB.isChecked){
+                tue = 1
+                rp = 1
+            }
+            if (wedCB.isChecked){
+                wed = 1
+                rp = 1
+            }
+            if (thuCB.isChecked){
+                thu = 1
+                rp = 1
+            }
+            if (friCB.isChecked){
+                fri = 1
+                rp = 1
+            }
+            if (satCB.isChecked){
+                sat = 1
+                rp = 1
+            }
+            if (sunCB.isChecked){
+                sun = 1
+                rp = 1
+            }
             MainActivity.dm.addTask(
                 cardId,
                 taskName.text.toString(),
                 taskDesc.text.toString(),
                 dateCheck(),
                 0,
+                rp,
                 mon, tue, wed, thu, fri, sat, sun
             )
             refreshTasks()
