@@ -344,7 +344,15 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                         cursorTasks.getString(3),
                         cursorTasks.getLong(4),
                         cursorTasks.getLong(5),
-                        cursorTasks.getInt(6)
+                        cursorTasks.getInt(6),
+                        cursorTasks.getInt(7),
+                        cursorTasks.getInt(8),
+                        cursorTasks.getInt(9),
+                        cursorTasks.getInt(10),
+                        cursorTasks.getInt(11),
+                        cursorTasks.getInt(12),
+                        cursorTasks.getInt(13),
+                        cursorTasks.getInt(14)
                     )
                 )
             } while (cursorTasks.moveToNext())
