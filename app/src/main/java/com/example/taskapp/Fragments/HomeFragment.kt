@@ -43,9 +43,6 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
         }
     }
 
-
-
-
     private fun dayAtAGlance(){
 
         val tasks = MainActivity.dm.dagTasks()
