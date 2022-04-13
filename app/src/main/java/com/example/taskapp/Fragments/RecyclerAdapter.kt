@@ -54,7 +54,7 @@ class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickL
         holder.taskDesc.text = tasks[position].getDesc()
         if(tasks[position].getDeadline() > 0){
             holder.timeText.text = MainActivity.covertLongToSimpleTime(tasks[position].getDeadline())
-            holder.timeText.gravity = Gravity.LEFT
+            //holder.timeText.gravity = Gravity.LEFT
 
         }
         if(tasks[position].getCompleted() == 1){
