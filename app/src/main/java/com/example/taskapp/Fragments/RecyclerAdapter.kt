@@ -1,5 +1,4 @@
 package com.example.taskapp.Fragments
-
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -9,8 +8,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import android.widget.AdapterView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskapp.MainActivity
@@ -18,7 +15,6 @@ import com.example.taskapp.R
 import com.example.taskapp.Task
 import java.util.*
 import kotlin.collections.ArrayList
-import javax.sql.RowSetListener
 
 class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
