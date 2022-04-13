@@ -8,8 +8,7 @@
     android:layout_margin="5dp"
     android:padding="20dp"
     app:cardElevation="5dp"
-    app:cardCornerRadius="10dp"
-    >
+    app:cardCornerRadius="10dp">
 
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,17 +16,17 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/offwhite"
         >
+
     <TextView
         android:id="@+id/taskName"
-        android:layout_width="240dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:gravity="center_vertical"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
         android:paddingTop="20dp"
+        android:paddingRight="20dp"
         android:text="Task Name"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -53,10 +52,10 @@
         android:layout_height="40sp"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@id/taskName"
-        android:gravity="center"
-        android:textSize="16dp"
+        android:gravity="left"
+        android:text=""
         android:textColor="#878787"
-        android:text="" />
+        android:textSize="16sp" />
 
 </RelativeLayout>
 </androidx.cardview.widget.CardView>

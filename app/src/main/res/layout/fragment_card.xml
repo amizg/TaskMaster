@@ -17,8 +17,7 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         app:cardCornerRadius="30dp"
-        android:elevation="50dp"
-        android:backgroundTint="@color/offwhite">
+        android:elevation="50dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,7 +30,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="55dp"
             android:text="Card"
-            android:textColor="#222222"
             android:textSize="30sp"
             android:singleLine="true"
             android:maxLength="16"/>
@@ -42,8 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/cardName"
-            android:text="Add Task"
-            android:textColor="@color/white"/>
+            android:text="Add Task" />
 
         <ImageView
             android:id="@+id/cardOptions"

@@ -3,6 +3,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import java.time.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -260,7 +261,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         }
         cursorTasks.close()
         db.close()
-
         return tasks
     }
 
@@ -289,8 +289,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 
     fun markCompleted(tid: Int, completed: Int, task: Task){
         val values = ContentValues()
-        val db=this.writableDatabase
-/*        val completed = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TID= $tid", null)*/
+
+        val db = this.writableDatabase
 
         if (completed==0){
             values.put(COL_TCOMPLETED, 1)
@@ -304,6 +304,75 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         }
         db.update(TBL_TASKS, values, "$COL_TID=?", arrayOf(tid.toString()))
         db.close()
+    }
+
+    fun clearCompleted(cardId: Int){
+        val db = this.writableDatabase
+
+        db.delete(TBL_TASKS, "$COL_TCOMPLETED=1 AND $COL_TCARD_ID=?", arrayOf(cardId.toString()))
+
+    }
+    fun clearAllComplete(){
+        val db = this.writableDatabase
+
+        db.delete(TBL_TASKS, "$COL_TCOMPLETED=?", arrayOf(1.toString()))
+    }
+    fun dagTasks(): ArrayList<Task>{
+
+        tasks.clear()
+        val db = this.readableDatabase
+
+        val date = Date()
+        val start = getStartOfDay(date)
+        val end = getEndOfDay(date)
+
+        // TODO ????????????
+        // Design: leave out passed tasks?
+        // Call "Day Ahead" or "Tasks for Today"?
+
+        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TCOMPLETED=0 AND " +
+                                            "$COL_TDEADLINE>$start AND $COL_TDEADLINE<$end OR $COL_TDEADLINE=0 " +
+                                             "ORDER BY $COL_TDEADLINE = 0, $COL_TDEADLINE ASC, $COL_TNAME ASC", null)
+
+        if (cursorTasks.moveToFirst()) {
+            do {
+                tasks.add(
+                    Task(
+                        cursorTasks.getInt(0),
+                        cursorTasks.getInt(1),
+                        cursorTasks.getString(2),
+                        cursorTasks.getString(3),
+                        cursorTasks.getLong(4),
+                        cursorTasks.getLong(5),
+                        cursorTasks.getInt(6)
+                    )
+                )
+            } while (cursorTasks.moveToNext())
+        }
+        cursorTasks.close()
+
+        db.close()
+        return tasks
+    }
+
+    fun getStartOfDay(date: Date): Long {
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar[Calendar.HOUR_OF_DAY] = 0
+        calendar[Calendar.MINUTE] = 0
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MILLISECOND] = 0
+        return calendar.timeInMillis
+    }
+
+    fun getEndOfDay(date: Date): Long {
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar[Calendar.HOUR_OF_DAY] = 23
+        calendar[Calendar.MINUTE] = 59
+        calendar[Calendar.SECOND] = 59
+        calendar[Calendar.MILLISECOND] = 999
+        return calendar.timeInMillis
     }
 
 }

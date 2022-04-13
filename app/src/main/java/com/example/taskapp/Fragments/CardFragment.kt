@@ -71,7 +71,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
-        val adapter = RecyclerAdapter(cardId, this)
+        val adapter = RecyclerAdapter(MainActivity.dm.getCardTasks(cardId), this)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -106,8 +106,10 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                         binding.cardName.text = editText.text.toString()
                     }
 
-                    alertDialog.setNegativeButton("Cancel") { _, _ ->
+                    alertDialog.setNegativeButton("Cancel") { dialog, _ ->
+                        dialog.dismiss()
                     }
+                    alertDialog.setNeutralButton(""){_,_ ->}
 
                     alertDialog.show()
                     true
@@ -126,6 +128,26 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                     alertDialog.setNegativeButton("No") { dialog, _ ->
                         dialog.dismiss()
                     }
+                    alertDialog.setNeutralButton(""){_,_ ->}
+
+                    alertDialog.show()
+                    true
+                }
+                R.id.clearCompletedTasks -> {
+                    val dialogLayout = inflater.inflate(R.layout.alert_box_confirmation, null)
+
+                    alertDialog.setView(dialogLayout)
+                    alertDialog.setTitle("Clear completed tasks?")
+
+                    alertDialog.setPositiveButton("Yes") { _, _ ->
+                        MainActivity.dm.clearCompleted(cardId)
+                        refreshTasks()
+                    }
+
+                    alertDialog.setNegativeButton("No") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    alertDialog.setNeutralButton(""){_,_ ->}
 
                     alertDialog.show()
                     true
@@ -474,7 +496,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     //Refresh the recycler view upon adding task
     @SuppressLint("NotifyDataSetChanged")
     private fun refreshTasks(){
-        val adapter = RecyclerAdapter(cardId, this)
+        val adapter = RecyclerAdapter(MainActivity.dm.getCardTasks(cardId), this)
         val recyclerView: RecyclerView = requireView().findViewById(R.id.recycler_view)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

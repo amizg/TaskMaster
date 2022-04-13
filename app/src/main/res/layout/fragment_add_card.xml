@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="#EEEEEE"
     tools:context=".AddCardFragment">
 
     <androidx.cardview.widget.CardView
@@ -14,16 +13,13 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         app:cardCornerRadius="30dp"
-        android:elevation="50dp"
-        android:backgroundTint="@color/offwhite">
+        android:elevation="50dp">
     <!-- Add Card Button -->
     <Button
         android:id="@+id/addCardBtn"
         android:layout_width="207dp"
         android:layout_height="109dp"
         android:layout_gravity="center"
-        android:backgroundTint="@color/black"
-        android:textColor="@color/white"
         android:tag="confirmAddCard"
         android:text="Add New Card"
         android:textSize="20sp"/>

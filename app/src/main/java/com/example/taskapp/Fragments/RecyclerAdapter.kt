@@ -1,5 +1,10 @@
 package com.example.taskapp.Fragments
-
+import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Context
+import android.graphics.Color
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,24 +16,22 @@ import com.example.taskapp.Task
 import java.util.*
 import kotlin.collections.ArrayList
 
-class RecyclerAdapter(cid: Int, private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    private var cardId = cid
-    private var tasks: ArrayList<Task> = MainActivity.dm.getCardTasks(cardId)
+//    private var cardId = cid
+//    private var tasks: ArrayList<Task> = MainActivity.dm.getCardTasks(cardId)
+    var tasks = tasks
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 
-        var taskTitle: TextView
-        var taskDesc: TextView
-        var timeText: TextView
+        var taskTitle: TextView = itemView.findViewById(R.id.taskName)
+        var taskDesc: TextView = itemView.findViewById(R.id.taskDesc)
+        var timeText: TextView = itemView.findViewById(R.id.timeText)
 
 
         init {
-            taskTitle = itemView.findViewById(R.id.taskName)
-            taskDesc = itemView.findViewById(R.id.taskDesc)
-            timeText = itemView.findViewById(R.id.timeText)
             itemView.setOnClickListener(this)
         }
 
@@ -51,14 +54,26 @@ class RecyclerAdapter(cid: Int, private val listener: OnItemClickListener) : Rec
         holder.taskDesc.text = tasks[position].getDesc()
         if(tasks[position].getDeadline() > 0){
             holder.timeText.text = MainActivity.covertLongToSimpleTime(tasks[position].getDeadline())
+            holder.timeText.gravity = Gravity.LEFT
+
         }
         if(tasks[position].getCompleted() == 1){
             holder.timeText.text = "Completed"
         }
+        //TODO: color tasks blue if they are due on this day of the week
+
+
+        //color tasks red if they are overdue, orange if they are due in the next hour
+        if(tasks[position].getDeadline() < MainActivity.currentTimeToLong()) {
+            holder.timeText.setTextColor(Color.parseColor("#F44336"))
+        }
+        else if(tasks[position].getDeadline()-3600000 < MainActivity.currentTimeToLong()) {
+            holder.timeText.setTextColor(Color.parseColor("#FFAE42"))
+        }
+
     }
 
     override fun getItemCount(): Int {
-        var tasks = MainActivity.dm.getCardTasks(cardId)
         return tasks.size
     }
 
