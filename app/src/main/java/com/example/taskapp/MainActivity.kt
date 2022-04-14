@@ -12,7 +12,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.taskapp.databinding.ActivityMainBinding
 import com.example.taskapp.notifications.*
+import com.example.taskapp.Fragments.RecyclerAdapter
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.*
 
 //For debugging Log.d(TAG,"")
@@ -22,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     // refresh function to add fragment changes
     companion object{
+        lateinit var rcy: RecyclerAdapter
         lateinit var adapter: ViewPagerAdapter
         lateinit var viewpager:ViewPager2
         lateinit var dm:DataManager
@@ -31,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         fun convertLongToTime(time: Long): String {
             val date = Date(time)
-            val format = SimpleDateFormat("E hh:mm a \n 'on' \n MM/dd/yyyy")
+            val format = SimpleDateFormat("E h:mm a \n 'on' \n MM/dd/yyyy")
             return format.format(date)
         }
 
@@ -40,9 +45,23 @@ class MainActivity : AppCompatActivity() {
             return df.parse(date).time
         }
 
+        fun covertLongToSimpleTime(time: Long): String{
+            val date = Date(time)
+            val format = SimpleDateFormat("MMM d \n h:mm a")
+            return format.format(date)
+        }
+
+        fun covertLongToSimpleDate(time: Long): String{
+            val date = Date(time)
+            val format = SimpleDateFormat("yyyyMMdd")
+            return format.format(date)
+        }
+
         fun currentTimeToLong(): Long {
             return System.currentTimeMillis()
         }
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
         //Declaring and setting up the database
         dm = DataManager(this)
-        alertBuilder = AlertDialog.Builder(this)
+        alertBuilder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
 
         //Initializing the view pager adapter
         adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
@@ -93,4 +112,5 @@ class MainActivity : AppCompatActivity() {
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
+
 }

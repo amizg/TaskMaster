@@ -3,40 +3,72 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/drawable-anydpi/ic_delete_task.xml" value="0.38385416666666666" />
-        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_addtask.xml" value="0.28351449275362317" />
-        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_blank.xml" value="0.24375" />
-        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_edittask.xml" value="0.36770833333333336" />
-        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_edittext.xml" value="0.28351449275362317" />
-        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/fragment_add_card.xml" value="0.27943840579710144" />
-        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/fragment_card.xml" value="0.1" />
-        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/item_task.xml" value="0.4" />
-        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/menu/task_menu.xml" value="0.36770833333333336" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.25364583333333335" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/drawable/ic_card_options.xml" value="0.3828125" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/drawable/ic_delete_task.xml" value="0.3828125" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/drawable/ic_edit_task.xml" value="0.3828125" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/drawable/ic_launcher_background.xml" value="0.25364583333333335" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/drawable/ic_task_options.xml" value="0.3828125" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/alert_box_addtask.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/alert_box_blank.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/alert_box_confirmation.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/alert_box_dag.xml" value="0.20520833333333333" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/alert_box_editcard.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/alert_box_edittask.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/alert_box_edittext.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/dag_item_task.xml" value="0.20520833333333333" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/expand_task_view.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/fragment_add_card.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/fragment_card.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/layout/item_task.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/menu/card_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/menu/task_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_addtask.xml" value="0.4" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_edittask.xml" value="0.2826086956521739" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/expand_task_view.xml" value="0.36770833333333336" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/menu/card_menu.xml" value="0.36770833333333336" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/activity_main.xml" value="0.22" />
-        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/alert_box.xml" value="1.1104651162790697" />
-        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/alert_box_addtask.xml" value="0.3359375" />
-        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/alert_box_confirmation.xml" value="0.22083333333333333" />
-        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/alert_box_edittext.xml" value="0.1" />
-        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/alert_layout.xml" value="0.3359375" />
-        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/expand_task_view.xml" value="0.3359375" />
-        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/fragment_add_card.xml" value="0.128125" />
+        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/alert_box_addtask.xml" value="0.254981884057971" />
+        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/alert_box_blank.xml" value="0.254981884057971" />
+        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/alert_box_confirmation.xml" value="0.254981884057971" />
+        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/alert_box_edittask.xml" value="0.30434782608695654" />
+        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/alert_box_edittext.xml" value="0.254981884057971" />
+        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/expand_task_view.xml" value="0.1308876811594203" />
+        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/fragment_add_card.xml" value="0.30434782608695654" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/fragment_blank.xml" value="0.17864583333333334" />
-        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/fragment_card.xml" value="0.25" />
+        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/fragment_card.xml" value="0.31657608695652173" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/fragment_card_test.xml" value="0.2375" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/fragment_home.xml" value="0.18" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/fragment_test.xml" value="0.2375" />
-        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/item_task.xml" value="0.5" />
+        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/item_task.xml" value="0.178125" />
+        <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/item_task.xml" value="0.3029891304347826" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/item_view_pager.xml" value="0.2682291666666667" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/layout/layout.xml" value="0.3269927536231884" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.25729166666666664" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.25729166666666664" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/font/convergence.xml" value="0.21822916666666667" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/font/titan_one.xml" value="0.21822916666666667" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/layout/alert_box_addtask.xml" value="0.31354166666666666" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/layout/alert_box_blank.xml" value="0.31354166666666666" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/layout/alert_box_confirmation.xml" value="0.5027173913043478" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/layout/alert_box_dag.xml" value="0.21331521739130435" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/layout/alert_box_edittask.xml" value="0.31354166666666666" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/layout/alert_box_edittext.xml" value="0.31354166666666666" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/layout/dag_item_task.xml" value="0.21331521739130435" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/layout/expand_task_view.xml" value="0.2366412213740458" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/layout/fragment_add_card.xml" value="0.31354166666666666" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/layout/fragment_card.xml" value="0.31354166666666666" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/layout/item_task.xml" value="0.25" />
+        <entry key="..\:/Users/Elrek/Documents/GitHub/Capstone/app/src/main/res/menu/card_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Noah/Documents/GitHub/Capstone/app/src/main/res/layout/activity_main.xml" value="0.3625" />
-        <entry key="..\:/Users/Noah/Documents/GitHub/Capstone/app/src/main/res/layout/fragment_add_card.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/Noah/Documents/GitHub/Capstone/app/src/main/res/layout/fragment_card.xml" value="0.21" />
         <entry key="..\:/Users/Noah/Documents/GitHub/Capstone/app/src/main/res/layout/fragment_home.xml" value="0.203125" />
-        <entry key="..\:/Users/Noah/Documents/GitHub/Capstone/app/src/main/res/layout/item_task.xml" value="0.25" />
       </map>
     </option>
   </component>

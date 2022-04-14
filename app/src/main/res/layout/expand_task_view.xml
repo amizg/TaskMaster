@@ -10,32 +10,26 @@
         android:layout_height="wrap_content"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:hint="Title"/>
+        android:hint="@string/title"/>
 
     <TextView
         android:id="@+id/taskDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/taskName"
-        android:textSize="20dp"
-        android:hint="Description"/>
+        android:paddingTop="5dp"
+        android:hint="@string/description"
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/selectedDateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/taskDesc"
-        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:text=""
         android:textSize="24sp" />
 
-<!--    <Button-->
-<!--        android:id="@+id/editTaskBtn"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/selectedDateText"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:text="Edit Task" />-->
 </RelativeLayout>

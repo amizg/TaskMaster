@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/editCard"
+        android:title="Edit Card"
+        />
+
+    <item
+        android:id="@+id/deleteCard"
+        android:title="Delete Card"
+        />
+
+    <item
+        android:id="@+id/clearCompletedTasks"
+        android:title="Clear Completed Tasks"
+        />
+</menu>

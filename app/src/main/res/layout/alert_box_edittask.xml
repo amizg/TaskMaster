@@ -8,14 +8,16 @@
         android:id="@+id/taskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="New Title"/>
+        android:text=""
+        android:singleLine="true"
+        android:maxLength="16"/>
 
     <EditText
         android:id="@+id/taskDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/taskName"
-        android:hint="New Description"/>
+        android:text=""/>
 
     <Button
         android:id="@+id/DateBtn"
@@ -35,6 +37,64 @@
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text=""
-        android:textSize="30dp" />
+        android:textSize="30sp" />
+
+    <CheckBox
+        android:id="@+id/monCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mon"
+        android:layout_below="@+id/selectedDateText"
+        android:layout_toLeftOf="@id/tueCB"/>
+
+    <CheckBox
+        android:id="@+id/tueCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tue"
+        android:layout_below="@+id/selectedDateText"
+        android:layout_toLeftOf="@id/wedCB"/>
+
+    <CheckBox
+        android:id="@+id/wedCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wed"
+        android:layout_below="@+id/selectedDateText"
+        android:layout_centerHorizontal="true"/>
+
+    <CheckBox
+        android:id="@+id/thuCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thu"
+        android:layout_below="@+id/selectedDateText"
+        android:layout_toRightOf="@+id/wedCB"/>
+
+    <CheckBox
+        android:id="@+id/friCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fri"
+        android:layout_below="@+id/selectedDateText"
+        android:layout_toRightOf="@+id/thuCB"/>
+
+    <CheckBox
+        android:id="@+id/satCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sat"
+        android:layout_below="@+id/tueCB"
+        android:layout_toRightOf="@id/monCB"
+        android:layout_marginStart="30dp"/>
+
+    <CheckBox
+        android:id="@+id/sunCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sun"
+        android:layout_below="@id/tueCB"
+        android:layout_toRightOf="@+id/satCB"
+        android:layout_marginStart="10dp"/>
 
 </RelativeLayout>
