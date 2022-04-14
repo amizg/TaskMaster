@@ -35,6 +35,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         private const val COL_TCREATED = "created"
         private const val COL_TCOMPLETED = "completed"
         private const val COL_TRP = "repeat"
+        private const val COL_TNOTIF = "notified"
         private const val COL_TMON = "monday"
         private const val COL_TTUE = "tuesday"
         private const val COL_TWED = "wednesday"
@@ -56,8 +57,9 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     override fun onCreate(db: SQLiteDatabase?) {
         val createCardTable = "CREATE TABLE $TBL_CARDS($COL_CID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_CNAME TEXT)"
         val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT(100)," +
-                " $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER, $COL_TCOMPLETED INTEGER, $COL_TRP INTEGER, $COL_TMON INTEGER, $COL_TTUE INTEGER, $COL_TWED INTEGER, " +
-                "$COL_TTHU INTEGER, $COL_TFRI INTEGER, $COL_TSAT INTEGER, $COL_TSUN INTEGER, $COL_TLASTCOMPLETED INTEGER)"
+                " $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER, $COL_TCOMPLETED INTEGER, $COL_TRP INTEGER, $COL_TNOTIF INTEGER, $COL_TMON INTEGER, $COL_TTUE INTEGER, $COL_TWED INTEGER, " +
+                "$COL_TTHU INTEGER, $COL_TFRI INTEGER, $COL_TSAT INTEGER, $COL_TSUN INTEGER)"
+
         db?.execSQL(createCardTable)
         db?.execSQL(createTaskTable)
     }
@@ -110,7 +112,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
 
     //Adding a task to the database
-    fun addTask(card_id:Int, name:String, desc:String, deadline:Long, completed: Int, rp: Int, mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int){
+    fun addTask(card_id:Int, name:String, desc:String, deadline:Long, completed: Int, rp: Int, notif: Int, mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int){
         val values = ContentValues()
         values.put(COL_TCARD_ID, card_id)
         values.put(COL_TNAME, name)
@@ -119,6 +121,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         values.put(COL_TCREATED, System.currentTimeMillis())
         values.put(COL_TCOMPLETED, completed) //get this from the xml
         values.put(COL_TRP, rp)
+        values.put(COL_TNOTIF, notif)
         values.put(COL_TMON, mon)
         values.put(COL_TTUE, tues)
         values.put(COL_TWED, wed)
@@ -132,8 +135,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
 
     //Edit contents of an existing task by TaskId
-    fun editTask(newTitle: String, newDesc: String, newDeadline: Long, taskId: Int, completed: Int, rp: Int,
-                 mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int){
+    fun editTask(newTitle: String, newDesc: String, newDeadline: Long, taskId: Int, rp: Int, notif: Int, mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int){
+
 
         val db = this.writableDatabase
         val values = ContentValues()
@@ -143,6 +146,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         values.put(COL_TDEADLINE, newDeadline)
         values.put(COL_TCOMPLETED, completed)
         values.put(COL_TRP, rp)
+        values.put(COL_TNOTIF, notif)
         values.put(COL_TMON, mon)
         values.put(COL_TTUE, tues)
         values.put(COL_TWED, wed)
@@ -229,10 +233,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
             }
         }
         db.close()
-    }
-    //Returns an arraylist of tasks
-    fun getTasks():ArrayList<Task>{
-        return tasks
     }
 
     fun getCardTasks(cardId: Int): ArrayList<Task>{

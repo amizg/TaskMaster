@@ -1,5 +1,6 @@
 package com.example.taskapp.Fragments
 import android.app.AlertDialog
+import android.app.Application
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
@@ -9,10 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskapp.MainActivity
 import com.example.taskapp.R
 import com.example.taskapp.Task
+import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -29,7 +32,6 @@ class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickL
         var taskTitle: TextView = itemView.findViewById(R.id.taskName)
         var taskDesc: TextView = itemView.findViewById(R.id.taskDesc)
         var timeText: TextView = itemView.findViewById(R.id.timeText)
-
 
         init {
             itemView.setOnClickListener(this)
@@ -54,8 +56,6 @@ class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickL
         holder.taskDesc.text = tasks[position].getDesc()
         if(tasks[position].getDeadline() > 0){
             holder.timeText.text = MainActivity.covertLongToSimpleTime(tasks[position].getDeadline())
-            //holder.timeText.gravity = Gravity.LEFT
-
         }
         if(tasks[position].getCompleted() == 1){
             holder.timeText.text = "Completed"
@@ -64,14 +64,30 @@ class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickL
 
 
         //color tasks red if they are overdue, orange if they are due in the next hour
-        if(tasks[position].getDeadline() < MainActivity.currentTimeToLong()) {
+        if(tasks[position].getDeadline() < MainActivity.currentTimeToLong() && tasks[position].getDeadline() > 0) {
             holder.timeText.setTextColor(Color.parseColor("#F44336"))
+            if (tasks[position].getNotif() == 0) {
+                MainActivity.getmInstanceActivity()?.scheduleNotification(
+                    "Deadline Reached",
+                    tasks[position].getName(),
+                    MainActivity.currentTimeToLong() + 10000)
+                tasks[position].setNotif(1)
+            }
         }
-        else if(tasks[position].getDeadline()-3600000 < MainActivity.currentTimeToLong()) {
+        else if(tasks[position].getDeadline()-3600000 < MainActivity.currentTimeToLong() && tasks[position].getDeadline() > 0) {
             holder.timeText.setTextColor(Color.parseColor("#FFAE42"))
+
+            if (tasks[position].getNotif() != 2) {
+                MainActivity.getmInstanceActivity()?.scheduleNotification(
+                    "Deadline Approaching",
+                    tasks[position].getName(),
+                    MainActivity.currentTimeToLong() + 10000)
+                tasks[position].setNotif(2)
+            }
         }
 
     }
+
 
     override fun getItemCount(): Int {
         return tasks.size
