@@ -1,9 +1,17 @@
 package com.example.taskapp
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
+import com.example.taskapp.databinding.ActivityMainBinding
+import com.example.taskapp.notifications.*
 import com.example.taskapp.Fragments.RecyclerAdapter
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -71,6 +79,38 @@ class MainActivity : AppCompatActivity() {
         viewpager = findViewById(R.id.viewpager)
         viewpager.adapter = adapter
 
+        createNotificationChannel()
+        scheduleNotification()
+    }
+
+    private fun scheduleNotification() {
+        val intent = Intent(applicationContext, Notification::class.java)
+        val title = "testing"
+        val message = "123"
+        intent.putExtra(titleExtra, title)
+        intent.putExtra(messageExtra, message)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            notificationID,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val calendar = Calendar.getInstance()
+        //set time to like one minute after current instance to notify with text message
+        //val time = calendar.set()
+    }
+
+    private fun createNotificationChannel() {
+        val name = "Day at a Glance Channel"
+        val desc = "Category of Day at a Glance notifications"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(channelID, name, importance)
+        channel.description = desc
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 
 }
