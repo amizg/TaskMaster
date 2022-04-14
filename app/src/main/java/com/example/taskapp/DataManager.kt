@@ -18,7 +18,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 //    tasks: (id, card_id, name, description, deadline, created)
     companion object {
         private const val DB_NAME = "taskmaster"
-        private const val DB_VER = 2
+        private const val DB_VER = 1
 
         //card table
         private const val TBL_CARDS = "cards"
@@ -58,7 +58,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         val createCardTable = "CREATE TABLE $TBL_CARDS($COL_CID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_CNAME TEXT)"
         val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT(100)," +
                 " $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER, $COL_TCOMPLETED INTEGER, $COL_TRP INTEGER, $COL_TNOTIF INTEGER, $COL_TMON INTEGER, $COL_TTUE INTEGER, $COL_TWED INTEGER, " +
-                "$COL_TTHU INTEGER, $COL_TFRI INTEGER, $COL_TSAT INTEGER, $COL_TSUN INTEGER)"
+                "$COL_TTHU INTEGER, $COL_TFRI INTEGER, $COL_TSAT INTEGER, $COL_TSUN INTEGER, $COL_TLASTCOMPLETED INTEGER)"
 
         db?.execSQL(createCardTable)
         db?.execSQL(createTaskTable)
@@ -112,7 +112,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
 
     //Adding a task to the database
-    fun addTask(card_id:Int, name:String, desc:String, deadline:Long, completed: Int, rp: Int, notif: Int, mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int){
+    fun addTask(card_id:Int, name:String, desc:String, deadline:Long, completed: Int, rp: Int, notif: Int, mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int, dayLast: Int){
         val values = ContentValues()
         values.put(COL_TCARD_ID, card_id)
         values.put(COL_TNAME, name)
@@ -129,13 +129,15 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         values.put(COL_TFRI, fri)
         values.put(COL_TSAT, sat)
         values.put(COL_TSUN, sun)
+        values.put(COL_TLASTCOMPLETED, dayLast)
         val db = this.writableDatabase
         db.insert(TBL_TASKS, null, values)
         db.close()
     }
 
     //Edit contents of an existing task by TaskId
-    fun editTask(newTitle: String, newDesc: String, newDeadline: Long, taskId: Int, rp: Int, notif: Int, mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int){
+    fun editTask(newTitle: String, newDesc: String, newDeadline: Long, completed: Int, taskId: Int, rp: Int, notif: Int,
+                 mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int, dayLast: Int){
 
 
         val db = this.writableDatabase
@@ -154,6 +156,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         values.put(COL_TFRI, fri)
         values.put(COL_TSAT, sat)
         values.put(COL_TSUN, sun)
+        values.put(COL_TLASTCOMPLETED, dayLast)
 
         db.update(TBL_TASKS, values, "$COL_TID=?", arrayOf(taskId.toString()))
         db.close()
@@ -216,7 +219,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                         cursorTasks.getInt(12),
                         cursorTasks.getInt(13),
                         cursorTasks.getInt(14),
-                        cursorTasks.getInt(15)
+                        cursorTasks.getInt(15),
+                        cursorTasks.getInt(16)
                     )
                 )
             } while (cursorTasks.moveToNext())
@@ -279,8 +283,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                 if(getDay()!=Task.getLastCompleted())
                 {
                     // mark the task incomplete for the next time the task appears
-                    editTask(Task.getName(),Task.getDesc(),Task.getDeadline(),Task.getTaskId(),0,
-                        Task.rp,Task.mon,Task.tue,Task.wed,Task.thu,Task.fri,Task.sat,Task.sun)
+                    editTask(Task.getName(),Task.getDesc(),Task.getDeadline(),0 ,Task.getTaskId(),
+                        0 , Task.getNotif(), Task.mon,Task.tue,Task.wed,Task.thu,Task.fri,Task.sat,Task.sun, Task.getLastCompleted())
                 }
             }
         }
@@ -308,7 +312,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                         cursorTasks.getInt(12),
                         cursorTasks.getInt(13),
                         cursorTasks.getInt(14),
-                        cursorTasks.getInt(15)
+                        cursorTasks.getInt(15),
+                        cursorTasks.getInt(16)
                     )
                 )
             } while (cursorTasks.moveToNext())
@@ -409,7 +414,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                         cursorTasks.getInt(12),
                         cursorTasks.getInt(13),
                         cursorTasks.getInt(14),
-                        cursorTasks.getInt(15)
+                        cursorTasks.getInt(15),
+                        cursorTasks.getInt(16)
                     )
                 )
             } while (cursorTasks.moveToNext())

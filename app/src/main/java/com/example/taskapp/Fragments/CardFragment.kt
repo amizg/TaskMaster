@@ -310,10 +310,11 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 taskName.text.toString(),
                 taskDesc.text.toString(),
                 dateCheck(),
-                task.getTaskId(),
                 task.getCompleted(),
-                rp, 0
-                mon, tue, wed, thu, fri, sat, sun
+                task.getTaskId(),
+                rp, 0,
+                mon, tue, wed, thu, fri, sat, sun,
+                task.getLastCompleted()
             )
             refreshTasks()
         }
@@ -420,7 +421,8 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 dateCheck(),
                 0,
                 rp, 0,
-                mon, tue, wed, thu, fri, sat, sun
+                mon, tue, wed, thu, fri, sat, sun,
+                0
             )
             refreshTasks()
         }
