@@ -1,7 +1,8 @@
 package com.example.taskapp
 
 
-class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cmpltd: Int, repeatable: Int, notif: Int, mon: Int, tue: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int) {
+class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cmpltd: Int, repeatable: Int, notif: Int,
+           mon: Int, tue: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int, dayLast: Int) {
 
     private var taskId:Int = tid
     private var cardId:Int = cid
@@ -23,7 +24,7 @@ class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cm
 
     fun setNotif(set: Int){
         notified = set
-        MainActivity.dm.editTask(name, desc, deadline, taskId, rp, set, mon, tue, wed, thu, fri, sat, sun)
+        MainActivity.dm.editTask(name, desc, deadline, completed, taskId, rp, set, mon, tue, wed, thu, fri, sat, sun, dayLastCompleted)
     }
 
     fun getNotif(): Int{
