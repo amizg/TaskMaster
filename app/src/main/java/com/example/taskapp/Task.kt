@@ -19,8 +19,6 @@ class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cm
     var sat = sat
     var sun = sun
 
-
-
     fun getTaskId():Int{
         return taskId
     }

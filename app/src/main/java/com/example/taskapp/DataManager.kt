@@ -1,4 +1,5 @@
 package com.example.taskapp
+
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -17,7 +18,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 //    tasks: (id, card_id, name, description, deadline, created)
     companion object {
         private const val DB_NAME = "taskmaster"
-        private const val DB_VER = 1
+        private const val DB_VER = 2
 
         //card table
         private const val TBL_CARDS = "cards"
