@@ -1,6 +1,7 @@
 package com.example.taskapp
 
-class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cmpltd: Int, repeatable: Int, mon: Int, tue: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int) {
+class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cmpltd: Int, repeatable: Int,
+           mon: Int, tue: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int, dayLast: Int) {
     private var taskId:Int = tid
     private var cardId:Int = cid
     private var name:String = nm
@@ -8,6 +9,7 @@ class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cm
     private var deadline:Long = ddln
     private var created:Long = crtd
     private var completed:Int = cmpltd
+    private var dayLastCompleted: Int = dayLast
     var rp = repeatable
     var mon = mon
     var tue = tue
@@ -16,6 +18,8 @@ class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cm
     var fri = fri
     var sat = sat
     var sun = sun
+
+
 
     fun getTaskId():Int{
         return taskId
@@ -51,5 +55,11 @@ class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cm
     }
     fun setCompleted(cmpltd: Int){
         completed = cmpltd
+    }
+    fun setLastCompleted(day: Int){
+        dayLastCompleted = day
+    }
+    fun getLastCompleted(): Int{
+        return dayLastCompleted
     }
 }
