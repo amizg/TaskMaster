@@ -21,6 +21,8 @@ class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cm
     var sat = sat
     var sun = sun
 
+
+
     fun setNotif(set: Int){
         notified = set
         MainActivity.dm.editTask(name, desc, deadline, taskId, rp, set, mon, tue, wed, thu, fri, sat, sun)
@@ -29,6 +31,7 @@ class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cm
     fun getNotif(): Int{
         return notified
     }
+
 
     fun getTaskId():Int{
         return taskId
