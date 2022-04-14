@@ -1,6 +1,6 @@
 package com.example.taskapp
 
-class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cmpltd: Int, repeatable: Int, mon: Int, tue: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int) {
+class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cmpltd: Int, repeatable: Int, notif: Int, mon: Int, tue: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int) {
     private var taskId:Int = tid
     private var cardId:Int = cid
     private var name:String = nm
@@ -9,6 +9,7 @@ class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cm
     private var created:Long = crtd
     private var completed:Int = cmpltd
     var rp = repeatable
+    var notified: Int = notif
     var mon = mon
     var tue = tue
     var wed = wed
@@ -16,6 +17,16 @@ class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cm
     var fri = fri
     var sat = sat
     var sun = sun
+
+
+    fun setNotif(set: Int){
+        notified = set
+        MainActivity.dm.editTask(name, desc, deadline, taskId, rp, set, mon, tue, wed, thu, fri, sat, sun)
+    }
+
+    fun getNotif(): Int{
+        return notified
+    }
 
     fun getTaskId():Int{
         return taskId

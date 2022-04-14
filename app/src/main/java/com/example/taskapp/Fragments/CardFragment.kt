@@ -17,7 +17,9 @@ import com.example.taskapp.databinding.FragmentCardBinding
 import java.util.*
 import kotlin.collections.ArrayList
 import android.content.Context
+import android.os.Build
 import android.view.Gravity
+import androidx.annotation.RequiresApi
 
 private val TAG: String = CardFragment::class.java.simpleName //Debugging tag
 
@@ -67,6 +69,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         return view
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -88,6 +91,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     private fun popupCardMenu(v: View, c: Context) {
         val popupCardMenu = PopupMenu(c, v, Gravity.RIGHT, R.attr.actionOverflowMenuStyle, 0)
         val inflater = layoutInflater
@@ -307,7 +311,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 taskDesc.text.toString(),
                 dateCheck(),
                 task.getTaskId(),
-                rp,
+                rp, 0,
                 mon, tue, wed, thu, fri, sat, sun
             )
             refreshTasks()
@@ -414,7 +418,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 taskDesc.text.toString(),
                 dateCheck(),
                 0,
-                rp,
+                rp, 0,
                 mon, tue, wed, thu, fri, sat, sun
             )
             refreshTasks()
@@ -431,10 +435,11 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 
     //Check to see if user entered deadline
     private fun dateCheck(): Long {
-        return if (selectedYear == 0){
+        return if (selectedYear == 0) {
             0
-        } else
+        } else {
             MainActivity.convertDateToLong("$selectedYear.$selectedMonth.$selectedDay $selectedHour:$selectedMinute")
+        }
     }
 
     //Set up Calendar for getting current d/m/y
@@ -505,6 +510,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         recyclerView.recycledViewPool.clear()
         adapter.notifyDataSetChanged()
     }
+
     //For refreshing card fragments
     @SuppressLint("NotifyDataSetChanged")
     private fun refreshCard(pos: Int){
