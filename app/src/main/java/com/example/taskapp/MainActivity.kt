@@ -5,7 +5,9 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
@@ -13,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.taskapp.databinding.ActivityMainBinding
 import com.example.taskapp.notifications.*
 import com.example.taskapp.Fragments.RecyclerAdapter
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -79,7 +82,9 @@ class MainActivity : AppCompatActivity() {
         viewpager = findViewById(R.id.viewpager)
         viewpager.adapter = adapter
 
-        createNotificationChannel()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel()
+        }
         scheduleNotification()
     }
 
@@ -98,11 +103,33 @@ class MainActivity : AppCompatActivity() {
         )
 
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val calendar = Calendar.getInstance()
-        //set time to like one minute after current instance to notify with text message
-        //val time = calendar.set()
+        val time = currentTimeToLong() + 10000
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                time,
+                pendingIntent
+            )
+        }
+        showAlert(time, title, message)
     }
 
+    private fun showAlert(time: Long, title: String, message: String) {
+        val date = Date(time)
+        val dateFormat = android.text.format.DateFormat.getLongDateFormat(applicationContext)
+        val timeFormat = android.text.format.DateFormat.getTimeFormat(applicationContext)
+
+        AlertDialog.Builder(this)
+            .setTitle("Notification Scheduled")
+            .setMessage(
+                "Title: " + title +
+                "\nMessage: " + message +
+                "\nAt: " + dateFormat.format(date) + " " + timeFormat.format(date))
+            .setPositiveButton("Okay"){_,_ ->}
+            .show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel() {
         val name = "Day at a Glance Channel"
         val desc = "Category of Day at a Glance notifications"
