@@ -3,18 +3,20 @@
     <color name="black">#121212</color>
     <color name="white">#E7E7E7</color>
 
-<!--TaskMaster day color scheme-->
+    <!--TaskMaster day color scheme-->
     <color name="primaryLight">#3D5A80</color>
     <color name="primaryVariantLight">#1E3C65</color>
     <color name="secondaryLight">#03DAC6</color>
     <color name="secondaryVariantLight">#018786</color>
     <color name="errorLight">#B00020</color>
+    <color name="taskLight">#F5F5F5</color>
 
-<!--TaskMaster night color scheme-->
-    <color name="primaryDark">#985AE4</color>
-    <color name="primaryVariantDark">#281A65</color>
+    <!--TaskMaster night color scheme-->
+    <color name="primaryDark">#3D5A80</color>
+    <color name="primaryVariantDark">#1E3C65</color>
     <color name="secondaryDark">#03DAC6</color>
     <color name="secondaryVariantDark">#018786</color>
     <color name="errorDark">#CF6679</color>
+    <color name="taskDark">#303030</color>
 
 </resources>
