@@ -8,7 +8,9 @@
         android:id="@+id/taskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Title"/>
+        android:hint="Title"
+        android:singleLine="true"
+        android:maxLength="16"/>
 
     <EditText
         android:id="@+id/taskDesc"
