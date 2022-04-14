@@ -11,7 +11,7 @@
     <color name="errorLight">#B00020</color>
     <color name="taskLight">#F5F5F5</color>
 
-    <!--TaskMaster night color scheme-->
+<!--TaskMaster night color scheme-->
     <color name="primaryDark">#3D5A80</color>
     <color name="primaryVariantDark">#1E3C65</color>
     <color name="secondaryDark">#03DAC6</color>

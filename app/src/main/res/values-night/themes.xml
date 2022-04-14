@@ -3,7 +3,7 @@
     <style name="Theme.TaskApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primaryDark</item>
         <item name="colorPrimaryVariant">@color/primaryVariantDark</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
 
         <item name="android:colorBackground">@color/black</item>
         <item name="colorSurface">@color/black</item>
@@ -16,10 +16,6 @@
         <item name="colorSecondary">@color/secondaryDark</item>
         <item name="colorSecondaryVariant">@color/secondaryVariantDark</item>
         <item name="colorOnSecondary">@color/black</item>
-
-        <item name="android:selectedWeekBackgroundColor">@color/primaryDark</item>
-        <item name="android:weekNumberColor">@color/primaryDark</item>
-        <item name="android:weekSeparatorLineColor">@color/primaryDark</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>

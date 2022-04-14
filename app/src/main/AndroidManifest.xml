@@ -3,6 +3,7 @@
     package="com.example.taskapp">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TaskApp">
+        <receiver
+            android:name=".notifications.Notification"
+            android:enabled="true"/>
         <activity
             android:name=".MainActivity"
              android:exported="true">
