@@ -16,7 +16,8 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/WindowBackground">
+        style="@style/WindowBackground"
+        >
 
     <TextView
         android:id="@+id/taskName"

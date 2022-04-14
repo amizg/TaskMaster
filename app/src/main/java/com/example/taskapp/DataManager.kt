@@ -235,6 +235,39 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         db.close()
     }
 
+    fun getRoutines():ArrayList<Task>{
+        tasks.clear()
+        val db = this.readableDatabase
+        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TRP = 1", null)
+        if (cursorTasks.moveToFirst()) {
+            do {
+                tasks.add(
+                    Task(
+                        cursorTasks.getInt(0),
+                        cursorTasks.getInt(1),
+                        cursorTasks.getString(2),
+                        cursorTasks.getString(3),
+                        cursorTasks.getLong(4),
+                        cursorTasks.getLong(5),
+                        cursorTasks.getInt(6),
+                        cursorTasks.getInt(7),
+                        cursorTasks.getInt(8),
+                        cursorTasks.getInt(9),
+                        cursorTasks.getInt(10),
+                        cursorTasks.getInt(11),
+                        cursorTasks.getInt(12),
+                        cursorTasks.getInt(13),
+                        cursorTasks.getInt(14),
+                        cursorTasks.getInt(15)
+                    )
+                )
+            } while (cursorTasks.moveToNext())
+        }
+        cursorTasks.close()
+        db.close()
+        return tasks
+    }
+
     fun getCardTasks(cardId: Int): ArrayList<Task>{
         // check each task in the ArrayList
         for(Task in tasks)
@@ -383,6 +416,41 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         }
         cursorTasks.close()
 
+        db.close()
+        return tasks
+    }
+
+    fun routineTasks(): ArrayList<Task>{
+        tasks.clear()
+        val db = this.readableDatabase
+
+        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TRP=1", null)
+
+        if (cursorTasks.moveToFirst()) {
+            do {
+                tasks.add(
+                    Task(
+                        cursorTasks.getInt(0),
+                        cursorTasks.getInt(1),
+                        cursorTasks.getString(2),
+                        cursorTasks.getString(3),
+                        cursorTasks.getLong(4),
+                        cursorTasks.getLong(5),
+                        cursorTasks.getInt(6),
+                        cursorTasks.getInt(7),
+                        cursorTasks.getInt(8),
+                        cursorTasks.getInt(9),
+                        cursorTasks.getInt(10),
+                        cursorTasks.getInt(11),
+                        cursorTasks.getInt(12),
+                        cursorTasks.getInt(13),
+                        cursorTasks.getInt(14),
+                        cursorTasks.getInt(15)
+                    )
+                )
+            } while (cursorTasks.moveToNext())
+        }
+        cursorTasks.close()
         db.close()
         return tasks
     }

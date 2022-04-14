@@ -6,14 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import com.example.taskapp.Card
-import com.example.taskapp.ViewPagerAdapter
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskapp.MainActivity
-import com.example.taskapp.R
-
+import com.example.taskapp.*
 
 
 class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
@@ -34,13 +30,188 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
         clearAllCmpltBtn.setOnClickListener {
             MainActivity.dm.clearAllComplete()
             refreshAllCards()
-
         }
         val dagBtn: View = view.findViewById(R.id.dagBtn)
+        val routinesBtn: View = view.findViewById(R.id.routinesBtn)
 
         dagBtn.setOnClickListener {
             dayAtAGlance()
         }
+
+        routinesBtn.setOnClickListener {
+            viewRoutines()
+        }
+    }
+
+    private fun viewRoutineDetails(pos: Int){
+        // this functions also as the way to complete tasks for now
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.expand_task_view, null)
+        val taskName: TextView = dialogLayout.findViewById(R.id.taskName)
+        val taskDesc: TextView =  dialogLayout.findViewById(R.id.taskDesc)
+        val alertDialog = MainActivity.alertBuilder
+
+        alertDialog.setView(dialogLayout)
+        alertDialog.setTitle("")
+
+        //Refresh task list for indexing
+        val tasks:ArrayList<Task> = MainActivity.dm.getRoutines()
+
+        taskName.text = tasks[pos].getName()
+        taskDesc.text = tasks[pos].getDesc()
+
+        //Mark Tasks Complete button
+        alertDialog.setPositiveButton("Mark Complete") { dialog, _ ->
+            MainActivity.dm.markCompleted(tasks[pos].getTaskId(), tasks[pos].getCompleted(), tasks[pos])
+            refreshTasks()
+            dialog.dismiss()
+        }
+
+        //Edit Btn
+        alertDialog.setNegativeButton("Edit"){dialog, _ ->
+            //edit go here
+            editRoutineBox(tasks[pos])
+            dialog.dismiss()
+        }
+
+        //Delete Btn
+        alertDialog.setNeutralButton("Delete"){dialog, _ ->
+            MainActivity.dm.deleteTask(tasks[pos].getTaskId())
+            refreshTasks()
+            dialog.dismiss()
+        }
+        alertDialog.show()
+    }
+
+    private fun viewRoutines(){
+        val tasks = MainActivity.dm.routineTasks()
+
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.alert_box_routines, null)
+
+        val alertDialog = MainActivity.alertBuilder
+
+        alertDialog.setView(dialogLayout)
+        alertDialog.setTitle("")
+
+        val recyclerView: RecyclerView = dialogLayout.findViewById(R.id.recycler)
+        val adapter = RecyclerAdapter(tasks, this)
+
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+
+        alertDialog.setNeutralButton("") { dialog, _ ->
+            dialog.dismiss()
+        }
+        alertDialog.setNegativeButton("") { dialog, _ ->
+            dialog.dismiss()
+        }
+        alertDialog.setPositiveButton("Close"){dialog, _ ->
+            dialog.dismiss()
+        }
+        alertDialog.show()
+    }
+
+    private fun editRoutineBox(task: Task){
+        //For the outer alert box
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.alert_box_editroutine, null)
+        val taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
+        val taskDesc =  dialogLayout.findViewById<EditText>(R.id.taskDesc)
+        val alertDialog = MainActivity.alertBuilder
+        lateinit var dateTextView: TextView
+
+        alertDialog.setTitle("Edit Routine")
+        alertDialog.setView(dialogLayout)
+
+        //vars to store days of the week
+        var mon = 0
+        var tue = 0
+        var wed = 0
+        var thu = 0
+        var fri = 0
+        var sat = 0
+        var sun = 0
+
+        // repeatable
+        var rp = 0
+
+        // checkboxes
+        val monCB: CheckBox = dialogLayout.findViewById(R.id.monCB)
+        val tueCB: CheckBox = dialogLayout.findViewById(R.id.tueCB)
+        val wedCB: CheckBox = dialogLayout.findViewById(R.id.wedCB)
+        val thuCB: CheckBox = dialogLayout.findViewById(R.id.thuCB)
+        val friCB: CheckBox = dialogLayout.findViewById(R.id.friCB)
+        val satCB: CheckBox = dialogLayout.findViewById(R.id.satCB)
+        val sunCB: CheckBox = dialogLayout.findViewById(R.id.sunCB)
+
+        taskName.setText(task.getName())
+        taskDesc.setText(task.getDesc())
+
+        // verify existing repeating days
+        monCB.isChecked = getDayState(task.mon)
+        tueCB.isChecked = getDayState(task.tue)
+        wedCB.isChecked = getDayState(task.wed)
+        thuCB.isChecked = getDayState(task.thu)
+        friCB.isChecked = getDayState(task.fri)
+        satCB.isChecked = getDayState(task.sat)
+        sunCB.isChecked = getDayState(task.sun)
+
+        //Confirm Task button
+        alertDialog.setPositiveButton("Confirm") {_, _ ->
+            //check status of checkboxes
+            if (monCB.isChecked) {
+                mon = 1
+                rp = 1
+            }
+            if (tueCB.isChecked){
+                tue = 1
+                rp = 1
+            }
+            if (wedCB.isChecked){
+                wed = 1
+                rp = 1
+            }
+            if (thuCB.isChecked){
+                thu = 1
+                rp = 1
+            }
+            if (friCB.isChecked){
+                fri = 1
+                rp = 1
+            }
+            if (satCB.isChecked){
+                sat = 1
+                rp = 1
+            }
+            if (sunCB.isChecked){
+                sun = 1
+                rp = 1
+            }
+            MainActivity.dm.editTask(
+                taskName.text.toString(),
+                taskDesc.text.toString(),
+                task.getDeadline(),
+                task.getTaskId(),
+                task.getCompleted(),
+                rp,
+                mon, tue, wed, thu, fri, sat, sun
+            )
+            refreshTasks()
+            refreshAllCards()
+        }
+        //Cancel
+        alertDialog.setNegativeButton("") {dialog, _ ->
+            dialog.dismiss()
+        }
+        alertDialog.setNeutralButton("Cancel"){dialog, _ ->
+            dialog.dismiss()
+        }
+        alertDialog.show()
+    }
+
+    fun getDayState(day: Int):Boolean{
+        return day==1
     }
 
     private fun dayAtAGlance(){
@@ -73,9 +244,11 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
         alertDialog.show()
     }
 
-    override fun onItemClick(position: Int) {
 
+    override fun onItemClick(position: Int) {
+        viewRoutineDetails(position)
     }
+
         @SuppressLint("NotifyDataSetChanged")
     fun refreshAllCards(){
         MainActivity.adapter = ViewPagerAdapter(MainActivity.fm, lifecycle)
@@ -83,5 +256,18 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
         MainActivity.viewpager.adapter = MainActivity.adapter
 
         MainActivity.adapter.notifyDataSetChanged()
+    }
+
+    //Refresh the recycler view upon adding task
+    @SuppressLint("NotifyDataSetChanged")
+    private fun refreshTasks(){
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.alert_box_routines, null)
+        val adapter = RecyclerAdapter(MainActivity.dm.getRoutines(), this)
+        val recyclerView: RecyclerView = dialogLayout.findViewById(R.id.recycler)
+
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 }
