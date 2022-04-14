@@ -3,6 +3,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import java.time.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -41,6 +42,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         private const val COL_TFRI = "friday"
         private const val COL_TSAT = "saturday"
         private const val COL_TSUN = "sunday"
+        private const val COL_TLASTCOMPLETED = "last_completed"
     }
 
     //Primary array of card objects
@@ -56,6 +58,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT(100)," +
                 " $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER, $COL_TCOMPLETED INTEGER, $COL_TRP INTEGER, $COL_TNOTIF INTEGER, $COL_TMON INTEGER, $COL_TTUE INTEGER, $COL_TWED INTEGER, " +
                 "$COL_TTHU INTEGER, $COL_TFRI INTEGER, $COL_TSAT INTEGER, $COL_TSUN INTEGER)"
+
         db?.execSQL(createCardTable)
         db?.execSQL(createTaskTable)
     }
@@ -133,12 +136,14 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     //Edit contents of an existing task by TaskId
     fun editTask(newTitle: String, newDesc: String, newDeadline: Long, taskId: Int, rp: Int, notif: Int, mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int){
 
+
         val db = this.writableDatabase
         val values = ContentValues()
 
         values.put(COL_TNAME, newTitle)
         values.put(COL_TDESC, newDesc)
         values.put(COL_TDEADLINE, newDeadline)
+        values.put(COL_TCOMPLETED, completed)
         values.put(COL_TRP, rp)
         values.put(COL_TNOTIF, notif)
         values.put(COL_TMON, mon)
@@ -190,7 +195,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     fun readTask(){
         tasks.clear()
         val db = this.readableDatabase
-
         val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS", null)
         if (cursorTasks.moveToFirst()) {
             do {
@@ -231,6 +235,21 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
 
     fun getCardTasks(cardId: Int): ArrayList<Task>{
+        // check each task in the ArrayList
+        for(Task in tasks)
+        {
+            // check if task is repeatable and marked complete
+            if (Task.rp==1 && Task.getCompleted()==1)
+            {
+                // check if current day is not the same as the last day task was completed
+                if(getDay()!=Task.getLastCompleted())
+                {
+                    // mark the task incomplete for the next time the task appears
+                    editTask(Task.getName(),Task.getDesc(),Task.getDeadline(),Task.getTaskId(),0,
+                        Task.rp,Task.mon,Task.tue,Task.wed,Task.thu,Task.fri,Task.sat,Task.sun)
+                }
+            }
+        }
         tasks.clear()
         val db = this.readableDatabase
         val dayQuery = dayQuery(getDay())
@@ -296,12 +315,13 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         if (completed==0){
             values.put(COL_TCOMPLETED, 1)
             task.setCompleted(1)
-
+            // set last completed to current day
+            values.put(COL_TLASTCOMPLETED, getDay())
+            task.setLastCompleted(getDay())
         }
         else if (completed==1){
             values.put(COL_TCOMPLETED, 0)
             task.setCompleted(0)
-
         }
         db.update(TBL_TASKS, values, "$COL_TID=?", arrayOf(tid.toString()))
         db.close()
@@ -310,14 +330,15 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     fun clearCompleted(cardId: Int){
         val db = this.writableDatabase
 
-        db.delete(TBL_TASKS, "$COL_TCOMPLETED=1 AND $COL_TCARD_ID=?", arrayOf(cardId.toString()))
+        db.delete(TBL_TASKS, "$COL_TRP=0 AND $COL_TCOMPLETED=1 AND $COL_TCARD_ID=?", arrayOf(cardId.toString()))
 
     }
     fun clearAllComplete(){
         val db = this.writableDatabase
 
-        db.delete(TBL_TASKS, "$COL_TCOMPLETED=?", arrayOf(1.toString()))
+        db.delete(TBL_TASKS, "$COL_TRP=0 AND $COL_TCOMPLETED=?", arrayOf(1.toString()))
     }
+
     fun dagTasks(): ArrayList<Task>{
 
         tasks.clear()
@@ -327,7 +348,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         val start = getStartOfDay(date)
         val end = getEndOfDay(date)
 
-        // TODO ????????????
+        // TODO
         // Design: leave out passed tasks?
         // Call "Day Ahead" or "Tasks for Today"?
 
