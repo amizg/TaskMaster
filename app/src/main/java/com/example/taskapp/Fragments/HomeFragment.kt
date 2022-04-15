@@ -117,7 +117,6 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
         val taskName = dialogLayout.findViewById<EditText>(R.id.taskName)
         val taskDesc =  dialogLayout.findViewById<EditText>(R.id.taskDesc)
         val alertDialog = MainActivity.alertBuilder
-        lateinit var dateTextView: TextView
 
         alertDialog.setTitle("Edit Routine")
         alertDialog.setView(dialogLayout)
@@ -243,7 +242,6 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
         alertDialog.show()
     }
 
-
     override fun onItemClick(position: Int) {
         viewRoutineDetails(position)
     }
@@ -267,6 +265,8 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
+
+        recyclerView.recycledViewPool.clear()
         adapter.notifyDataSetChanged()
     }
 }
