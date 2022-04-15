@@ -91,6 +91,44 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         }
     }
 
+    override fun onItemClick(position: Int) {
+        viewTaskDetails(position)
+    }
+
+    //Called when the date is selected and the user selects "Ok"
+    override fun onDateSet(view:DatePicker?, year: Int, month: Int, dayOfMonth: Int){
+        selectedDay = dayOfMonth
+        selectedMonth = month + 1 //This 1 needs to be here until i figure out why it is always 1 month behind
+        selectedYear = year
+
+        getDateTimeCalendar()
+        TimePickerDialog(requireContext(), this, hour, minute, false).show()
+    }
+
+    //Called when the time is set and user selects "Ok"
+    override fun onTimeSet(view:TimePicker?, hourOfDay: Int, minute: Int ){
+        selectedHour = hourOfDay
+        selectedMinute = minute
+
+        val longDate = MainActivity.convertDateToLong("$selectedYear.$selectedMonth.$selectedDay $selectedHour:$selectedMinute")
+
+        dateTextView.text = MainActivity.convertLongToTime(longDate)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    // onClickListener for AddTask button
+    override fun onClick(view: View) {
+        when(view.id){
+            R.id.addTaskBtn -> {
+                addTaskBox()
+            }
+        }
+    }
+
     @SuppressLint("DiscouragedPrivateApi", "RtlHardcoded")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     //three dot menu, upper right corner of card(Edit Card, Clear Completed Tasks, Delete Card)
@@ -168,10 +206,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         val menu = popup.get(popupCardMenu)
         menu.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java)
             .invoke(menu, true)
-    }
-
-    override fun onItemClick(position: Int) {
-        viewTaskDetails(position)
     }
 
     // opens alertDialog with detailed task information
@@ -470,26 +504,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         DatePickerDialog(requireContext(), this, year, month, day).show()
     }
 
-    //Called when the date is selected and the user selects "Ok"
-    override fun onDateSet(view:DatePicker?, year: Int, month: Int, dayOfMonth: Int){
-        selectedDay = dayOfMonth
-        selectedMonth = month + 1 //This 1 needs to be here until i figure out why it is always 1 month behind
-        selectedYear = year
-
-        getDateTimeCalendar()
-        TimePickerDialog(requireContext(), this, hour, minute, false).show()
-    }
-
-    //Called when the time is set and user selects "Ok"
-    override fun onTimeSet(view:TimePicker?, hourOfDay: Int, minute: Int ){
-        selectedHour = hourOfDay
-        selectedMinute = minute
-
-        val longDate = MainActivity.convertDateToLong("$selectedYear.$selectedMonth.$selectedDay $selectedHour:$selectedMinute")
-
-        dateTextView.text = MainActivity.convertLongToTime(longDate)
-    }
-
     private fun findCardPos(cardId: Int, cardList: ArrayList<Card>): Int{
 
         for ((index, card) in cardList.withIndex()){
@@ -497,15 +511,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
             if (cardId == card.getId()){return index}
         }
         return 0
-    }
-
-    // onClickListener for AddTask button
-    override fun onClick(view: View) {
-       when(view.id){
-           R.id.addTaskBtn -> {
-               addTaskBox()
-           }
-       }
     }
 
     //Refresh the recycler view upon adding task
@@ -529,11 +534,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         MainActivity.viewpager.adapter = MainActivity.adapter
 
         MainActivity.adapter.notifyDataSetChanged()
-        MainActivity.viewpager.setCurrentItem(pos, true)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        MainActivity.viewpager.setCurrentItem(pos, false)
     }
 }

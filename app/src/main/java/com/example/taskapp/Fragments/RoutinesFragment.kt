@@ -41,7 +41,14 @@ class RoutinesFragment :
         view.setOnClickListener(this)
     }
 
-        private fun viewRoutineDetails(pos: Int){
+    override fun onItemClick(position: Int) {
+        viewRoutineDetails(position)
+    }
+
+    override fun onClick(p0: View?) {
+    }
+
+    private fun viewRoutineDetails(pos: Int){
         // this functions also as the way to complete tasks for now
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.expand_task_view, null)
@@ -165,7 +172,7 @@ class RoutinesFragment :
                 task.getLastCompleted()
             )
             refreshTasks()
-            refreshAllCards()
+            refreshCard(MainActivity.dm.readCards().size+3)
         }
         //Cancel
         alertDialog.setNegativeButton("") {dialog, _ ->
@@ -190,6 +197,17 @@ class RoutinesFragment :
         MainActivity.adapter.notifyDataSetChanged()
     }
 
+    //For refreshing card fragments
+    @SuppressLint("NotifyDataSetChanged")
+    private fun refreshCard(pos: Int){
+        MainActivity.adapter = ViewPagerAdapter(MainActivity.fm, lifecycle)
+        MainActivity.viewpager = MainActivity.viewpager.findViewById(R.id.viewpager)
+        MainActivity.viewpager.adapter = MainActivity.adapter
+
+        MainActivity.adapter.notifyDataSetChanged()
+        MainActivity.viewpager.setCurrentItem(pos, false)
+    }
+
     //Refresh the recycler view upon adding task
     @SuppressLint("NotifyDataSetChanged")
     private fun refreshTasks(){
@@ -201,12 +219,5 @@ class RoutinesFragment :
 
         recyclerView.recycledViewPool.clear()
         adapter.notifyDataSetChanged()
-    }
-
-    override fun onItemClick(position: Int) {
-        viewRoutineDetails(position)
-    }
-
-    override fun onClick(p0: View?) {
     }
 }

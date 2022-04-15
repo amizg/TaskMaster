@@ -19,6 +19,26 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        //Declaring and setting up the database
+        dm = DataManager(this)
+        alertBuilder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
+
+        //Initializing the view pager adapter
+        adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
+        fm = supportFragmentManager
+        //assigning the layout ViewPager2 to viewpager with the id of viewpager
+        viewpager = findViewById(R.id.viewpager)
+        viewpager.adapter = adapter
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel()
+        }
+    }
+
     // refresh function to add fragment changes
     companion object{
         lateinit var adapter: ViewPagerAdapter
@@ -49,26 +69,6 @@ class MainActivity : AppCompatActivity() {
 
         fun currentTimeToLong(): Long {
             return System.currentTimeMillis()
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        //Declaring and setting up the database
-        dm = DataManager(this)
-        alertBuilder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
-
-        //Initializing the view pager adapter
-        adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
-        fm = supportFragmentManager
-        //assigning the layout ViewPager2 to viewpager with the id of viewpager
-        viewpager = findViewById(R.id.viewpager)
-        viewpager.adapter = adapter
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel()
         }
     }
 

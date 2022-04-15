@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Clear All Completed Tasks"
-            android:translationY="500dp"
+            android:translationY="530dp"
             android:layout_gravity="center_horizontal"
             />
 
