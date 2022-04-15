@@ -61,7 +61,7 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
         taskDesc.text = tasks[pos].getDesc()
 
         //Mark Tasks Complete button
-        alertDialog.setPositiveButton("Back") {dialog, _ ->
+        alertDialog.setPositiveButton("Back") { dialog, _ ->
             dialog.dismiss()
         }
 
