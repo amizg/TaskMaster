@@ -23,6 +23,7 @@
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/menu/card_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Program Files (x86)/Capstone/app/src/main/res/menu/task_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/font/orbitron.xml" value="0.39791666666666664" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/activity_main.xml" value="0.21557971014492755" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_addtask.xml" value="0.4" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_blank.xml" value="0.20625" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_confirmation.xml" value="0.20625" />
@@ -32,9 +33,14 @@
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_edittext.xml" value="0.20625" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/alert_box_routines.xml" value="0.31145833333333334" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/expand_task_view.xml" value="0.36770833333333336" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/dag_item_task.xml" value="0.36770833333333336" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/expand_task_view.xml" value="0.36272040302267" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/fragment_add_card.xml" value="0.17617753623188406" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/fragment_home.xml" value="0.4" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/fragment_routines.xml" value="0.4" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/layout/item_task.xml" value="0.1" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/menu/card_menu.xml" value="0.36770833333333336" />
+        <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/menu/task_menu.xml" value="0.36770833333333336" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.38385416666666666" />
         <entry key="..\:/School/CSC483/Repo/Capstone/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.38385416666666666" />
         <entry key="..\:/Users/AdamMiz/Desktop/U-Mich/Winter2022/Capstone/TaskApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19895833333333332" />

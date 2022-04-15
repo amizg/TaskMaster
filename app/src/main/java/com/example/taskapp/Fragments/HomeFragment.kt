@@ -36,6 +36,9 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
         }
     }
 
+    override fun onItemClick(position: Int) {
+    }
+
     // opens alertDialog for Day at a Glance popup
     private fun dayAtAGlance(){
 
@@ -74,8 +77,5 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
         MainActivity.viewpager.adapter = MainActivity.adapter
 
         MainActivity.adapter.notifyDataSetChanged()
-    }
-
-    override fun onItemClick(position: Int) {
     }
 }
