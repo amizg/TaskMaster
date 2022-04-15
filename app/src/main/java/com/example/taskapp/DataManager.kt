@@ -262,7 +262,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                         cursorTasks.getInt(12),
                         cursorTasks.getInt(13),
                         cursorTasks.getInt(14),
-                        cursorTasks.getInt(15)
+                        cursorTasks.getInt(15),
+                        cursorTasks.getInt(16)
                     )
                 )
             } while (cursorTasks.moveToNext())
@@ -451,7 +452,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                         cursorTasks.getInt(12),
                         cursorTasks.getInt(13),
                         cursorTasks.getInt(14),
-                        cursorTasks.getInt(15)
+                        cursorTasks.getInt(15),
+                        cursorTasks.getInt(16)
                     )
                 )
             } while (cursorTasks.moveToNext())
