@@ -1,5 +1,6 @@
 package com.example.taskapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -44,8 +45,7 @@ class AddCardFragment : Fragment() {
 
         alertDialog.setPositiveButton("Enter") { _, _ ->
             MainActivity.dm.addCard(editText.text.toString())
-            //MainActivity.refresh(MainActivity.dm.getCards())
-            refreshCard()
+            refreshAllCards()
         }
 
         alertDialog.setNegativeButton("Cancel") { dialog, _ ->
@@ -58,13 +58,11 @@ class AddCardFragment : Fragment() {
         alertDialog.show()
     }
 
-    private fun refreshCard(){
+    @SuppressLint("NotifyDataSetChanged")
+    fun refreshAllCards(){
         MainActivity.adapter = ViewPagerAdapter(MainActivity.fm, lifecycle)
         MainActivity.viewpager = MainActivity.viewpager.findViewById(R.id.viewpager)
         MainActivity.viewpager.adapter = MainActivity.adapter
-
-        var pos = MainActivity.dm.getCards().size
-        MainActivity.adapter.notifyItemInserted(pos)
-        MainActivity.viewpager.currentItem = pos
+        MainActivity.adapter.notifyDataSetChanged()
     }
 }
