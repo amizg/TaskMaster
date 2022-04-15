@@ -42,7 +42,7 @@ class AddCardFragment : Fragment() {
 
         alertDialog.setPositiveButton("Enter") { _, _ ->
             MainActivity.dm.addCard(editText.text.toString())
-            refreshAllCards()
+            refreshCard(MainActivity.dm.readCards().size + 1)
         }
 
         alertDialog.setNegativeButton("Cancel") { dialog, _ ->
@@ -56,10 +56,12 @@ class AddCardFragment : Fragment() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun refreshAllCards(){
+    private fun refreshCard(pos: Int){
         MainActivity.adapter = ViewPagerAdapter(MainActivity.fm, lifecycle)
         MainActivity.viewpager = MainActivity.viewpager.findViewById(R.id.viewpager)
         MainActivity.viewpager.adapter = MainActivity.adapter
+
         MainActivity.adapter.notifyDataSetChanged()
+        MainActivity.viewpager.setCurrentItem(pos - 1, false)
     }
 }

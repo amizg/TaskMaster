@@ -172,7 +172,7 @@ class RoutinesFragment :
                 task.getLastCompleted()
             )
             refreshTasks()
-            refreshCard(MainActivity.dm.readCards().size+3)
+            refreshCard(MainActivity.dm.readCards().size + 3)
         }
         //Cancel
         alertDialog.setNegativeButton("") {dialog, _ ->
@@ -189,12 +189,14 @@ class RoutinesFragment :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun refreshAllCards(){
+    //For refreshing card fragments
+    private fun refreshCard(pos: Int){
         MainActivity.adapter = ViewPagerAdapter(MainActivity.fm, lifecycle)
         MainActivity.viewpager = MainActivity.viewpager.findViewById(R.id.viewpager)
         MainActivity.viewpager.adapter = MainActivity.adapter
 
         MainActivity.adapter.notifyDataSetChanged()
+        MainActivity.viewpager.setCurrentItem(pos, false)
     }
 
     //For refreshing card fragments
@@ -210,7 +212,7 @@ class RoutinesFragment :
 
     //Refresh the recycler view upon adding task
     @SuppressLint("NotifyDataSetChanged")
-    private fun refreshTasks(){
+    fun refreshTasks(){
         val adapter = RecyclerAdapter(MainActivity.dm.getRoutines(), this)
         val recyclerView: RecyclerView = requireView().findViewById(R.id.recycler_view)
 

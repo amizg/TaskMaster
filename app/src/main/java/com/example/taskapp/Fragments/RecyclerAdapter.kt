@@ -43,6 +43,7 @@ class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickL
     override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
         holder.taskTitle.text = tasks[position].getName()
         holder.taskDesc.text = tasks[position].getDesc()
+
         if(tasks[position].getDeadline() > 0){
             holder.timeText.text = MainActivity.convertLongToSimpleTime(tasks[position].getDeadline())
         }
