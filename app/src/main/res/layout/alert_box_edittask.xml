@@ -37,16 +37,35 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/DateBtn"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text=""
-        android:textSize="30sp" />
+        android:textSize="20sp" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="?android:attr/listDivider"
+        android:layout_below="@id/selectedDateText"/>
+
+    <TextView
+        android:id="@+id/routineDays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/divider"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Repeat on days:"
+        android:textSize="15sp" />
 
     <CheckBox
         android:id="@+id/monCB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Mon"
-        android:layout_below="@+id/selectedDateText"
+        android:layout_below="@+id/routineDays"
         android:layout_toLeftOf="@id/tueCB"/>
 
     <CheckBox
@@ -54,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tue"
-        android:layout_below="@+id/selectedDateText"
+        android:layout_below="@+id/routineDays"
         android:layout_toLeftOf="@id/wedCB"/>
 
     <CheckBox
@@ -62,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Wed"
-        android:layout_below="@+id/selectedDateText"
+        android:layout_below="@+id/routineDays"
         android:layout_centerHorizontal="true"/>
 
     <CheckBox
@@ -70,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Thu"
-        android:layout_below="@+id/selectedDateText"
+        android:layout_below="@+id/routineDays"
         android:layout_toRightOf="@+id/wedCB"/>
 
     <CheckBox
@@ -78,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Fri"
-        android:layout_below="@+id/selectedDateText"
+        android:layout_below="@+id/routineDays"
         android:layout_toRightOf="@+id/thuCB"/>
 
     <CheckBox
