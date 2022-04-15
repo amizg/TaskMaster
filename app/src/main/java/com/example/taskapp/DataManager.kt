@@ -4,8 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
-import java.time.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -380,21 +378,18 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
 
     fun dagTasks(): ArrayList<Task>{
-
         tasks.clear()
         val db = this.readableDatabase
 
         val date = Date()
         val start = getStartOfDay(date)
         val end = getEndOfDay(date)
-
-        // TODO
-        // Design: leave out passed tasks?
-        // Call "Day Ahead" or "Tasks for Today"?
+        val dayQuery = dayQuery(getDay())
 
         val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TCOMPLETED=0 AND " +
-                                            "$COL_TDEADLINE>$start AND $COL_TDEADLINE<$end OR $COL_TDEADLINE=0 " +
-                                             "ORDER BY $COL_TDEADLINE = 0, $COL_TDEADLINE ASC, $COL_TNAME ASC", null)
+                                            "(($COL_TDEADLINE>$start AND $COL_TDEADLINE<$end) OR $COL_TDEADLINE=0) AND " +
+                                            "(($dayQuery AND $COL_TRP = 1) OR $COL_TRP = 0) " +
+                                            "ORDER BY $COL_TDEADLINE = 0, $COL_TDEADLINE ASC, $COL_TNAME ASC", null)
 
         if (cursorTasks.moveToFirst()) {
             do {
@@ -427,11 +422,47 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         return tasks
     }
 
-    fun routineTasks(): ArrayList<Task>{
+    fun viewHiddenRoutines(cid: Int): ArrayList<Task>{
         tasks.clear()
         val db = this.readableDatabase
 
-        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TRP=1", null)
+        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TCARD_ID=$cid", null)
+
+        if (cursorTasks.moveToFirst()) {
+            do {
+                tasks.add(
+                    Task(
+                        cursorTasks.getInt(0),
+                        cursorTasks.getInt(1),
+                        cursorTasks.getString(2),
+                        cursorTasks.getString(3),
+                        cursorTasks.getLong(4),
+                        cursorTasks.getLong(5),
+                        cursorTasks.getInt(6),
+                        cursorTasks.getInt(7),
+                        cursorTasks.getInt(8),
+                        cursorTasks.getInt(9),
+                        cursorTasks.getInt(10),
+                        cursorTasks.getInt(11),
+                        cursorTasks.getInt(12),
+                        cursorTasks.getInt(13),
+                        cursorTasks.getInt(14),
+                        cursorTasks.getInt(15),
+                        cursorTasks.getInt(16)
+                    )
+                )
+            } while (cursorTasks.moveToNext())
+        }
+        cursorTasks.close()
+        db.close()
+        return tasks
+    }
+
+    fun routineTasks(cid: Int): ArrayList<Task>{
+        tasks.clear()
+        val db = this.readableDatabase
+
+        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TRP=1 AND $COL_TCARD_ID=$cid", null)
 
         if (cursorTasks.moveToFirst()) {
             do {

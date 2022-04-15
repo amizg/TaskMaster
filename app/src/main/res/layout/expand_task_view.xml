@@ -10,7 +10,9 @@
         android:layout_height="wrap_content"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:hint="@string/title"/>
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:hint="No Title"/>
 
     <TextView
         android:id="@+id/taskDesc"
@@ -18,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/taskName"
         android:paddingTop="5dp"
-        android:hint="@string/description"
+        android:paddingLeft="10dp"
+        android:hint="No Description"
         android:textSize="20dp" />
 
     <TextView

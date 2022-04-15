@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,8 +19,6 @@ import android.content.Context
 import android.os.Build
 import android.view.Gravity
 import androidx.annotation.RequiresApi
-
-private val TAG: String = CardFragment::class.java.simpleName //Debugging tag
 
 class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     Fragment(),
@@ -118,15 +115,15 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                     alertDialog.show()
                     true
                 }
-                R.id.deleteCard -> {
+                R.id.clearCompletedTasks -> {
                     val dialogLayout = inflater.inflate(R.layout.alert_box_confirmation, null)
 
                     alertDialog.setView(dialogLayout)
-                    alertDialog.setTitle("Delete Card?")
+                    alertDialog.setTitle("Clear completed tasks?")
 
                     alertDialog.setPositiveButton("Yes") { _, _ ->
-                        refreshCard(findCardPos(cardId, MainActivity.dm.getCards()))
-                        MainActivity.dm.deleteCard(cardId)
+                        MainActivity.dm.clearCompleted(cardId)
+                        refreshTasks()
                     }
 
                     alertDialog.setNegativeButton("No") { dialog, _ ->
@@ -137,15 +134,15 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                     alertDialog.show()
                     true
                 }
-                R.id.clearCompletedTasks -> {
+                R.id.deleteCard -> {
                     val dialogLayout = inflater.inflate(R.layout.alert_box_confirmation, null)
 
                     alertDialog.setView(dialogLayout)
-                    alertDialog.setTitle("Clear completed tasks?")
+                    alertDialog.setTitle("Delete Card?")
 
                     alertDialog.setPositiveButton("Yes") { _, _ ->
-                        MainActivity.dm.clearCompleted(cardId)
-                        refreshTasks()
+                        refreshCard(findCardPos(cardId, MainActivity.dm.getCards()))
+                        MainActivity.dm.deleteCard(cardId)
                     }
 
                     alertDialog.setNegativeButton("No") { dialog, _ ->
@@ -217,6 +214,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         }
         alertDialog.show()
     }
+
     private fun editTaskBox(task: Task){
         //For the outer alert box
         val inflater = layoutInflater

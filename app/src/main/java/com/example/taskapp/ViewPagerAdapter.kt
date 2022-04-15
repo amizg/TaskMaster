@@ -5,6 +5,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.taskapp.Fragments.CardFragment
 import com.example.taskapp.Fragments.HomeFragment
+import com.example.taskapp.Fragments.RoutinesFragment
 import kotlin.collections.ArrayList
 
 class ViewPagerAdapter(fm: FragmentManager?, lifecycle: Lifecycle?) :
@@ -21,8 +22,11 @@ class ViewPagerAdapter(fm: FragmentManager?, lifecycle: Lifecycle?) :
                     cards[position - 1].getName(),
                     cards[position - 1].getTasks())
             }
-            position > 0 && position > (cards.size) -> {
+            position > 0 && position == (cards.size+1)-> {
                 AddCardFragment()
+            }
+            position > 0 && position > (cards.size+1) -> {
+                RoutinesFragment()
             }
             else -> {
                 HomeFragment()
@@ -32,7 +36,7 @@ class ViewPagerAdapter(fm: FragmentManager?, lifecycle: Lifecycle?) :
     }
 
     override fun getItemCount(): Int {
-        return MainActivity.dm.getCards().size + 2
+        return MainActivity.dm.getCards().size + 3
     }
 
     //Animations for scrolling, still need to work on this - Adam
