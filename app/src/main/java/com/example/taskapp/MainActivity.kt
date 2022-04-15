@@ -10,11 +10,13 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.taskapp.databinding.ActivityMainBinding
 import com.example.taskapp.notifications.*
 import com.example.taskapp.Fragments.RecyclerAdapter
+import java.lang.ref.WeakReference
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -27,15 +29,20 @@ private val TAG: String = MainActivity::class.java.simpleName //Debugging tag
 
 class MainActivity : AppCompatActivity() {
 
+
+
     // refresh function to add fragment changes
     companion object{
+        lateinit var weakActivity: WeakReference<MainActivity>
         lateinit var rcy: RecyclerAdapter
         lateinit var adapter: ViewPagerAdapter
         lateinit var viewpager:ViewPager2
         lateinit var dm:DataManager
         lateinit var fm: FragmentManager
         lateinit var alertBuilder: AlertDialog.Builder
-
+        fun getmInstanceActivity(): MainActivity? {
+            return weakActivity.get()
+        }
 
         fun convertLongToTime(time: Long): String {
             val date = Date(time)
@@ -64,7 +71,6 @@ class MainActivity : AppCompatActivity() {
             return System.currentTimeMillis()
         }
 
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,17 +89,20 @@ class MainActivity : AppCompatActivity() {
         viewpager.adapter = adapter
 
         //requires version check as we allow older versions than when notification library was supported
+        weakActivity = WeakReference<MainActivity>(this)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel()
         }
-        scheduleNotification()
     }
 
     //creates notification and sets it using AlarmManager
-    private fun scheduleNotification() {
+    fun scheduleNotification(ttl: String, msg: String, tm: Long) {
         val intent = Intent(applicationContext, Notification::class.java)
-        val title = "testing"
-        val message = "123"
+        val title = ttl
+        val message = msg
+        val time = tm
+
         intent.putExtra(titleExtra, title)
         intent.putExtra(messageExtra, message)
 
@@ -105,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val time = currentTimeToLong() + 10000
+//        val time = currentTimeToLong() + 10000
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
@@ -127,15 +136,16 @@ class MainActivity : AppCompatActivity() {
             .setTitle("Notification Scheduled")
             .setMessage(
                 "Title: " + title +
-                "\nMessage: " + message +
-                "\nAt: " + dateFormat.format(date) + " " + timeFormat.format(date))
-            .setPositiveButton("Okay"){_,_ ->}
+                        "\nMessage: " + message +
+                        "\nAt: " + dateFormat.format(date) + " " + timeFormat.format(date)
+            )
+            .setPositiveButton("Okay") { _, _ -> }
             .show()
     }
 
     //required for notification, is category of notifications and requires a minimum build version
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel() {
+    fun createNotificationChannel() {
         val name = "Day at a Glance Channel"
         val desc = "Category of Day at a Glance notifications"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
@@ -144,5 +154,4 @@ class MainActivity : AppCompatActivity() {
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
-
 }
