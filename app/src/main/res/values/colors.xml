@@ -10,6 +10,8 @@
     <color name="secondaryVariantLight">#018786</color>
     <color name="errorLight">#B00020</color>
     <color name="taskLight">#F5F5F5</color>
+    <color name="titleLight">#616161</color>
+    <color name="descLight">#6E6E6E</color>
 
 <!--TaskMaster night color scheme-->
     <color name="primaryDark">#3D5A80</color>
@@ -18,5 +20,7 @@
     <color name="secondaryVariantDark">#018786</color>
     <color name="errorDark">#CF6679</color>
     <color name="taskDark">#303030</color>
+    <color name="titleDark">#D1D1D1</color>
+    <color name="descDark">#C5C5C5</color>
 
 </resources>

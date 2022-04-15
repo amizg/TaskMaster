@@ -27,6 +27,14 @@
         <item name="android:background">@color/taskLight</item>
     </style>
 
+    <style name="TitleText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/titleLight</item>
+    </style>
+
+    <style name="DescText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/descLight</item>
+    </style>
+
     <style name="Theme.TaskApp.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -44,17 +52,20 @@
     <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/white</item>
         <item name="backgroundTint">@color/primaryVariantLight</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/primaryVariantLight</item>
         <item name="strokeColor">@color/primaryLight</item>
         <item name="strokeWidth">2dp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="NeutralButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/white</item>
         <item name="backgroundTint">#F44336</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
 </resources>
