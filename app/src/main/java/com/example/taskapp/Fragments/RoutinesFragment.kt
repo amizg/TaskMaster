@@ -1,8 +1,6 @@
 package com.example.taskapp.Fragments
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -18,13 +16,9 @@ import com.example.taskapp.R
 import com.example.taskapp.Task
 import com.example.taskapp.ViewPagerAdapter
 
-class RoutinesFragment() :
+class RoutinesFragment :
     Fragment(),View.OnClickListener,
     RecyclerAdapter.OnItemClickListener {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -166,7 +160,7 @@ class RoutinesFragment() :
                 task.getDeadline(),
                 task.getCompleted(),
                 task.getTaskId(),
-                rp, task.getNotif(),
+                rp,
                 mon, tue, wed, thu, fri, sat, sun,
                 task.getLastCompleted()
             )
@@ -183,7 +177,7 @@ class RoutinesFragment() :
         alertDialog.show()
     }
 
-    fun getDayState(day: Int):Boolean{
+    private fun getDayState(day: Int):Boolean{
         return day==1
     }
 

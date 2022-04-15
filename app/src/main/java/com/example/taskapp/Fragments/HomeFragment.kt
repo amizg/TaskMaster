@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskapp.*
 
-
 class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
 
     override fun onCreateView(
@@ -37,6 +36,7 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
         }
     }
 
+    // opens alertDialog for Day at a Glance popup
     private fun dayAtAGlance(){
 
         val tasks = MainActivity.dm.dagTasks()
