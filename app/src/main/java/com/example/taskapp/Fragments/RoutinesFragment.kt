@@ -188,17 +188,6 @@ class RoutinesFragment :
         return day==1
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    //For refreshing card fragments
-    private fun refreshCard(pos: Int){
-        MainActivity.adapter = ViewPagerAdapter(MainActivity.fm, lifecycle)
-        MainActivity.viewpager = MainActivity.viewpager.findViewById(R.id.viewpager)
-        MainActivity.viewpager.adapter = MainActivity.adapter
-
-        MainActivity.adapter.notifyDataSetChanged()
-        MainActivity.viewpager.setCurrentItem(pos, false)
-    }
-
     //For refreshing card fragments
     @SuppressLint("NotifyDataSetChanged")
     private fun refreshCard(pos: Int){
