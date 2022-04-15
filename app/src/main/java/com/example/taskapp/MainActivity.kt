@@ -97,8 +97,5 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             um.createNotificationChannel()
         }
-
-        //testing
-        um.scheduleNotification("noah is kinda cool", "ur mom", currentTimeToLong() + 10000)
     }
 }

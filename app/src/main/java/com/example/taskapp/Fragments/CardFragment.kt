@@ -425,6 +425,9 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 0
             )
             refreshTasks()
+
+            //Create appropriate notification(s) for the added task
+            MainActivity.um.scheduleNotifications(dateCheck(), taskName.text.toString())
         }
         //Cancel
         alertDialog.setNegativeButton("") { dialog, _ ->

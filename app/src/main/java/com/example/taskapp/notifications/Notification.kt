@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -17,21 +18,13 @@ import com.example.taskapp.MainActivity
 import com.example.taskapp.R
 import java.util.*
 
-const val notificationID = 1
 const val channelID = "channel1"
 const val titleExtra = "titleExtra"
 const val messageExtra = "messageExtra"
+const val preferenceKey = "taskmaster_key"
+const val lastNotifPrefKey = "last_notification_preference_key"
 
-class Notification : BroadcastReceiver() {
-
-    override fun onReceive(context: Context, intent: Intent) {
-        val notification = NotificationCompat.Builder(context, channelID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle(intent.getStringExtra(titleExtra))
-            .setContentText(intent.getStringExtra(messageExtra))
-            .build()
-
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(notificationID, notification)
-    }
+class Notification (nID: Int, tID: Int) {
+    private var notifID:Int = nID
+    private var taskID:Int = tID
 }

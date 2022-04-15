@@ -66,26 +66,10 @@ class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickL
         //color tasks red if they are overdue, orange if they are due in the next hour
         if(tasks[position].getDeadline() < MainActivity.currentTimeToLong() && tasks[position].getDeadline() > 0) {
             holder.timeText.setTextColor(Color.parseColor("#F44336"))
-            if (tasks[position].getNotif() == 0) {
-                MainActivity.getmInstanceActivity()?.scheduleNotification(
-                    "Deadline Reached",
-                    tasks[position].getName(),
-                    MainActivity.currentTimeToLong() + 10000)
-                tasks[position].setNotif(1)
-            }
         }
         else if(tasks[position].getDeadline()-3600000 < MainActivity.currentTimeToLong() && tasks[position].getDeadline() > 0) {
             holder.timeText.setTextColor(Color.parseColor("#FFAE42"))
-
-            if (tasks[position].getNotif() != 2) {
-                MainActivity.getmInstanceActivity()?.scheduleNotification(
-                    "Deadline Approaching",
-                    tasks[position].getName(),
-                    MainActivity.currentTimeToLong() + 10000)
-                tasks[position].setNotif(2)
-            }
         }
-
     }
 
 
