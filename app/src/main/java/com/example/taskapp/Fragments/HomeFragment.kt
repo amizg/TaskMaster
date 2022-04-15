@@ -192,8 +192,8 @@ class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
                 taskName.text.toString(),
                 taskDesc.text.toString(),
                 task.getDeadline(),
-                task.getTaskId(),
                 task.getCompleted(),
+                task.getTaskId(),
                 rp, task.getNotif(),
                 mon, tue, wed, thu, fri, sat, sun,
                 task.getLastCompleted()
