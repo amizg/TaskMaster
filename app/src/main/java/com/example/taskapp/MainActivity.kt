@@ -82,12 +82,14 @@ class MainActivity : AppCompatActivity() {
         viewpager = findViewById(R.id.viewpager)
         viewpager.adapter = adapter
 
+        //requires version check as we allow older versions than when notification library was supported
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel()
         }
         scheduleNotification()
     }
 
+    //creates notification and sets it using AlarmManager
     private fun scheduleNotification() {
         val intent = Intent(applicationContext, Notification::class.java)
         val title = "testing"
@@ -111,9 +113,11 @@ class MainActivity : AppCompatActivity() {
                 pendingIntent
             )
         }
+        //unnecessary for making notif, used to push alert to screen for testing purposes
         showAlert(time, title, message)
     }
 
+    //show on-screen alert
     private fun showAlert(time: Long, title: String, message: String) {
         val date = Date(time)
         val dateFormat = android.text.format.DateFormat.getLongDateFormat(applicationContext)
@@ -129,6 +133,7 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
+    //required for notification, is category of notifications and requires a minimum build version
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel() {
         val name = "Day at a Glance Channel"
