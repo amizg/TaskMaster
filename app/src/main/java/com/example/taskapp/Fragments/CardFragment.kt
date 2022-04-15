@@ -33,6 +33,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     private var tasks: ArrayList<Task>
     private var _binding: FragmentCardBinding? = null
     private val binding get() = _binding!!
+    private lateinit var routinePage: RoutinesFragment
 
     //Variable for alertDialog popup
     private val alertDialog = MainActivity.alertBuilder
@@ -89,6 +90,8 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         menu.setOnClickListener {
             popupCardMenu(view, requireContext())
         }
+
+        routinePage = RoutinesFragment()
     }
 
     @SuppressLint("DiscouragedPrivateApi", "RtlHardcoded")
@@ -322,6 +325,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
             )
             //refreshes tasks
             refreshTasks()
+            refreshCard(findCardPos(cardId, MainActivity.dm.readCards()))
         }
         alertDialog.setNegativeButton("") { dialog, _ ->
             dialog.dismiss()
@@ -431,6 +435,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 0
             )
             refreshTasks()
+            refreshCard(findCardPos(cardId, MainActivity.dm.readCards()))
         }
         alertDialog.setNegativeButton("") { dialog, _ ->
             dialog.dismiss()
@@ -494,7 +499,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 
         for ((index, card) in cardList.withIndex()){
 
-            if (cardId == card.getId()){return index}
+            if (cardId == card.getId()){return index + 1}
         }
         return 0
     }
@@ -529,7 +534,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         MainActivity.viewpager.adapter = MainActivity.adapter
 
         MainActivity.adapter.notifyDataSetChanged()
-        MainActivity.viewpager.setCurrentItem(pos, true)
+        MainActivity.viewpager.setCurrentItem(pos, false)
     }
 
     override fun onDestroyView() {
