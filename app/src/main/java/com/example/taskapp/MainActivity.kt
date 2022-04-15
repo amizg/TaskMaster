@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var viewpager:ViewPager2
         lateinit var dm:DataManager
         lateinit var fm: FragmentManager
+        lateinit var um: UpdateManager
         lateinit var alertBuilder: AlertDialog.Builder
         fun getmInstanceActivity(): MainActivity? {
             return weakActivity.get()
@@ -88,65 +89,16 @@ class MainActivity : AppCompatActivity() {
         viewpager = findViewById(R.id.viewpager)
         viewpager.adapter = adapter
 
+        um = UpdateManager(this)
+
+        //requires version check as we allow older versions than when notification library was supported
         weakActivity = WeakReference<MainActivity>(this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel()
+            um.createNotificationChannel()
         }
-    }
 
-    fun scheduleNotification(ttl: String, msg: String, tm: Long) {
-        val intent = Intent(applicationContext, Notification::class.java)
-        val title = ttl
-        val message = msg
-        val time = tm
-
-        intent.putExtra(titleExtra, title)
-        intent.putExtra(messageExtra, message)
-
-        val pendingIntent = PendingIntent.getBroadcast(
-            applicationContext,
-            notificationID,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-//        val time = currentTimeToLong() + 10000
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                time,
-                pendingIntent
-            )
-        }
-        showAlert(time, title, message)
-    }
-
-    private fun showAlert(time: Long, title: String, message: String) {
-        val date = Date(time)
-        val dateFormat = android.text.format.DateFormat.getLongDateFormat(applicationContext)
-        val timeFormat = android.text.format.DateFormat.getTimeFormat(applicationContext)
-
-        AlertDialog.Builder(this)
-            .setTitle("Notification Scheduled")
-            .setMessage(
-                "Title: " + title +
-                        "\nMessage: " + message +
-                        "\nAt: " + dateFormat.format(date) + " " + timeFormat.format(date)
-            )
-            .setPositiveButton("Okay") { _, _ -> }
-            .show()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun createNotificationChannel() {
-        val name = "Day at a Glance Channel"
-        val desc = "Category of Day at a Glance notifications"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(channelID, name, importance)
-        channel.description = desc
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+        //testing
+        um.scheduleNotification("noah is kinda cool", "ur mom", currentTimeToLong() + 10000)
     }
 }
