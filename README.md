@@ -2,7 +2,7 @@
 
 Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrigo, Travis Justice
 
-## Description
+## Features - v1.0
 - Task Master is a task management application
 - Separation of Tasks in "Category Cards" ( Work, Home, School, etc.)
 - Set "Routines", Tasks that recur automatically on specified days.
@@ -28,7 +28,12 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
     - These tasks will not appear on the Day at a Glance
 
 
-
+## Plans for the future
+- Routines
+    - Rotuines tasks to have set times and dates to recur
+    - Clear from card view when completed without permanently deleting from data
+    - Allow for more variety in recurrence options (bi-weekly, weekly, monthly, etc)
+    - 
 
 ## Directions for Download
 -----------------------
