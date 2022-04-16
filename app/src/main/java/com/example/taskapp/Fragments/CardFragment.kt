@@ -354,7 +354,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
             MainActivity.dm.editTask(
                 taskName.text.toString(),
                 taskDesc.text.toString(),
-                dateCheck(),
+                dateCheck(task),
                 task.getCompleted(),
                 task.getTaskId(),
                 rp,
@@ -373,7 +373,47 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
             refreshTasks()
             refreshCard(findCardPos(cardId, MainActivity.dm.readCards()))
         }
-        alertDialog.setNegativeButton("") { dialog, _ ->
+        alertDialog.setNegativeButton("Remove Deadline") { dialog, _ ->
+            if (monCB.isChecked) {
+                mon = 1
+                rp = 1
+            }
+            if (tueCB.isChecked){
+                tue = 1
+                rp = 1
+            }
+            if (wedCB.isChecked){
+                wed = 1
+                rp = 1
+            }
+            if (thuCB.isChecked){
+                thu = 1
+                rp = 1
+            }
+            if (friCB.isChecked){
+                fri = 1
+                rp = 1
+            }
+            if (satCB.isChecked){
+                sat = 1
+                rp = 1
+            }
+            if (sunCB.isChecked){
+                sun = 1
+                rp = 1
+            }
+            MainActivity.dm.editTask(
+                taskName.text.toString(),
+                taskDesc.text.toString(),
+                initDateCheck(),
+                task.getCompleted(),
+                task.getTaskId(),
+                rp,
+                mon, tue, wed, thu, fri, sat, sun,
+                task.getLastCompleted()
+            )
+            refreshTasks()
+            refreshCard(findCardPos(cardId, MainActivity.dm.readCards()))
             dialog.dismiss()
         }
         //Cancel
@@ -474,7 +514,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 cardId,
                 taskName.text.toString(),
                 taskDesc.text.toString(),
-                dateCheck(),
+                initDateCheck(),
                 0,
                 rp,
                 mon, tue, wed, thu, fri, sat, sun,
@@ -494,8 +534,16 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     }
 
     //Check to see if user entered deadline
-    private fun dateCheck(): Long {
-        return if (selectedYear == 0) {
+    private fun dateCheck(task: Task): Long {
+        return if (selectedYear==0){
+            task.getDeadline()
+        } else {
+            MainActivity.convertDateToLong("$selectedYear.$selectedMonth.$selectedDay $selectedHour:$selectedMinute")
+        }
+    }
+
+    private fun initDateCheck(): Long {
+        return if (selectedYear==0){
             0
         } else {
             MainActivity.convertDateToLong("$selectedYear.$selectedMonth.$selectedDay $selectedHour:$selectedMinute")
