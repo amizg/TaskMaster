@@ -237,6 +237,8 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         //Mark Tasks Complete button
         alertDialog.setPositiveButton("Mark Complete") { dialog, _ ->
             MainActivity.dm.markCompleted(tasks[pos].getTaskId(), tasks[pos].getCompleted(), tasks[pos])
+            MainActivity.um.cancelTaskNotifications(tasks[pos].getTaskId())
+            MainActivity.um.clearTaskFromPreferences(tasks[pos].getTaskId())
             refreshTasks()
             dialog.dismiss()
         }
@@ -251,6 +253,8 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         //Delete Btn
         alertDialog.setNeutralButton("Delete"){dialog, _ ->
             MainActivity.dm.deleteTask(tasks[pos].getTaskId())
+            MainActivity.um.cancelTaskNotifications(tasks[pos].getTaskId())
+            MainActivity.um.clearTaskFromPreferences(tasks[pos].getTaskId())
             refreshTasks()
             dialog.dismiss()
         }
@@ -357,6 +361,14 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 mon, tue, wed, thu, fri, sat, sun,
                 task.getLastCompleted()
             )
+
+            MainActivity.um.cancelTaskNotifications(task.getTaskId())
+            MainActivity.um.scheduleNotifications(
+                task.getDeadline(),
+                task.getName(),
+                task.getTaskId()
+            )
+
             //refreshes tasks
             refreshTasks()
             refreshCard(findCardPos(cardId, MainActivity.dm.readCards()))

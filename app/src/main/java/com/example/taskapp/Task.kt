@@ -1,5 +1,7 @@
 package com.example.taskapp
 
+import com.example.taskapp.notifications.Notification
+
 
 class Task(
     tid: Int, nm: String, dsc: String, ddln: Long, cmpltd: Int, repeatable: Int, var mon: Int,
@@ -13,6 +15,15 @@ class Task(
     private var completed:Int = cmpltd
     private var dayLastCompleted: Int = dayLast
     var rp = repeatable
+
+    init {
+        MainActivity.um.scheduleNotifications(
+            deadline,
+            name,
+            tid
+        )
+    }
+
     fun getTaskId():Int{
         return taskId
     }

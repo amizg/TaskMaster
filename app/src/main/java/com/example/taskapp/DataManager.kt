@@ -4,6 +4,9 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
+import com.example.taskapp.notifications.Notification
+import java.time.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -16,7 +19,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 
     companion object {
         private const val DB_NAME = "taskmaster"
-        private const val DB_VER = 1
+        private const val DB_VER = 2
 
         //card table
         private const val TBL_CARDS = "cards"
@@ -51,6 +54,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 //On creation of the database for the very first time
     //Create tasks table
     //Create cards table
+    //Create notifications table
     //Execute SQL statements
     override fun onCreate(db: SQLiteDatabase?) {
         val createCardTable = "CREATE TABLE $TBL_CARDS($COL_CID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_CNAME TEXT)"
@@ -140,8 +144,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     //Edit contents of an existing task by TaskId
     fun editTask(newTitle: String, newDesc: String, newDeadline: Long, completed: Int, taskId: Int, rp: Int,
                  mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int, dayLast: Int){
-
-
         val db = this.writableDatabase
         val values = ContentValues()
 
