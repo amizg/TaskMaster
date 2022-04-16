@@ -38,8 +38,8 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
     - Rotuines tasks to have set times and dates to recur
     - Clear from card view when completed without permanently deleting from data
     - Allow for more variety in recurrence options (bi-weekly, weekly, monthly, etc)
-  
-    - 
+
+
 <br/>
 
 ## Directions for Download
