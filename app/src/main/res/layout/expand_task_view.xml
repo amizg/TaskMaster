@@ -27,6 +27,17 @@
         style="@style/DescText"/>
 
     <TextView
+        android:id="@+id/taskRepeatsOn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskDesc"
+        android:paddingTop="3dp"
+        android:paddingLeft="12dp"
+        android:hint="Does not repeat"
+        android:textSize="20dp"
+        style="@style/DescText"/>
+
+    <TextView
         android:id="@+id/selectedDateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,5 +49,77 @@
         android:textSize="20sp"
         android:textAlignment="center"
         style="@style/DescText"/>
+
+    <TextView
+        android:id="@+id/monText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskRepeatsOn"
+        android:hint="M"
+        android:textSize="24sp"
+        android:layout_toLeftOf="@id/tueText"
+        style="@style/DateText"/>
+    <TextView
+        android:id="@+id/tueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskRepeatsOn"
+        android:hint="T"
+        android:textSize="24sp"
+        android:layout_toLeftOf="@id/wedText"
+        android:layout_marginLeft="20dp"
+        style="@style/DateText" />
+    <TextView
+        android:id="@+id/wedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskRepeatsOn"
+        android:hint="W"
+        android:textSize="24sp"
+        android:layout_toLeftOf="@id/thurText"
+        android:layout_marginLeft="20dp"
+        style="@style/DateText"/>
+
+    <TextView
+        android:id="@+id/thurText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskRepeatsOn"
+        android:layout_centerHorizontal="true"
+        android:hint="T"
+        android:textSize="24sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        style="@style/DateText" />
+    <TextView
+        android:id="@+id/friText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskRepeatsOn"
+        android:hint="F"
+        android:textSize="24sp"
+        android:layout_toRightOf="@id/thurText"
+        android:layout_marginRight="20dp"
+        style="@style/DateText"/>
+    <TextView
+        android:id="@+id/satText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskRepeatsOn"
+        android:hint="S"
+        android:textSize="24sp"
+        android:layout_toRightOf="@id/friText"
+        android:layout_marginRight="20dp"
+        style="@style/DateText"/>
+    <TextView
+        android:id="@+id/sunText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskRepeatsOn"
+        android:hint="S"
+        android:textSize="24sp"
+        android:layout_toRightOf="@id/satText"
+        android:layout_marginRight="20dp"
+        style="@style/DateText"/>
 
 </RelativeLayout>
