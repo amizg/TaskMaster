@@ -34,8 +34,10 @@ class MainActivity : AppCompatActivity() {
         viewpager = findViewById(R.id.viewpager)
         viewpager.adapter = adapter
 
+        um = UpdateManager(this)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel()
+            um.createNotificationChannel()
         }
     }
 
@@ -70,32 +72,6 @@ class MainActivity : AppCompatActivity() {
 
         fun currentTimeToLong(): Long {
             return System.currentTimeMillis()
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        //Declaring and setting up the database
-        dm = DataManager(this)
-        alertBuilder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
-
-        //Initializing the view pager adapter
-        adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
-        fm = supportFragmentManager
-        //assigning the layout ViewPager2 to viewpager with the id of viewpager
-        viewpager = findViewById(R.id.viewpager)
-        viewpager.adapter = adapter
-
-        um = UpdateManager(this)
-        //um.showPreferences()
-
-        //requires version check as we allow older versions than when notification library was supported
-        weakActivity = WeakReference<MainActivity>(this)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            um.createNotificationChannel()
         }
     }
 }
