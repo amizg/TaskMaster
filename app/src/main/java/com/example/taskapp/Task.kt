@@ -16,13 +16,16 @@ class Task(
     private var dayLastCompleted: Int = dayLast
     var rp = repeatable
 
-    init {
-        MainActivity.um.scheduleNotifications(
-            deadline,
-            name,
-            tid
-        )
-    }
+//    init {
+//        if (deadline != 0.toLong()){
+//            MainActivity.um.scheduleNotifications(
+//                deadline,
+//                name,
+//                tid
+//            )
+//        }
+//
+//    }
 
     fun getTaskId():Int{
         return taskId
