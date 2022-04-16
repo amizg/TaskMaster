@@ -2,6 +2,8 @@
 
 Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrigo, Travis Justice
 
+<br/>
+
 ## Features - v1.0
 - Task Master is a task management application
 - Separation of Tasks in "Category Cards" ( Work, Home, School, etc.)
@@ -14,6 +16,7 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
 - Clear all completed tasks on all cards with the button on the home menu
 - App Theme will match the phone theme (Dark/Light)
 
+<br/>
 
 ## Notes
 - Currently there is not a way to set a routine to recur at certain times or dates
@@ -27,14 +30,30 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
 - Tasks created without a deadline or repeating days will appear on the card everyday until it is completed and cleared.
     - These tasks will not appear on the Day at a Glance
 
+<br/>
 
 ## Plans for the future
+
 - Routines
     - Rotuines tasks to have set times and dates to recur
     - Clear from card view when completed without permanently deleting from data
     - Allow for more variety in recurrence options (bi-weekly, weekly, monthly, etc)
+  
     - 
+<br/>
 
 ## Directions for Download
------------------------
-https://drive.google.com/file/d/1_vjSjn9Y-mKMwyRT6DGyakV59oI2ikhl/view?usp=sharing
+
+1) Follow the link below
+2) Click "Download"
+3) Your phone will then prompt you to allow downloads from unknown sources
+5) Turn on "Drive"
+6) Then click "Install" when prompted
+7) Your'e all set! 
+8) Enjoy TaskMaster!
+
+  
+<br/><br/>
+
+### TaskMaster Download Link:
+### https://drive.google.com/file/d/1_vjSjn9Y-mKMwyRT6DGyakV59oI2ikhl/view?usp=sharing
