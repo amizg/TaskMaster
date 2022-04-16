@@ -18,13 +18,15 @@ import com.example.taskapp.MainActivity
 import com.example.taskapp.R
 import java.util.*
 
-const val channelID = "channel1"
-const val titleExtra = "titleExtra"
-const val messageExtra = "messageExtra"
-const val preferenceKey = "taskmaster_key"
-const val lastNotifPrefKey = "last_notification_preference_key"
-
 class Notification (nID: Int, tID: Int) {
     private var notifID:Int = nID
     private var taskID:Int = tID
+
+    fun getNID(): Int {
+        return notifID
+    }
+
+    fun getTID(): Int {
+        return taskID
+    }
 }

@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         viewpager.adapter = adapter
 
         um = UpdateManager(this)
+        //um.showPreferences()
 
         //requires version check as we allow older versions than when notification library was supported
         weakActivity = WeakReference<MainActivity>(this)

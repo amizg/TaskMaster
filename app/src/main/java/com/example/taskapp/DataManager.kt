@@ -45,17 +45,11 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         private const val COL_TSAT = "saturday"
         private const val COL_TSUN = "sunday"
         private const val COL_TLASTCOMPLETED = "last_completed"
-
-        //notifications table
-        private const val TBL_NOTIFS = "notifications"
-        private const val COL_NID = "id"
-        private const val COL_NTASK_ID = "task_id"
     }
 
     //Primary array of card objects
     private var cards:ArrayList<Card> = ArrayList()
     private var tasks:ArrayList<Task> = ArrayList()
-    private var notifs:ArrayList<Notification> = ArrayList()
 
 //On creation of the database for the very first time
     //Create tasks table
@@ -67,11 +61,9 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT(100)," +
                 " $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER, $COL_TCOMPLETED INTEGER, $COL_TRP INTEGER, $COL_TNOTIF INTEGER, $COL_TMON INTEGER, $COL_TTUE INTEGER, $COL_TWED INTEGER, " +
                 "$COL_TTHU INTEGER, $COL_TFRI INTEGER, $COL_TSAT INTEGER, $COL_TSUN INTEGER, $COL_TLASTCOMPLETED INTEGER)"
-        val createNotifTable = "CREATE TABLE $TBL_NOTIFS($COL_NID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_NTASK_ID INTEGER)"
 
         db?.execSQL(createCardTable)
         db?.execSQL(createTaskTable)
-        db?.execSQL(createNotifTable)
     }
 
     //When DB_VER is incremented by 1, this will reset the entire database and its data
@@ -79,7 +71,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TBL_CARDS")
         db?.execSQL("DROP TABLE IF EXISTS $TBL_TASKS")
-        db?.execSQL("DROP TABLE IF EXISTS $TBL_NOTIFS")
         onCreate(db)
     }
 
@@ -88,7 +79,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     override fun onDowngrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TBL_CARDS")
         db?.execSQL("DROP TABLE IF EXISTS $TBL_TASKS")
-        db?.execSQL("DROP TABLE IF EXISTS $TBL_NOTIFS")
         onCreate(db)
     }
 
@@ -178,33 +168,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         val db = this.writableDatabase
 
         db.delete(TBL_TASKS, "$COL_TID=?", arrayOf(taskId.toString()))
-        db.close()
-    }
-
-    //Add notif by task ID
-    fun addNotif (taskID: Int) {
-        val db = this.writableDatabase
-        val values = ContentValues()
-
-        values.put(COL_NTASK_ID, taskID)
-
-        db.insert(TBL_NOTIFS, null, values)
-        db.close()
-    }
-
-    //Should not need to edit notifs, their notif IDs and task IDs can not change
-    fun deleteNotif (notifID: Int) {
-        val db = this.writableDatabase
-
-        db.delete(TBL_NOTIFS, "$COL_NID=?", arrayOf(notifID.toString()))
-        db.close()
-    }
-
-    //Delete notifications by existing task ID
-    fun deleteTaskNotifs (taskID: Int) {
-        val db = this.writableDatabase
-
-        db.delete(TBL_NOTIFS, "$COL_NTASK_ID=?", arrayOf(taskID.toString()))
         db.close()
     }
 
@@ -359,26 +322,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         cursorTasks.close()
         db.close()
         return tasks
-    }
-
-    fun readNotifs() {
-        notifs.clear()
-        val db = this.readableDatabase
-        val cursorNotifs = db.rawQuery("SELECT * FROM $TBL_NOTIFS", null)
-        if (cursorNotifs.moveToFirst()) {
-            do {
-                notifs.add(Notification(cursorNotifs.getInt(0), cursorNotifs.getInt(1)))
-            } while (cursorNotifs.moveToNext())
-        }
-
-        cursorNotifs.close()
-        db.close()
-    }
-
-    //return arraylist of Notification
-    fun getNotifs():ArrayList<Notification>{
-        MainActivity.dm.readNotifs()
-        return notifs
     }
 
     // takes in current day as integer and returns SQL query

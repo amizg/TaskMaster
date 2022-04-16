@@ -1,5 +1,7 @@
 package com.example.taskapp
 
+import com.example.taskapp.notifications.Notification
+
 
 class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cmpltd: Int, repeatable: Int, notif: Int,
            mon: Int, tue: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int, dayLast: Int) {
@@ -21,6 +23,14 @@ class Task(tid:Int, cid:Int, nm: String, dsc: String, ddln: Long, crtd: Long, cm
     var fri = fri
     var sat = sat
     var sun = sun
+
+    init {
+        MainActivity.um.scheduleNotifications(
+            deadline,
+            name,
+            tid
+        )
+    }
 
     fun setNotif(set: Int){
         notified = set
