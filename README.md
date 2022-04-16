@@ -47,11 +47,13 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
 1) Follow the link below
 2) Click "Download"
 3) Your phone will then prompt you to allow downloads from unknown sources
-5) Turn on "Drive"
-6) Then click "Install" when prompted
-7) Your'e all set! 
-8) Enjoy TaskMaster!
+4) Turn on "Drive"
+5) Then click "Install" when prompted
+6) Your'e all set, Enjoy TaskMaster!
 
+<br/>
+
+### NOTE: This build is currently only supported on Android Devices  
   
 <br/><br/>
 
