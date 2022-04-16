@@ -1,6 +1,6 @@
-package com.example.taskapp
+package com.example.taskapp.Fragments
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,11 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.viewpager2.widget.ViewPager2
-import com.example.taskapp.Fragments.CardFragment
-import java.security.AccessController.getContext
+import com.example.taskapp.MainActivity
+import com.example.taskapp.R
+import com.example.taskapp.ViewPagerAdapter
 
-private val TAG: String = AddCardFragment::class.java.simpleName //Debugging tag
 class AddCardFragment : Fragment() {
 
     private val alertDialog = MainActivity.alertBuilder //for building popup screens
@@ -20,19 +19,18 @@ class AddCardFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view:View = inflater!!.inflate(R.layout.fragment_add_card, container, false)
+    ): View {
+        val view:View = inflater.inflate(R.layout.fragment_add_card, container, false)
 
         val addCardBtn:Button = view.findViewById(R.id.addCardBtn)
 
         addCardBtn.setOnClickListener{
             addCardBox()
         }
-
         return view
     }
 
-    // Jeremy
+    // alertDialog for adding a card
     private fun addCardBox() {
 
         val inflater = layoutInflater
@@ -44,8 +42,7 @@ class AddCardFragment : Fragment() {
 
         alertDialog.setPositiveButton("Enter") { _, _ ->
             MainActivity.dm.addCard(editText.text.toString())
-            //MainActivity.refresh(MainActivity.dm.getCards())
-            refreshCard()
+            refreshCard(MainActivity.dm.readCards().size + 1)
         }
 
         alertDialog.setNegativeButton("Cancel") { dialog, _ ->
@@ -58,13 +55,13 @@ class AddCardFragment : Fragment() {
         alertDialog.show()
     }
 
-    private fun refreshCard(){
+    @SuppressLint("NotifyDataSetChanged")
+    private fun refreshCard(pos: Int){
         MainActivity.adapter = ViewPagerAdapter(MainActivity.fm, lifecycle)
         MainActivity.viewpager = MainActivity.viewpager.findViewById(R.id.viewpager)
         MainActivity.viewpager.adapter = MainActivity.adapter
 
-        var pos = MainActivity.dm.getCards().size
-        MainActivity.adapter.notifyItemInserted(pos)
-        MainActivity.viewpager.currentItem = pos
+        MainActivity.adapter.notifyDataSetChanged()
+        MainActivity.viewpager.setCurrentItem(pos - 1, false)
     }
 }

@@ -7,12 +7,12 @@
         />
 
     <item
-        android:id="@+id/deleteCard"
-        android:title="Delete Card"
+        android:id="@+id/clearCompletedTasks"
+        android:title="Clear Completed Tasks"
         />
 
     <item
-        android:id="@+id/clearCompletedTasks"
-        android:title="Clear Completed Tasks"
+        android:id="@+id/deleteCard"
+        android:title="Delete Card"
         />
 </menu>

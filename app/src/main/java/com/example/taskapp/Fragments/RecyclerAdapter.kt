@@ -1,30 +1,19 @@
 package com.example.taskapp.Fragments
-import android.app.AlertDialog
-import android.app.Application
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.content.Context
 import android.graphics.Color
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskapp.MainActivity
 import com.example.taskapp.R
 import com.example.taskapp.Task
-import java.lang.ref.WeakReference
-import java.util.*
 import kotlin.collections.ArrayList
 
 class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-//    private var cardId = cid
-//    private var tasks: ArrayList<Task> = MainActivity.dm.getCardTasks(cardId)
+    // task array
     var tasks = tasks
-
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
@@ -54,14 +43,13 @@ class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickL
     override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
         holder.taskTitle.text = tasks[position].getName()
         holder.taskDesc.text = tasks[position].getDesc()
+
         if(tasks[position].getDeadline() > 0){
-            holder.timeText.text = MainActivity.covertLongToSimpleTime(tasks[position].getDeadline())
+            holder.timeText.text = MainActivity.convertLongToSimpleTime(tasks[position].getDeadline())
         }
         if(tasks[position].getCompleted() == 1){
             holder.timeText.text = "Completed"
         }
-        //TODO: color tasks blue if they are due on this day of the week
-
 
         //color tasks red if they are overdue, orange if they are due in the next hour
         if(tasks[position].getDeadline() < MainActivity.currentTimeToLong() && tasks[position].getDeadline() > 0) {
@@ -71,7 +59,6 @@ class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickL
             holder.timeText.setTextColor(Color.parseColor("#FFAE42"))
         }
     }
-
 
     override fun getItemCount(): Int {
         return tasks.size

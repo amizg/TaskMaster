@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,8 +20,6 @@ import android.os.Build
 import android.view.Gravity
 import androidx.annotation.RequiresApi
 
-private val TAG: String = CardFragment::class.java.simpleName //Debugging tag
-
 class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     Fragment(),
     View.OnClickListener,
@@ -30,12 +27,16 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     TimePickerDialog.OnTimeSetListener,
     RecyclerAdapter.OnItemClickListener{
 
+    //Variables for card properties
     private var name: String = "Card"
     private var cardId: Int = 0
     private var tasks: ArrayList<Task>
     private var _binding: FragmentCardBinding? = null
     private val binding get() = _binding!!
-    private val alertDialog = MainActivity.alertBuilder //for building popup screens
+    private lateinit var routinePage: RoutinesFragment
+
+    //Variable for alertDialog popup
+    private val alertDialog = MainActivity.alertBuilder
 
     //Variables needed for deadline creation
     private var day = 0
@@ -89,9 +90,51 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         menu.setOnClickListener {
             popupCardMenu(view, requireContext())
         }
+
+        routinePage = RoutinesFragment()
     }
 
+    override fun onItemClick(position: Int) {
+        viewTaskDetails(position)
+    }
+
+    //Called when the date is selected and the user selects "Ok"
+    override fun onDateSet(view:DatePicker?, year: Int, month: Int, dayOfMonth: Int){
+        selectedDay = dayOfMonth
+        selectedMonth = month + 1 //This 1 needs to be here until i figure out why it is always 1 month behind
+        selectedYear = year
+
+        getDateTimeCalendar()
+        TimePickerDialog(requireContext(), this, hour, minute, false).show()
+    }
+
+    //Called when the time is set and user selects "Ok"
+    override fun onTimeSet(view:TimePicker?, hourOfDay: Int, minute: Int ){
+        selectedHour = hourOfDay
+        selectedMinute = minute
+
+        val longDate = MainActivity.convertDateToLong("$selectedYear.$selectedMonth.$selectedDay $selectedHour:$selectedMinute")
+
+        dateTextView.text = MainActivity.convertLongToTime(longDate)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    // onClickListener for AddTask button
+    override fun onClick(view: View) {
+        when(view.id){
+            R.id.addTaskBtn -> {
+                addTaskBox()
+            }
+        }
+    }
+
+    @SuppressLint("DiscouragedPrivateApi", "RtlHardcoded")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
+    //three dot menu, upper right corner of card(Edit Card, Clear Completed Tasks, Delete Card)
     private fun popupCardMenu(v: View, c: Context) {
         val popupCardMenu = PopupMenu(c, v, Gravity.RIGHT, R.attr.actionOverflowMenuStyle, 0)
         val inflater = layoutInflater
@@ -118,15 +161,15 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                     alertDialog.show()
                     true
                 }
-                R.id.deleteCard -> {
+                R.id.clearCompletedTasks -> {
                     val dialogLayout = inflater.inflate(R.layout.alert_box_confirmation, null)
 
                     alertDialog.setView(dialogLayout)
-                    alertDialog.setTitle("Delete Card?")
+                    alertDialog.setTitle("Clear Completed Tasks?")
 
                     alertDialog.setPositiveButton("Yes") { _, _ ->
-                        refreshCard(findCardPos(cardId, MainActivity.dm.getCards()))
-                        MainActivity.dm.deleteCard(cardId)
+                        MainActivity.dm.clearCompleted(cardId)
+                        refreshTasks()
                     }
 
                     alertDialog.setNegativeButton("No") { dialog, _ ->
@@ -137,15 +180,15 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                     alertDialog.show()
                     true
                 }
-                R.id.clearCompletedTasks -> {
+                R.id.deleteCard -> {
                     val dialogLayout = inflater.inflate(R.layout.alert_box_confirmation, null)
 
                     alertDialog.setView(dialogLayout)
-                    alertDialog.setTitle("Clear completed tasks?")
+                    alertDialog.setTitle("Delete Card?")
 
                     alertDialog.setPositiveButton("Yes") { _, _ ->
-                        MainActivity.dm.clearCompleted(cardId)
-                        refreshTasks()
+                        refreshCard(findCardPos(cardId, MainActivity.dm.readCards()))
+                        MainActivity.dm.deleteCard(cardId)
                     }
 
                     alertDialog.setNegativeButton("No") { dialog, _ ->
@@ -166,13 +209,9 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         val menu = popup.get(popupCardMenu)
         menu.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java)
             .invoke(menu, true)
-
     }
 
-    override fun onItemClick(position: Int) {
-        viewTaskDetails(position)
-    }
-
+    // opens alertDialog with detailed task information
     private fun viewTaskDetails(pos: Int){
         // this functions also as the way to complete tasks for now
         val inflater = layoutInflater
@@ -221,6 +260,8 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         }
         alertDialog.show()
     }
+
+    // opens alertDialog to edit task selected by user
     private fun editTaskBox(task: Task){
         //For the outer alert box
         val inflater = layoutInflater
@@ -256,12 +297,10 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         val satCB: CheckBox = dialogLayout.findViewById(R.id.satCB)
         val sunCB: CheckBox = dialogLayout.findViewById(R.id.sunCB)
 
-        //Set outer variable for changing if needed
-        dateTextView = dateChosen
-
+        // establish existing data for task name, description, deadline(if applicable) and repeating days(if applicable)
         taskName.setText(task.getName())
         taskDesc.setText(task.getDesc())
-
+        dateTextView = dateChosen
         monCB.isChecked = getDayState(task.mon)
         tueCB.isChecked = getDayState(task.tue)
         wedCB.isChecked = getDayState(task.wed)
@@ -270,6 +309,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         satCB.isChecked = getDayState(task.sat)
         sunCB.isChecked = getDayState(task.sun)
 
+        // checks if task has deadline; if true, shows deadline
         if (task.getDeadline() > 0){
             dateChosen.text = MainActivity.convertLongToTime(task.getDeadline())
         }
@@ -310,13 +350,14 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 sun = 1
                 rp = 1
             }
+            // edits task with new data
             MainActivity.dm.editTask(
                 taskName.text.toString(),
                 taskDesc.text.toString(),
                 dateCheck(),
                 task.getCompleted(),
                 task.getTaskId(),
-                rp, 0,
+                rp,
                 mon, tue, wed, thu, fri, sat, sun,
                 task.getLastCompleted()
             )
@@ -328,19 +369,22 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 task.getTaskId()
             )
 
+            //refreshes tasks
             refreshTasks()
+            refreshCard(findCardPos(cardId, MainActivity.dm.readCards()))
         }
-        //Cancel
         alertDialog.setNegativeButton("") { dialog, _ ->
             dialog.dismiss()
         }
+        //Cancel
         alertDialog.setNeutralButton("Cancel"){dialog, _ ->
             dialog.dismiss()
         }
         alertDialog.show()
     }
 
-    fun getDayState(day: Int):Boolean{
+    // checks if task is repeating on specified day
+    private fun getDayState(day: Int):Boolean{
         return day==1
     }
 
@@ -432,16 +476,17 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 taskDesc.text.toString(),
                 dateCheck(),
                 0,
-                rp, 0,
+                rp,
                 mon, tue, wed, thu, fri, sat, sun,
                 0
             )
             refreshTasks()
+            refreshCard(findCardPos(cardId, MainActivity.dm.readCards()))
         }
-        //Cancel
         alertDialog.setNegativeButton("") { dialog, _ ->
             dialog.dismiss()
         }
+        //Cancel
         alertDialog.setNeutralButton("Cancel"){dialog, _ ->
             dialog.dismiss()
         }
@@ -476,41 +521,13 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         DatePickerDialog(requireContext(), this, year, month, day).show()
     }
 
-    //Called when the date is selected and the user selects "Ok"
-    override fun onDateSet(view:DatePicker?, year: Int, month: Int, dayOfMonth: Int){
-        selectedDay = dayOfMonth
-        selectedMonth = month + 1 //This 1 needs to be here until i figure out why it is always 1 month behind
-        selectedYear = year
-
-        getDateTimeCalendar()
-        TimePickerDialog(requireContext(), this, hour, minute, false).show()
-    }
-
-    //Called when the time is set and user selects "Ok"
-    override fun onTimeSet(view:TimePicker?, hourOfDay: Int, minute: Int ){
-        selectedHour = hourOfDay
-        selectedMinute = minute
-
-        var longDate = MainActivity.convertDateToLong("$selectedYear.$selectedMonth.$selectedDay $selectedHour:$selectedMinute")
-
-        dateTextView.text = MainActivity.convertLongToTime(longDate)
-    }
-
     private fun findCardPos(cardId: Int, cardList: ArrayList<Card>): Int{
 
         for ((index, card) in cardList.withIndex()){
 
-            if (cardId == card.getId()){return index}
+            if (cardId == card.getId()){return index + 1}
         }
         return 0
-    }
-
-    override fun onClick(view: View) {
-       when(view.id){
-           R.id.addTaskBtn -> {
-               addTaskBox()
-           }
-       }
     }
 
     //Refresh the recycler view upon adding task
@@ -534,11 +551,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         MainActivity.viewpager.adapter = MainActivity.adapter
 
         MainActivity.adapter.notifyDataSetChanged()
-        MainActivity.viewpager.setCurrentItem(pos, true)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        MainActivity.viewpager.setCurrentItem(pos, false)
     }
 }

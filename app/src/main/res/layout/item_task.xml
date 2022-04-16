@@ -16,23 +16,23 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/WindowBackground"
-        >
+        style="@style/WindowBackground">
 
     <TextView
         android:id="@+id/taskName"
-        android:layout_width="215dp"
+        android:maxLength="13"
+        android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:gravity="center_vertical"
-        android:paddingLeft="20dp"
-        android:paddingTop="5dp"
-        android:paddingRight="20dp"
-        android:text="Task Name"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:layout_marginTop="10dp"
         android:ellipsize="end"
-        android:singleLine="true"/>
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:singleLine="true"
+        android:text="Task Name"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/taskDesc"
@@ -43,7 +43,7 @@
         android:layout_alignParentBottom="true"
         android:paddingRight="20dp"
         android:gravity="center_vertical"
-        android:paddingLeft="20dp"
+        android:paddingLeft="10dp"
         android:text="Task Desc"
         android:ellipsize="end"
         android:maxLines="1"

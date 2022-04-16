@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="55dp"
-            android:text="Card"
+            android:text=""
             android:textSize="30sp"
             android:singleLine="true"
             android:maxLength="16"/>
@@ -38,8 +38,8 @@
             android:id="@+id/addTaskBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/cardName"
+            android:layout_centerHorizontal="true"
             android:text="Add Task" />
 
         <ImageView
@@ -48,7 +48,7 @@
             android:layout_height="40dp"
             android:src="@drawable/ic_task_options"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="15dp"/>
 
     </RelativeLayout>

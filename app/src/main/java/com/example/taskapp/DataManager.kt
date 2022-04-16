@@ -10,13 +10,13 @@ import java.time.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-//For debugging Log.d(TAG,"")
-private val TAG: String = DataManager::class.java.simpleName //Debugging tag
-
 class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VER) {
 //    Tables in our database taskmaster
 //    cards: (id, name)
-//    tasks: (id, card_id, name, description, deadline, created)
+//
+//    tasks: (id, card_id, name, description, deadline, completed,
+//    repeat, days of the week, day last completed)
+
     companion object {
         private const val DB_NAME = "taskmaster"
         private const val DB_VER = 2
@@ -33,10 +33,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         private const val COL_TNAME = "name"
         private const val COL_TDESC = "description"
         private const val COL_TDEADLINE = "deadline"
-        private const val COL_TCREATED = "created"
         private const val COL_TCOMPLETED = "completed"
         private const val COL_TRP = "repeat"
-        private const val COL_TNOTIF = "notified"
         private const val COL_TMON = "monday"
         private const val COL_TTUE = "tuesday"
         private const val COL_TWED = "wednesday"
@@ -49,6 +47,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 
     //Primary array of card objects
     private var cards:ArrayList<Card> = ArrayList()
+
+    //Primary array of task objects
     private var tasks:ArrayList<Task> = ArrayList()
 
 //On creation of the database for the very first time
@@ -58,8 +58,9 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     //Execute SQL statements
     override fun onCreate(db: SQLiteDatabase?) {
         val createCardTable = "CREATE TABLE $TBL_CARDS($COL_CID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_CNAME TEXT)"
+
         val createTaskTable = "CREATE TABLE $TBL_TASKS ($COL_TID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_TCARD_ID INTEGER, $COL_TNAME TEXT(100), $COL_TDESC TEXT(100)," +
-                " $COL_TDEADLINE INTEGER, $COL_TCREATED INTEGER, $COL_TCOMPLETED INTEGER, $COL_TRP INTEGER, $COL_TNOTIF INTEGER, $COL_TMON INTEGER, $COL_TTUE INTEGER, $COL_TWED INTEGER, " +
+                " $COL_TDEADLINE INTEGER, $COL_TCOMPLETED INTEGER, $COL_TRP INTEGER, $COL_TMON INTEGER, $COL_TTUE INTEGER, $COL_TWED INTEGER, " +
                 "$COL_TTHU INTEGER, $COL_TFRI INTEGER, $COL_TSAT INTEGER, $COL_TSUN INTEGER, $COL_TLASTCOMPLETED INTEGER)"
 
         db?.execSQL(createCardTable)
@@ -68,6 +69,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 
     //When DB_VER is incremented by 1, this will reset the entire database and its data
     //dropping both tasks and cards table
+    //TODO: Remove before turn-in?
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TBL_CARDS")
         db?.execSQL("DROP TABLE IF EXISTS $TBL_TASKS")
@@ -76,6 +78,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 
     //When DB_VER is decremented by 1, this will reset the entire database and its data
     //dropping both tasks and cards table
+    //TODO: Remove before turn-in?
     override fun onDowngrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TBL_CARDS")
         db?.execSQL("DROP TABLE IF EXISTS $TBL_TASKS")
@@ -94,7 +97,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
 
     //Edit Card name column for existing Card by Card Name
     fun editCard(newName: String, cardId: Int){
-
         val db = this.writableDatabase
         val values = ContentValues()
 
@@ -114,16 +116,18 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
 
     //Adding a task to the database
-    fun addTask(card_id:Int, name:String, desc:String, deadline:Long, completed: Int, rp: Int, notif: Int, mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int, dayLast: Int){
+    fun addTask(card_id:Int, name:String, desc:String, deadline:Long, completed: Int, rp: Int,
+                mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int, dayLast: Int){
+
+        val db = this.writableDatabase
         val values = ContentValues()
+
         values.put(COL_TCARD_ID, card_id)
         values.put(COL_TNAME, name)
         values.put(COL_TDESC, desc)
         values.put(COL_TDEADLINE, deadline)
-        values.put(COL_TCREATED, System.currentTimeMillis())
         values.put(COL_TCOMPLETED, completed) //get this from the xml
         values.put(COL_TRP, rp)
-        values.put(COL_TNOTIF, notif)
         values.put(COL_TMON, mon)
         values.put(COL_TTUE, tues)
         values.put(COL_TWED, wed)
@@ -132,13 +136,13 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         values.put(COL_TSAT, sat)
         values.put(COL_TSUN, sun)
         values.put(COL_TLASTCOMPLETED, dayLast)
-        val db = this.writableDatabase
+
         db.insert(TBL_TASKS, null, values)
         db.close()
     }
 
     //Edit contents of an existing task by TaskId
-    fun editTask(newTitle: String, newDesc: String, newDeadline: Long, completed: Int, taskId: Int, rp: Int, notif: Int,
+    fun editTask(newTitle: String, newDesc: String, newDeadline: Long, completed: Int, taskId: Int, rp: Int,
                  mon: Int, tues: Int, wed: Int, thu: Int, fri: Int, sat: Int, sun: Int, dayLast: Int){
         val db = this.writableDatabase
         val values = ContentValues()
@@ -148,7 +152,6 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         values.put(COL_TDEADLINE, newDeadline)
         values.put(COL_TCOMPLETED, completed)
         values.put(COL_TRP, rp)
-        values.put(COL_TNOTIF, notif)
         values.put(COL_TMON, mon)
         values.put(COL_TTUE, tues)
         values.put(COL_TWED, wed)
@@ -172,7 +175,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
 
     //Reading tasks from the database, importing for reassigning the cards arraylist
-    fun readCards() {
+    fun readCards(): ArrayList<Card> {
         cards.clear()
         val db = this.readableDatabase
 
@@ -188,71 +191,26 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
             } while (cursorCards.moveToNext())
         }
         cursorCards.close()
-    }
-
-    //Returns an arraylist of cards
-    fun getCards():ArrayList<Card>{
-        readCards()
+        db.close()
         return cards
     }
 
-    fun readTask(){
-        tasks.clear()
-        val db = this.readableDatabase
-        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS", null)
-        if (cursorTasks.moveToFirst()) {
-            do {
-                tasks.add(
-                    Task(
-                        cursorTasks.getInt(0),
-                        cursorTasks.getInt(1),
-                        cursorTasks.getString(2),
-                        cursorTasks.getString(3),
-                        cursorTasks.getLong(4),
-                        cursorTasks.getLong(5),
-                        cursorTasks.getInt(6),
-                        cursorTasks.getInt(7),
-                        cursorTasks.getInt(8),
-                        cursorTasks.getInt(9),
-                        cursorTasks.getInt(10),
-                        cursorTasks.getInt(11),
-                        cursorTasks.getInt(12),
-                        cursorTasks.getInt(13),
-                        cursorTasks.getInt(14),
-                        cursorTasks.getInt(15),
-                        cursorTasks.getInt(16)
-                    )
-                )
-            } while (cursorTasks.moveToNext())
-        }
-        cursorTasks.close()
-
-        for (task in tasks){
-            val taskcardId = task.getCardId()
-            for(card in cards){
-                val cardId = card.getId()
-                if(taskcardId == cardId){
-                    card.addTask(task)
-                }
-            }
-        }
-        db.close()
-    }
-
+    // gets repeatable tasks to display on routines fragment
     fun getRoutines():ArrayList<Task>{
         tasks.clear()
+
         val db = this.readableDatabase
         val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TRP = 1", null)
+
         if (cursorTasks.moveToFirst()) {
             do {
                 tasks.add(
                     Task(
                         cursorTasks.getInt(0),
-                        cursorTasks.getInt(1),
                         cursorTasks.getString(2),
                         cursorTasks.getString(3),
                         cursorTasks.getLong(4),
-                        cursorTasks.getLong(5),
+                        cursorTasks.getInt(5),
                         cursorTasks.getInt(6),
                         cursorTasks.getInt(7),
                         cursorTasks.getInt(8),
@@ -261,9 +219,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                         cursorTasks.getInt(11),
                         cursorTasks.getInt(12),
                         cursorTasks.getInt(13),
-                        cursorTasks.getInt(14),
-                        cursorTasks.getInt(15),
-                        cursorTasks.getInt(16)
+                        cursorTasks.getInt(14)
                     )
                 )
             } while (cursorTasks.moveToNext())
@@ -273,6 +229,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         return tasks
     }
 
+    // gets tasks with id matching current card to be displayed in recyclerview
     fun getCardTasks(cardId: Int): ArrayList<Task>{
         // check each task in the ArrayList
         for(Task in tasks)
@@ -285,25 +242,26 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                 {
                     // mark the task incomplete for the next time the task appears
                     editTask(Task.getName(),Task.getDesc(),Task.getDeadline(),0 ,Task.getTaskId(),
-                        0 , Task.getNotif(), Task.mon,Task.tue,Task.wed,Task.thu,Task.fri,Task.sat,Task.sun, Task.getLastCompleted())
+                        0 , Task.mon,Task.tue,Task.wed,Task.thu,Task.fri,Task.sat,Task.sun, Task.getLastCompleted())
                 }
             }
         }
         tasks.clear()
+
         val db = this.readableDatabase
         val dayQuery = dayQuery(getDay())
         val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE (($dayQuery AND $COL_TRP = 1) OR $COL_TRP = 0) " +
                 "AND $COL_TCARD_ID = $cardId ORDER BY $COL_TCOMPLETED ASC, $COL_TDEADLINE = 0, $COL_TDEADLINE ASC, $COL_TNAME ASC", null)
+
         if (cursorTasks.moveToFirst()) {
             do {
                 tasks.add(
                     Task(
                         cursorTasks.getInt(0),
-                        cursorTasks.getInt(1),
                         cursorTasks.getString(2),
                         cursorTasks.getString(3),
                         cursorTasks.getLong(4),
-                        cursorTasks.getLong(5),
+                        cursorTasks.getInt(5),
                         cursorTasks.getInt(6),
                         cursorTasks.getInt(7),
                         cursorTasks.getInt(8),
@@ -312,9 +270,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                         cursorTasks.getInt(11),
                         cursorTasks.getInt(12),
                         cursorTasks.getInt(13),
-                        cursorTasks.getInt(14),
-                        cursorTasks.getInt(15),
-                        cursorTasks.getInt(16)
+                        cursorTasks.getInt(14)
                     )
                 )
             } while (cursorTasks.moveToNext())
@@ -347,6 +303,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         return cal.get(Calendar.DAY_OF_WEEK)
     }
 
+    // marks task completed in database
     fun markCompleted(tid: Int, completed: Int, task: Task){
         val values = ContentValues()
 
@@ -367,45 +324,45 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         db.close()
     }
 
+    // deletes completed, non-repeatable tasks from the current card
     fun clearCompleted(cardId: Int){
         val db = this.writableDatabase
 
         db.delete(TBL_TASKS, "$COL_TRP=0 AND $COL_TCOMPLETED=1 AND $COL_TCARD_ID=?", arrayOf(cardId.toString()))
 
     }
+
+    // deletes completed, non-repeatable tasks from all cards
     fun clearAllComplete(){
         val db = this.writableDatabase
 
         db.delete(TBL_TASKS, "$COL_TRP=0 AND $COL_TCOMPLETED=?", arrayOf(1.toString()))
     }
 
+    // gets tasks with deadlines on the current day, and tasks that are repeatable on the current day
     fun dagTasks(): ArrayList<Task>{
-
         tasks.clear()
         val db = this.readableDatabase
 
         val date = Date()
         val start = getStartOfDay(date)
         val end = getEndOfDay(date)
-
-        // TODO
-        // Design: leave out passed tasks?
-        // Call "Day Ahead" or "Tasks for Today"?
+        val dayQuery = dayQuery(getDay())
 
         val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TCOMPLETED=0 AND " +
-                                            "$COL_TDEADLINE>$start AND $COL_TDEADLINE<$end OR $COL_TDEADLINE=0 " +
-                                             "ORDER BY $COL_TDEADLINE = 0, $COL_TDEADLINE ASC, $COL_TNAME ASC", null)
+                                            "(($COL_TDEADLINE>$start AND $COL_TDEADLINE<$end) OR $COL_TDEADLINE=0) AND " +
+                                            "(($dayQuery AND $COL_TRP = 1) OR $COL_TRP = 0) " +
+                                            "ORDER BY $COL_TDEADLINE = 0, $COL_TDEADLINE ASC, $COL_TNAME ASC", null)
 
         if (cursorTasks.moveToFirst()) {
             do {
                 tasks.add(
                     Task(
                         cursorTasks.getInt(0),
-                        cursorTasks.getInt(1),
                         cursorTasks.getString(2),
                         cursorTasks.getString(3),
                         cursorTasks.getLong(4),
-                        cursorTasks.getLong(5),
+                        cursorTasks.getInt(5),
                         cursorTasks.getInt(6),
                         cursorTasks.getInt(7),
                         cursorTasks.getInt(8),
@@ -414,9 +371,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                         cursorTasks.getInt(11),
                         cursorTasks.getInt(12),
                         cursorTasks.getInt(13),
-                        cursorTasks.getInt(14),
-                        cursorTasks.getInt(15),
-                        cursorTasks.getInt(16)
+                        cursorTasks.getInt(14)
                     )
                 )
             } while (cursorTasks.moveToNext())
@@ -427,43 +382,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         return tasks
     }
 
-    fun routineTasks(): ArrayList<Task>{
-        tasks.clear()
-        val db = this.readableDatabase
-
-        val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TRP=1", null)
-
-        if (cursorTasks.moveToFirst()) {
-            do {
-                tasks.add(
-                    Task(
-                        cursorTasks.getInt(0),
-                        cursorTasks.getInt(1),
-                        cursorTasks.getString(2),
-                        cursorTasks.getString(3),
-                        cursorTasks.getLong(4),
-                        cursorTasks.getLong(5),
-                        cursorTasks.getInt(6),
-                        cursorTasks.getInt(7),
-                        cursorTasks.getInt(8),
-                        cursorTasks.getInt(9),
-                        cursorTasks.getInt(10),
-                        cursorTasks.getInt(11),
-                        cursorTasks.getInt(12),
-                        cursorTasks.getInt(13),
-                        cursorTasks.getInt(14),
-                        cursorTasks.getInt(15),
-                        cursorTasks.getInt(16)
-                    )
-                )
-            } while (cursorTasks.moveToNext())
-        }
-        cursorTasks.close()
-        db.close()
-        return tasks
-    }
-
-    fun getStartOfDay(date: Date): Long {
+    // finds 12:00:00 AM of current day, to long
+    private fun getStartOfDay(date: Date): Long {
         val calendar = Calendar.getInstance()
         calendar.time = date
         calendar[Calendar.HOUR_OF_DAY] = 0
@@ -473,7 +393,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         return calendar.timeInMillis
     }
 
-    fun getEndOfDay(date: Date): Long {
+    // finds 11:59:59 PM of current day, to long
+    private fun getEndOfDay(date: Date): Long {
         val calendar = Calendar.getInstance()
         calendar.time = date
         calendar[Calendar.HOUR_OF_DAY] = 23
@@ -482,5 +403,4 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         calendar[Calendar.MILLISECOND] = 999
         return calendar.timeInMillis
     }
-
 }
