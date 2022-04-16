@@ -11,6 +11,7 @@ import android.widget.EditText
 import com.example.taskapp.MainActivity
 import com.example.taskapp.R
 import com.example.taskapp.ViewPagerAdapter
+import me.relex.circleindicator.CircleIndicator3
 
 class AddCardFragment : Fragment() {
 
@@ -60,6 +61,7 @@ class AddCardFragment : Fragment() {
         MainActivity.adapter = ViewPagerAdapter(MainActivity.fm, lifecycle)
         MainActivity.viewpager = MainActivity.viewpager.findViewById(R.id.viewpager)
         MainActivity.viewpager.adapter = MainActivity.adapter
+        MainActivity.indicator.setViewPager(MainActivity.viewpager)
 
         MainActivity.adapter.notifyDataSetChanged()
         MainActivity.viewpager.setCurrentItem(pos - 1, false)

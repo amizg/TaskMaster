@@ -189,6 +189,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                     alertDialog.setPositiveButton("Yes") { _, _ ->
                         refreshCard(findCardPos(cardId, MainActivity.dm.readCards()))
                         MainActivity.dm.deleteCard(cardId)
+                        MainActivity.indicator.setViewPager(MainActivity.viewpager)
                     }
 
                     alertDialog.setNegativeButton("No") { dialog, _ ->
@@ -597,6 +598,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         MainActivity.adapter = ViewPagerAdapter(MainActivity.fm, lifecycle)
         MainActivity.viewpager = MainActivity.viewpager.findViewById(R.id.viewpager)
         MainActivity.viewpager.adapter = MainActivity.adapter
+        MainActivity.indicator.setViewPager(MainActivity.viewpager)
 
         MainActivity.adapter.notifyDataSetChanged()
         MainActivity.viewpager.setCurrentItem(pos, false)
