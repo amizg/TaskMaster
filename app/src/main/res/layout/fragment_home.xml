@@ -24,9 +24,9 @@
             android:layout_gravity="center_horizontal"
             android:elegantTextHeight="true"
             android:fontFamily="@font/orbitron"
-            android:paddingTop="15dp"
+            android:layout_marginTop="75dp"
             android:text="TaskMaster"
-            android:textSize="40sp"
+            android:textSize="48sp"
             android:textStyle="bold" />
 
         <Button
@@ -34,9 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Day at a Glance"
-            android:layout_marginTop="100dp"
-            />
+            android:translationY="400dp"
+            android:text="Day at a Glance" />
 
         <Button
             android:id="@+id/clearAllCompleted"
