@@ -160,6 +160,7 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         values.put(COL_TSAT, sat)
         values.put(COL_TSUN, sun)
         values.put(COL_TLASTCOMPLETED, dayLast)
+        values.put(COL_TDEADLINE, newDeadline)
 
         db.update(TBL_TASKS, values, "$COL_TID=?", arrayOf(taskId.toString()))
         db.close()
