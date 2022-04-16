@@ -11,7 +11,7 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
 - Set a deadline for a task to be completed (File Taxes, Homework Assignment, etc.)
 - Set a deadline for a routine task to cease recurring (Last day of a class, Last day of training, etc.)
 - Routines Page for editing and viewing Routines when not present on Category Card
-- View all tasks specific to the day ahead with "Day at a Glace" (Deadlined tasks, routine tasks for that day)
+- View all tasks specific to the day ahead with "Day at a Glance" (Deadlined tasks, routine tasks for that day)
 - Clear completed tasks on that specific card only with option in 3 dot menu on Card
 - Clear all completed tasks on all cards with the button on the home menu
 - App Theme will match the phone theme (Dark/Light)
