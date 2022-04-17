@@ -30,7 +30,7 @@
         android:id="@+id/taskRepeatsOn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/taskDesc"
+        android:layout_below="@id/selectedDateText"
         android:paddingTop="3dp"
         android:paddingLeft="12dp"
         android:hint="Does not repeat"
@@ -58,6 +58,7 @@
         android:hint="M"
         android:textSize="24sp"
         android:layout_toLeftOf="@id/tueText"
+        android:layout_marginLeft="20dp"
         style="@style/DateText"/>
     <TextView
         android:id="@+id/tueText"
@@ -74,10 +75,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/taskRepeatsOn"
+        android:layout_centerHorizontal="true"
         android:hint="W"
         android:textSize="24sp"
-        android:layout_toLeftOf="@id/thurText"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         style="@style/DateText"/>
 
     <TextView
@@ -85,10 +87,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/taskRepeatsOn"
-        android:layout_centerHorizontal="true"
         android:hint="T"
         android:textSize="24sp"
-        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/wedText"
         android:layout_marginRight="20dp"
         style="@style/DateText" />
     <TextView
@@ -118,8 +119,7 @@
         android:layout_below="@id/taskRepeatsOn"
         android:hint="S"
         android:textSize="24sp"
-        android:layout_toRightOf="@id/satText"
-        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/monText"
         style="@style/DateText"/>
 
 </RelativeLayout>
