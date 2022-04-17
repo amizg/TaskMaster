@@ -35,6 +35,10 @@
         <item name="android:textColor">@color/descLight</item>
     </style>
 
+    <style name="DateText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/secondaryLight</item>
+    </style>
+
     <style name="Theme.TaskApp.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

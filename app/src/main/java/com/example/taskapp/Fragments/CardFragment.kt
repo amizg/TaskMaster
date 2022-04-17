@@ -216,9 +216,18 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         // this functions also as the way to complete tasks for now
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.expand_task_view, null)
-        val  taskName: TextView = dialogLayout.findViewById(R.id.taskName)
+        val taskName: TextView = dialogLayout.findViewById(R.id.taskName)
         val taskDesc: TextView =  dialogLayout.findViewById(R.id.taskDesc)
+        val taskRepeatsOn: TextView = dialogLayout.findViewById((R.id.taskRepeatsOn))
         val dateChosen: TextView = dialogLayout.findViewById(R.id.selectedDateText)
+        val monText: TextView = dialogLayout.findViewById(R.id.monText)
+        val tueText: TextView = dialogLayout.findViewById(R.id.tueText)
+        val wedText: TextView = dialogLayout.findViewById(R.id.wedText)
+        val thurText: TextView = dialogLayout.findViewById(R.id.thurText)
+        val friText: TextView = dialogLayout.findViewById(R.id.friText)
+        val satText: TextView = dialogLayout.findViewById(R.id.satText)
+        val sunText: TextView = dialogLayout.findViewById(R.id.sunText)
+
 
         alertDialog.setView(dialogLayout)
         alertDialog.setTitle("")
@@ -228,6 +237,40 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 
         taskName.text = tasks[pos].getName()
         taskDesc.text = tasks[pos].getDesc()
+        if (tasks[pos].rp==1){
+            taskRepeatsOn.text = "Repeats on:"
+            if (tasks[pos].mon==1){
+                monText.text="M"
+            }
+            if (tasks[pos].tue==1){
+                tueText.text="T"
+            }
+            if (tasks[pos].wed==1){
+                wedText.text="W"
+            }
+            if (tasks[pos].thu==1){
+                thurText.text="T"
+            }
+            if (tasks[pos].fri==1){
+                friText.text="F"
+            }
+            if (tasks[pos].sat==1){
+                satText.text="S"
+            }
+            if (tasks[pos].sun==1){
+                sunText.text="S"
+            }
+        }
+        else{
+            taskRepeatsOn.text = ""
+            monText.text=""
+            tueText.text=""
+            wedText.text=""
+            thurText.text=""
+            friText.text=""
+            satText.text=""
+            sunText.text=""
+        }
 
         //Only show deadline if it was set
         if(tasks[pos].getDeadline() > 0){
@@ -260,6 +303,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         }
         alertDialog.show()
     }
+
 
     // opens alertDialog to edit task selected by user
     private fun editTaskBox(task: Task){
@@ -533,7 +577,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         alertDialog.show()
     }
 
-    //Check to see if user entered deadline
+    //Check to see if user entered new deadline (editTask)
     private fun dateCheck(task: Task): Long {
         return if (selectedYear==0){
             task.getDeadline()
@@ -542,6 +586,7 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         }
     }
 
+    //Check to see if user entered deadline (addTask)
     private fun initDateCheck(): Long {
         return if (selectedYear==0){
             0
@@ -578,6 +623,32 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         return 0
     }
 
+/*    private fun daysRepeated(task: Task): String{
+        var daysRepeated = "Repeats on:"
+        if (task.mon==1){
+            daysRepeated += " M"
+        }
+        if (task.tue==1){
+            daysRepeated+= " T"
+        }
+        if (task.wed==1){
+            daysRepeated+= " W"
+        }
+        if (task.thu==1){
+            daysRepeated+= " Th"
+        }
+        if (task.fri==1){
+            daysRepeated+= " F"
+        }
+        if (task.sat==1){
+            daysRepeated+= " Sat"
+        }
+        if (task.sun==1){
+            daysRepeated+= " Sun"
+        }
+        return daysRepeated
+
+    }*/
     //Refresh the recycler view upon adding task
     @SuppressLint("NotifyDataSetChanged")
     private fun refreshTasks(){
