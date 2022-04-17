@@ -44,12 +44,12 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
 
 ## Directions for Download
 
-1) Follow the link below
-2) Click "Download"
-3) Your phone will then prompt you to allow downloads from unknown sources
-4) Follow steps to allow from the source
-5) Then click "Install" when prompted
-6) You're all set, enjoy TaskMaster!
+1)  Follow the link below
+2)  Click "Download"
+3)  Your phone will then prompt you to allow downloads from unknown sources
+4)  Follow steps to allow from the source
+5)  Then click "Install" when prompted
+6)  You're all set, enjoy TaskMaster!
 
 <br/>
 
