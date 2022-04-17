@@ -23,8 +23,8 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
     - Recommended Actions: Specify the time in the description of the routine
     - Only specify a deadline for a routine task with the intention of that being the final day of that recurrence
 - Clear Completed Tasks will permanently delete any task that is marked as complete
-    - Currently, Recurring Routine tasks will not clear from the card, even when completed
-    - Recommended Actions: If you wish to PERMANENTLY delete a Routine Task, you must manually delete it in the task details menu
+    - Currently, recurring Routine tasks will not clear from the card, even when completed
+    - Recommended Actions: If you wish to PERMANENTLY delete a Routine task, you must manually delete it in the task details menu
     - The Routine task will move to the bottom of the card when completed, and mark itself incomplete again on the next scheduled day
     - If the routine task has a finish deadline, it will delete after it is completed and after the deadline is reached
 - Tasks created without a deadline or repeating days will appear on the card everyday until it is completed and cleared.
@@ -35,7 +35,7 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
 ## Plans for the future
 
 - Routines
-    - Rotuines tasks to have set times and dates to recur
+    - Routines tasks to have set times and dates to recur
     - Clear from card view when completed without permanently deleting from data
     - Allow for more variety in recurrence options (bi-weekly, weekly, monthly, etc)
 
@@ -47,13 +47,13 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
 1) Follow the link below
 2) Click "Download"
 3) Your phone will then prompt you to allow downloads from unknown sources
-4) Turn on "Drive"
+4) Follow steps to allow from the source
 5) Then click "Install" when prompted
-6) Your'e all set, Enjoy TaskMaster!
+6) You're all set, enjoy TaskMaster!
 
 <br/>
 
-### NOTE: This build is currently only supported on Android Devices  
+### NOTE: This build is currently only supported on Android devices  
   
 <br/><br/>
 
