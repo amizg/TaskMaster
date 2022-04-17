@@ -33,7 +33,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
     private var tasks: ArrayList<Task>
     private var _binding: FragmentCardBinding? = null
     private val binding get() = _binding!!
-    private lateinit var routinePage: RoutinesFragment
 
     //Variable for alertDialog popup
     private val alertDialog = MainActivity.alertBuilder
@@ -91,7 +90,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
             popupCardMenu(view, requireContext())
         }
 
-        routinePage = RoutinesFragment()
     }
 
     override fun onItemClick(position: Int) {
@@ -296,8 +294,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         //Delete Btn
         alertDialog.setNeutralButton("Delete"){dialog, _ ->
             MainActivity.dm.deleteTask(tasks[pos].getTaskId())
-//            MainActivity.um.cancelTaskNotifications(tasks[pos].getTaskId())
-//            MainActivity.um.clearTaskFromPreferences(tasks[pos].getTaskId())
             refreshTasks()
             dialog.dismiss()
         }
@@ -405,13 +401,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
                 mon, tue, wed, thu, fri, sat, sun,
                 task.getLastCompleted()
             )
-
-//            MainActivity.um.cancelTaskNotifications(task.getTaskId())
-//            MainActivity.um.scheduleNotifications(
-//                task.getDeadline(),
-//                task.getName(),
-//                task.getTaskId()
-//            )
 
             //refreshes tasks
             refreshTasks()
@@ -623,32 +612,6 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
         return 0
     }
 
-/*    private fun daysRepeated(task: Task): String{
-        var daysRepeated = "Repeats on:"
-        if (task.mon==1){
-            daysRepeated += " M"
-        }
-        if (task.tue==1){
-            daysRepeated+= " T"
-        }
-        if (task.wed==1){
-            daysRepeated+= " W"
-        }
-        if (task.thu==1){
-            daysRepeated+= " Th"
-        }
-        if (task.fri==1){
-            daysRepeated+= " F"
-        }
-        if (task.sat==1){
-            daysRepeated+= " Sat"
-        }
-        if (task.sun==1){
-            daysRepeated+= " Sun"
-        }
-        return daysRepeated
-
-    }*/
     //Refresh the recycler view upon adding task
     @SuppressLint("NotifyDataSetChanged")
     private fun refreshTasks(){
@@ -671,5 +634,10 @@ class CardFragment(id: Int, nm: String, taskList: ArrayList<Task>) :
 
         MainActivity.adapter.notifyDataSetChanged()
         MainActivity.viewpager.setCurrentItem(pos, false)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshTasks()
     }
 }

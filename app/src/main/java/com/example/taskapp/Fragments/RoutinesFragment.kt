@@ -253,4 +253,8 @@ class RoutinesFragment :
         recyclerView.recycledViewPool.clear()
         adapter.notifyDataSetChanged()
     }
+    override fun onResume() {
+        super.onResume()
+        refreshTasks()
+    }
 }
