@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:text=""
         android:singleLine="true"
+        android:inputType="textCapSentences"
         android:hint="Title"
         android:maxLength="20"/>
 
@@ -18,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/taskName"
+        android:inputType="textCapSentences"
         android:hint="Description"
         android:text=""/>
 
