@@ -18,6 +18,10 @@ import com.example.taskapp.notifications.*
 import me.relex.circleindicator.CircleIndicator3
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.recyclerview.widget.RecyclerView
+
+
+
 
 class MainActivity : AppCompatActivity() {
 

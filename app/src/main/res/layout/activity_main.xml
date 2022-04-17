@@ -10,8 +10,9 @@
     <me.relex.circleindicator.CircleIndicator3
         android:id="@+id/indicator"
         android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        app:ci_drawable="@drawable/ic_circles"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager"
