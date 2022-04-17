@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:maxLength="16"
-        android:hint="New Card Name"/>
+        android:hint="New Card Name"
+        android:inputType="textCapSentences"/>
 
 </LinearLayout>
