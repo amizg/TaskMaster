@@ -31,7 +31,9 @@
         android:singleLine="true"
         android:text="Task Name"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:hint="Task Name"
+        />
 
     <TextView
         android:id="@+id/taskDesc"
@@ -46,7 +48,9 @@
         android:text="Task Desc"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:hint="Task Description"
+        />
 
     <TextView
         android:id="@+id/timeText"
