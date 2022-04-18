@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@id/taskName"
-        android:gravity="center"
+        android:gravity="left"
         android:text=""
         android:textColor="#878787"
         android:textSize="16sp" />
