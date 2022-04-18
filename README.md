@@ -64,11 +64,11 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
 5)  Then click "Install" when prompted
 6)  You're all set, enjoy TaskMaster!
 
-<br/>
-
-### NOTE: This build is currently only supported on Android devices  
   
 <br/><br/>
 
 ### TaskMaster Download Link:
 ### https://drive.google.com/file/d/1_vjSjn9Y-mKMwyRT6DGyakV59oI2ikhl/view?usp=sharing
+<br/>
+
+### NOTE: This build is currently only supported on Android devices  
