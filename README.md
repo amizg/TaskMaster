@@ -43,6 +43,14 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
     - Allow for options to show tasks on cards for the day, 3 days, week, etc. based on use preference
     - Show the names of neighbor cards
     - Improve speed of task refresh on card scroll
+    - Improve the scrolling drag to be less touchy and more forgiving with non-linear movements
+- Notifications
+    - Push notifications for when a deadline is both approaching and reached
+    - Adding "Wake and Sleep" times.
+    - Wake time would push a wake up message and direct the user to their "Day at a Glance"
+    - Sleep time would push a message to remind you to get ready for bed and show the completed tasks for that day.
+- Settings Menu
+    - 
 
 
 <br/>
