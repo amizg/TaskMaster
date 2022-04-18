@@ -44,13 +44,18 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
     - Show the names of neighbor cards
     - Improve speed of task refresh on card scroll
     - Improve the scrolling drag to be less touchy and more forgiving with non-linear movements
+    - Have a menu to view routines for that card and remove the routines fragment.
 - Notifications
     - Push notifications for when a deadline is both approaching and reached
-    - Adding "Wake and Sleep" times.
+    - Adding "Wake and Sleep" times
     - Wake time would push a wake up message and direct the user to their "Day at a Glance"
-    - Sleep time would push a message to remind you to get ready for bed and show the completed tasks for that day.
+    - Sleep time would push a message to remind you to get ready for bed and show the completed tasks for that day
+- Home Menu
+    - Add Calendar, ability to set future, day specific tasks to a calendar. Only to appear on that day
+    - Add Settings menu for the following and move "Clear Completed Tasks" functionality into there
 - Settings Menu
-    - 
+    - Set Wake and Sleep times
+    - Set swipe animations
 
 
 <br/>
