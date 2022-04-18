@@ -38,6 +38,11 @@ Contributors: Adam Mizgalski, Collin Tift, Jake Range, Jeremy Jarzab, Noah Abrig
     - Routines tasks to have set times and dates to recur
     - Clear from card view when completed without permanently deleting from data
     - Allow for more variety in recurrence options (bi-weekly, weekly, monthly, etc)
+    - Show Routine repeated days under task description, before expanding the task view
+- Cards 
+    - Allow for options to show tasks on cards for the day, 3 days, week, etc. based on use preference
+    - Show the names of the neighbor cards
+    - 
 
 
 <br/>
