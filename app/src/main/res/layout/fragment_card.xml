@@ -32,7 +32,9 @@
             android:text=""
             android:textSize="30sp"
             android:singleLine="true"
-            android:maxLength="16"/>
+            android:maxLength="16"
+            android:hint="Card Name"
+            />
 
         <Button
             android:id="@+id/addTaskBtn"
