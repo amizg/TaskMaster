@@ -1,4 +1,5 @@
 package com.example.taskapp
+
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.NotificationChannel
@@ -14,8 +15,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.taskapp.notifications.*
+import me.relex.circleindicator.CircleIndicator3
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.recyclerview.widget.RecyclerView
+
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,9 +36,14 @@ class MainActivity : AppCompatActivity() {
         //Initializing the view pager adapter
         adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         fm = supportFragmentManager
+
         //assigning the layout ViewPager2 to viewpager with the id of viewpager
         viewpager = findViewById(R.id.viewpager)
         viewpager.adapter = adapter
+
+        //IndicatorView at bottom
+        indicator = findViewById<CircleIndicator3>(R.id.indicator)
+        indicator.setViewPager(viewpager)
 
         um = UpdateManager(this)
 
@@ -45,6 +56,7 @@ class MainActivity : AppCompatActivity() {
     companion object{
         lateinit var adapter: ViewPagerAdapter
         lateinit var viewpager:ViewPager2
+        lateinit var indicator:CircleIndicator3
         lateinit var dm:DataManager
         lateinit var fm: FragmentManager
         lateinit var um: UpdateManager

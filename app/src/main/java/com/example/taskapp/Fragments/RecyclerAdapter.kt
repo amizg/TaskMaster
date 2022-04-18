@@ -67,4 +67,5 @@ class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickL
     interface OnItemClickListener{
         fun onItemClick(position: Int)
     }
+
 }
