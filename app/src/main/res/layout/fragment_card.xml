@@ -34,7 +34,7 @@
             android:textSize="30sp"
             android:singleLine="true"
             android:maxLength="16"
-            android:hint="Card Name"
+            android:hint="(No Title)"
             />
 
         <Button
