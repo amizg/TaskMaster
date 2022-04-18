@@ -351,8 +351,8 @@ class DataManager(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
         val dayQuery = dayQuery(getDay())
 
         val cursorTasks = db.rawQuery("SELECT * FROM $TBL_TASKS WHERE $COL_TCOMPLETED=0 AND " +
-                                            "($COL_TDEADLINE>$start AND $COL_TDEADLINE<$end) OR " +
-                                            "($dayQuery AND $COL_TRP = 1) " +
+                                            "(($COL_TDEADLINE>$start AND $COL_TDEADLINE<$end) OR " +
+                                            "($dayQuery AND $COL_TRP = 1)) " +
                                             "ORDER BY $COL_TDEADLINE = 0, $COL_TDEADLINE ASC, $COL_TNAME ASC", null)
 
         if (cursorTasks.moveToFirst()) {
