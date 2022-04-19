@@ -1,4 +1,4 @@
-package com.example.taskapp.Fragments
+package com.example.TaskMaster.Fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,10 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import com.example.taskapp.MainActivity
-import com.example.taskapp.R
-import com.example.taskapp.ViewPagerAdapter
-import me.relex.circleindicator.CircleIndicator3
+import com.example.TaskMaster.MainActivity
+import com.example.TaskMaster.R
+import com.example.TaskMaster.ViewPagerAdapter
 
 class AddCardFragment : Fragment() {
 

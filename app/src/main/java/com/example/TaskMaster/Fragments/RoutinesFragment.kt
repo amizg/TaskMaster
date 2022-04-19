@@ -1,4 +1,4 @@
-package com.example.taskapp.Fragments
+package com.example.TaskMaster.Fragments
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -11,10 +11,10 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskapp.MainActivity
-import com.example.taskapp.R
-import com.example.taskapp.Task
-import com.example.taskapp.ViewPagerAdapter
+import com.example.TaskMaster.MainActivity
+import com.example.TaskMaster.R
+import com.example.TaskMaster.Task
+import com.example.TaskMaster.ViewPagerAdapter
 
 class RoutinesFragment :
     Fragment(),View.OnClickListener,

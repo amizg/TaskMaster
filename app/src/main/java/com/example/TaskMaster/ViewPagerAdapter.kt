@@ -1,12 +1,12 @@
-package com.example.taskapp
+package com.example.TaskMaster
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.taskapp.Fragments.AddCardFragment
-import com.example.taskapp.Fragments.CardFragment
-import com.example.taskapp.Fragments.HomeFragment
-import com.example.taskapp.Fragments.RoutinesFragment
+import com.example.TaskMaster.Fragments.AddCardFragment
+import com.example.TaskMaster.Fragments.CardFragment
+import com.example.TaskMaster.Fragments.HomeFragment
+import com.example.TaskMaster.Fragments.RoutinesFragment
 import kotlin.collections.ArrayList
 
 class ViewPagerAdapter(fm: FragmentManager?, lifecycle: Lifecycle?) :

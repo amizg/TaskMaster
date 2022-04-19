@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.taskapp">
+    package="com.example.TaskMaster">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TaskApp">
         <receiver
-            android:name=".notifications.AlarmReceiver"
+            android:name="com.example.TaskMaster.notifications.AlarmReceiver"
             android:enabled="true"/>
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.TaskMaster.MainActivity"
              android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

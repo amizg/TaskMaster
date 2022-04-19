@@ -1,4 +1,4 @@
-package com.example.taskapp.Fragments
+package com.example.TaskMaster.Fragments
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -11,8 +11,8 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskapp.*
-import com.example.taskapp.databinding.FragmentCardBinding
+import com.example.TaskMaster.*
+import com.example.TaskMaster.databinding.FragmentCardBinding
 import java.util.*
 import kotlin.collections.ArrayList
 import android.content.Context

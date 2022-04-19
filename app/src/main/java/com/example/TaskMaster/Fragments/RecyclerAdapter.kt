@@ -1,13 +1,13 @@
-package com.example.taskapp.Fragments
+package com.example.TaskMaster.Fragments
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskapp.MainActivity
-import com.example.taskapp.R
-import com.example.taskapp.Task
+import com.example.TaskMaster.MainActivity
+import com.example.TaskMaster.R
+import com.example.TaskMaster.Task
 import kotlin.collections.ArrayList
 
 class RecyclerAdapter(tasks: ArrayList<Task>, private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {

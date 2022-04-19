@@ -1,26 +1,16 @@
-package com.example.taskapp
+package com.example.TaskMaster
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
-import com.example.taskapp.notifications.*
+import com.example.TaskMaster.notifications.*
 import me.relex.circleindicator.CircleIndicator3
 import java.text.SimpleDateFormat
 import java.util.*
-import androidx.recyclerview.widget.RecyclerView
-
-
 
 
 class MainActivity : AppCompatActivity() {

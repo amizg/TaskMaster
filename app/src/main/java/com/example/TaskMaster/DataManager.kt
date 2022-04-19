@@ -1,12 +1,9 @@
-package com.example.taskapp
+package com.example.TaskMaster
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
-import com.example.taskapp.notifications.Notification
-import java.time.*
 import java.util.*
 import kotlin.collections.ArrayList
 

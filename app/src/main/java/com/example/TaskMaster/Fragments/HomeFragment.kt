@@ -1,4 +1,4 @@
-package com.example.taskapp.Fragments
+package com.example.TaskMaster.Fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskapp.*
+import com.example.TaskMaster.*
 
 class HomeFragment : Fragment(), RecyclerAdapter.OnItemClickListener {
 

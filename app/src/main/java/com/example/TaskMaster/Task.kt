@@ -1,6 +1,4 @@
-package com.example.taskapp
-
-import com.example.taskapp.notifications.Notification
+package com.example.TaskMaster
 
 
 class Task(
